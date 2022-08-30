@@ -8,17 +8,24 @@ import time
 
 if __name__ == "__main__":
 
-    # initiate ground data
-    data = GroundData(110, 6, 3, 10, 0.12, 10, 10, 2.4*10**6)
+    # initiate ground, fluid and pipe data
+    ground_data = GroundData(110, 6, 3, 10, 0.12, 15, 20, 2.4*10**6)
+    fluid_data = FluidData(0.2, 0.568, 998, 4180, 1e-3)
+    pipe_data = PipeData(1, 0.015, 0.02, 0.4, 0.05, 0.075, 2)
 
     # initiate borefield
     borefield = Borefield()
 
     # set ground data in borefield
-    borefield.set_ground_parameters(data)
+    borefield.set_ground_parameters(ground_data)
+    borefield.set_fluid_parameters(fluid_data)
+    borefield.set_pipe_parameters(pipe_data)
+
+    # use variable ground temperature
+    borefield.sizing_setup(use_constant_Tg=False, use_constant_Rb=False)
 
     # load the hourly profile
-    borefield.load_hourly_profile("hourly_profile.csv", header=True, separator=";", first_column_heating=True)
+    borefield.load_hourly_profile("swimming_pool.csv", header=True, separator=";", first_column_heating=False)
 
     ### size the borefield
     # according to L2
