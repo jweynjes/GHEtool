@@ -234,6 +234,7 @@ def test_sizing_L32(borefield_cooling_dom):
     borefield_cooling_dom.set_peak_heating(np.array(peakHeating) * 5)
     assert np.isclose(borefield_cooling_dom.size(L3_sizing=True),  181.06232590246438)
 
+
 def test_size_L4_fail(borefield):
     with pytest.raises(ValueError):
         borefield.size(L4_sizing=True)
