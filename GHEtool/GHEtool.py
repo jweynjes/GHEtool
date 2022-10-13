@@ -6,9 +6,8 @@ from math import pi
 import pygfunction as gt
 import os.path
 import matplotlib.pyplot as plt
-from typing import Optional, Union, List, Tuple
+from typing import Optional, Union, List
 from numpy.typing import NDArray
-import functools
 import warnings
 
 if __name__ == "__main__":
@@ -177,9 +176,9 @@ class Borefield:
         self.alpha: float = 0.  # ground diffusivity (m2/s)
         self.number_of_boreholes: int = 0  # number of total boreholes #
 
-        self.Tf_H: float = 0
-        self.Tf_C: float = 16
-        self.Tf: float = 0.
+        self.Tf: float = 0.  # temperature of the fluid
+        self.Tf_H: float = 16.  # maximum temperature of the fluid
+        self.Tf_C: float = 0.  # minimum temperature of the fluid
 
         # initiate fluid parameters
         self.fluid_data: Optional[FluidData] = None
