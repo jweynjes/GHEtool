@@ -1,4 +1,4 @@
-from GHEtool import GroundData, FluidData, PipeData
+from GHEtool import GroundData, FluidData, PipeData, MultipleUPPipeData, CoaxialPipe
 
 
 def test_ground_data():
@@ -31,6 +31,67 @@ def test_pipe_data():
     assert data.number_of_pipes == 2
     assert data.D == 4
     assert data.r_b == 0.075
+
+
+def test_multiple_u_pipe():
+    data = MultipleUPPipeData(1, 0.015, 0.02, 0.4, 0.05, 0.075, 2)
+    assert data.k_g == 1
+    assert data.r_in == 0.015
+    assert data.r_out == 0.02
+    assert data.k_p == 0.4
+    assert data.D_s == 0.05
+    assert data.number_of_pipes == 2
+    assert data.D == 4
+    assert data.r_b == 0.075
+    data = MultipleUPPipeData(conductivity_grout=1, inner_radius=0.015, outer_radius=0.02, conductivity_pipe=0.4, pipe_distance=0.05, borehole_radius=0.075,
+                              number_of_pipes=2)
+    assert data.k_g == 1
+    assert data.r_in == 0.015
+    assert data.r_out == 0.02
+    assert data.k_p == 0.4
+    assert data.D_s == 0.05
+    assert data.number_of_pipes == 2
+    assert data.D == 4
+    assert data.r_b == 0.075
+
+
+def test_coaxial():
+    data = CoaxialPipe(0.015, 0.02, 0.4, 0.065, 0.075, 40)
+    assert data.k_g == 0.1
+    assert data.r_in == 0.015
+    assert data.r_out == 0.02
+    assert data.k_p == 0.4
+    assert data.D_s == 0
+    assert data.r_in_out == 0.065
+    assert data.r_out_out == 0.075
+    assert data.number_of_pipes == 0
+    assert data.k_o == 40
+    assert data.r_b == 0.075
+    data = CoaxialPipe(inner_radius_inner_pipe=0.015, outer_radius_inner_pipe=0.02, conductivity_inner_pipe=0.4,
+                       inner_radius_outer_pipe=0.065, outer_radius_outer_pipe=0.075, conductivity_outer_pipe=40)
+    assert data.k_g == 0.1
+    assert data.r_in == 0.015
+    assert data.r_out == 0.02
+    assert data.k_p == 0.4
+    assert data.D_s == 0
+    assert data.r_in_out == 0.065
+    assert data.r_out_out == 0.075
+    assert data.number_of_pipes == 0
+    assert data.k_o == 40
+    assert data.r_b == 0.075
+    data = CoaxialPipe(inner_radius_inner_pipe=0.015, outer_radius_inner_pipe=0.02, conductivity_inner_pipe=0.4,
+                       inner_radius_outer_pipe=0.065, outer_radius_outer_pipe=0.075, conductivity_outer_pipe=40,
+                       borehole_radius=0.08, conductivity_grout=0.01)
+    assert data.k_g == 0.01
+    assert data.r_in == 0.015
+    assert data.r_out == 0.02
+    assert data.k_p == 0.4
+    assert data.D_s == 0
+    assert data.r_in_out == 0.065
+    assert data.r_out_out == 0.075
+    assert data.number_of_pipes == 0
+    assert data.k_o == 40
+    assert data.r_b == 0.08
 
 
 def test_ground_data_equal():

@@ -64,9 +64,10 @@ class Borefield:
                 'gui', 'time_L3_first_year', 'time_L3_last_year', 'peak_heating_external', 'peak_cooling_external', \
                 'monthly_load_heating_external', 'monthly_load_cooling_external', 'hourly_heating_load_external', \
                 'hourly_cooling_load_external', 'hourly_heating_load_on_the_borefield', 'hourly_cooling_load_on_the_borefield', \
-                'k_f', 'mfr', 'Cp', 'mu', 'rho', 'use_constant_Rb', 'h_f', 'R_f', 'R_p', 'printing', 'combo', \
-                'r_in', 'r_out', 'k_p', 'D_s', 'r_b', 'number_of_pipes', 'epsilon', 'k_g', 'pos', 'D', 'jit_calculation',\
-                'L2_sizing', 'L3_sizing', 'L4_sizing', 'quadrant_sizing', 'H_init', 'use_precalculated_data', 'convergence'
+                'use_constant_Rb', 'printing', 'combo', 'pos', \
+                'jit_calculation',\
+                'L2_sizing', 'L3_sizing', 'L4_sizing', 'quadrant_sizing', 'H_init', 'use_precalculated_data', 'convergence', 'pipe_data', \
+                'fluid_data', 'resistances'
 
     def __init__(self, simulation_period: int = 20, number_of_boreholes: int = None,
                  peak_heating: Optional[Union[List[float], NDArray[np.float64]]] = None,
@@ -103,9 +104,6 @@ class Borefield:
 
         # initialize variables for equivalent borehole resistance calculation
         self.pos: List[float] = []
-        self.h_f: float = 0.
-        self.R_f: float = 0.
-        self.R_p: float = 0.
 
         #
         self.monthly_load = np.array([])
@@ -179,28 +177,16 @@ class Borefield:
         self.alpha: float = 0.  # ground diffusivity (m2/s)
         self.number_of_boreholes: int = 0  # number of total boreholes #
 
+        self.Tf_H: float = 0
+        self.Tf_C: float = 16
+        self.Tf: float = 0.
+
         # initiate fluid parameters
-        self.k_f: float = 0.  # Thermal conductivity W/mK
-        self.mfr: float = 0.  # Mass flow rate kg/s
-        self.rho: float = 0.  # Density kg/m3
-        self.Cp: float = 0.  # Thermal capacity J/kgK
-        self.mu: float = 0.  # Dynamic viscosity Pa/s.
-        self.Tf: float = 0.  # temperature of the fluid
-        self.Tf_H: float = 16.  # maximum temperature of the fluid
-        self.Tf_C: float = 0.  # minimum temperature of the fluid
-        self.fluid_data_available: bool = False  # needs to be True in order to calculate Rb*
+        self.fluid_data: Optional[FluidData] = None
 
         # initiate borehole parameters
-        self.r_in: float = 0.015  # inner pipe radius m
-        self.r_out: float = 0.  # outer pipe radius m
-        self.r_b: float = 0.  # borehole radius m
-        self.k_g: float = 0.  # grout thermal conductivity W/mK
-        self.k_p: float = 0.  # pipe thermal conductivity W/mK
-        self.D_s: float = 0.  # distance of pipe until center of the borehole
-        self.number_of_pipes: int = 0  # number of pipes in the borehole (single = 1, double = 2 etc.)
-        self.D: float = 4.  # burial depth m
-        self.epsilon = 1e-6  # pipe roughness
-        self.pipe_data_available: bool = False  # needs to be True in order to calculate Rb*
+        self.pipe_data: Optional[PipeData] = None
+        self.resistances: List[float] = []
 
         # initiate different sizing
         self.L2_sizing: bool = True
@@ -363,45 +349,22 @@ class Borefield:
 
     def set_fluid_parameters(self, data: FluidData) -> None:
         """
-        This function sets the relevant fluid characteristics.
-
+        This function sets the relevant fluid characteristics.\n
         :return None
         """
-
-        self.k_f = data.k_f  # Thermal conductivity W/mK
-        self.rho = data.rho  # Density kg/m3
-        self.Cp = data.Cp  # Thermal capacity J/kgK
-        self.mu = data.mu  # Dynamic viscosity Pa/s
-        self.set_mass_flow_rate(data.mfr)
-        self.fluid_data_available = True
-
-        if self.pipe_data_available:
-            self.calculate_fluid_thermal_resistance()
+        self.fluid_data = data
+        self.calculate_resistances()
 
     def set_pipe_parameters(self, data: PipeData) -> None:
         """
-        This function sets the pipe parameters.
-
+        This function sets the pipe parameters.\n
         :return None
         """
-
-        self.r_in = data.r_in  # inner pipe radius m
-        self.r_out = data.r_out  # outer pipe radius m
-        self.k_p = data.k_p  # pipe thermal conductivity W/mK
-        self.D_s = data.D_s  # distance of pipe until center m
-        self.r_b = data.r_b  # borehole radius m
-        self.number_of_pipes = data.number_of_pipes  # number of pipes #
-        self.epsilon = data.epsilon  # pipe roughness
-        self.k_g = data.k_g  # grout thermal conductivity W/mK
-        self.D = data.D  # burial depth m
+        self.pipe_data = data
         # calculates the position of the pipes based on an axis-symmetrical positioning
         self.pos = self._axis_symmetrical_pipe
 
-        self.pipe_data_available = True
-        # calculate the different resistances
-        if self.fluid_data_available:
-            self.calculate_fluid_thermal_resistance()
-        self.calculate_pipe_thermal_resistance()
+        self.calculate_resistances()
 
     def set_max_ground_temperature(self, temp: float) -> None:
         """
@@ -419,31 +382,35 @@ class Borefield:
         """
         self.Tf_C = temp
 
-    def set_mass_flow_rate(self, mfr: float) -> None:
-        """
-        This function sets the mass flow rate per borehole.
-
-        :return None
-        """
-        self.mfr = mfr
-
-    def calculate_fluid_thermal_resistance(self) -> None:
-        """
-        This function calculates and sets the fluid thermal resistance R_f.
-
-        :return: None"""
-        self.h_f = gt.pipes.convective_heat_transfer_coefficient_circular_pipe(self.mfr / self.number_of_pipes, self.r_in, self.mu,
-                                                                                      self.rho, self.k_f, self.Cp,
-                                                                                      self.epsilon)
-        self.R_f = 1. / (self.h_f * 2 * pi * self.r_in)
-
-    def calculate_pipe_thermal_resistance(self) -> None:
-        """
-        This function calculates and sets the pipe thermal resistance R_p.
-
-        :return: None
-        """
-        self.R_p = gt.pipes.conduction_thermal_resistance_circular_pipe(self.r_in, self.r_out, self.k_p)
+    def calculate_resistances(self):
+        # check if all data is available
+        if self.pipe_data is None or self.fluid_data is None:
+            return
+        if self.pipe_data.__class__ == PipeData or isinstance(self.pipe_data, MultipleUPPipeData):
+            # initiate pipe
+            R_p: float = gt.pipes.conduction_thermal_resistance_circular_pipe(self.pipe_data.r_in, self.pipe_data.r_out, self.pipe_data.k_p)
+            h_f: float = gt.pipes.convective_heat_transfer_coefficient_circular_pipe(self.fluid_data.mfr / self.pipe_data.number_of_pipes, self.pipe_data.r_in,
+                                                                                     self.fluid_data.mu,
+                                                                                     self.fluid_data.rho, self.fluid_data.k_f, self.fluid_data.Cp,
+                                                                                     self.pipe_data.epsilon)
+            R_f: float = 1. / (h_f * 2 * pi * self.pipe_data.r_in)
+            self.resistances = [R_f + R_p]
+        if isinstance(self.pipe_data, CoaxialPipe):
+            h_f_inner = gt.pipes.convective_heat_transfer_coefficient_circular_pipe(self.fluid_data.mfr, self.pipe_data.r_in, self.fluid_data.mu,
+                                                                                    self.fluid_data.rho, self.fluid_data.k_f, self.fluid_data.Cp,
+                                                                                    self.pipe_data.epsilon)
+            epsilon = (self.pipe_data.epsilon * self.pipe_data.r_out + self.pipe_data.epsilon_outer * self.pipe_data.r_in_out) / (self.pipe_data.r_out +
+                                                                                                                                  self.pipe_data.r_in_out)
+            h_f_outer = gt.pipes.convective_heat_transfer_coefficient_concentric_annulus(self.fluid_data.mfr, self.pipe_data.r_out, self.pipe_data.r_in_out,
+                                                                                         self.fluid_data.mu,
+                                                                                         self.fluid_data.rho, self.fluid_data.k_f, self.fluid_data.Cp,
+                                                                                         epsilon)
+            R_inner_pipe = gt.pipes.conduction_thermal_resistance_circular_pipe(self.pipe_data.r_in, self.pipe_data.r_out, self.pipe_data.k_p)
+            R_f_inner = 1. / (h_f_inner * 2 * pi * self.pipe_data.r_in)
+            R_f_outer_in = 1. / (h_f_outer[0] * 2 * pi * (self.pipe_data.r_in_out - self.pipe_data.r_out))
+            R_f_outer_out = 1. / (h_f_outer[1] * 2 * pi * (self.pipe_data.r_in_out - self.pipe_data.r_out))
+            R_outer_pipe = gt.pipes.conduction_thermal_resistance_circular_pipe(self.pipe_data.r_in_out, self.pipe_data.r_out_out, self.pipe_data.k_o)
+            self.resistances = [R_f_inner + R_f_outer_in + R_inner_pipe, R_outer_pipe + R_f_outer_out]
 
     @property
     def _Rb(self) -> float:
@@ -453,11 +420,7 @@ class Borefield:
         :return: the borehole equivalent thermal resistance
         """
         # use a constant Rb*
-        if self.use_constant_Rb:
-            return self.Rb
-
-        # calculate Rb*
-        return self.calculate_Rb()
+        return self.Rb if self.use_constant_Rb else self.calculate_Rb()  # calculate Rb*
 
     def _Tg(self, H: float = None) -> float:
         """
@@ -485,20 +448,29 @@ class Borefield:
         :return: the borehole equivalent thermal resistance
         """
         # check if all data is available
-        if not self.pipe_data_available or not self.fluid_data_available:
-            print("Please make sure you set al the pipe and fluid data.")
+        if self.pipe_data is None or self.fluid_data is None:
+            print("Please make sure you set all the pipe and fluid data.")
             raise ValueError
 
         # initiate temporary borefield
-        borehole = gt.boreholes.Borehole(self.H, self.D, self.r_b, 0, 0)
-        # initiate pipe
-        pipe = gt.pipes.MultipleUTube(self.pos, self.r_in, self.r_out, borehole, self.k_s, self.k_g,
-                                      self.R_p + self.R_f, self.number_of_pipes, J=2)
+        borehole = gt.boreholes.Borehole(self.H, self.pipe_data.D, self.pipe_data.r_b, 0, 0)
+        if self.pipe_data.__class__ == PipeData or isinstance(self.pipe_data, MultipleUPPipeData):
+            pipe = gt.pipes.MultipleUTube(self.pos, self.pipe_data.r_in, self.pipe_data.r_out, borehole, self.k_s, self.pipe_data.k_g,
+                                          self.resistances[0], self.pipe_data.number_of_pipes, J=2)
+        elif isinstance(self.pipe_data, CoaxialPipe):
+            pipe = gt.pipes.Coaxial(pos=self.pos,
+                                    r_in=np.array([self.pipe_data.r_in_out, self.pipe_data.r_in]) if self.pipe_data.is_annulus_inlet else
+                                    np.array([self.pipe_data.r_in, self.pipe_data.r_in_out]),
+                                    r_out=np.array([self.pipe_data.r_out_out, self.pipe_data.r_out]) if self.pipe_data.is_annulus_inlet else
+                                    np.array([self.pipe_data.r_out, self.pipe_data.r_out_out]),
+                                    borehole=borehole, k_s=self.k_s, k_g=self.pipe_data.k_g, R_ff=self.resistances[0], R_fp=self.resistances[1], J=2)
+        else:
+            raise ValueError("Please make sure you set al the pipe and fluid data.")
         try:
             # only in pygfunction >= v2.2.1
-            return pipe.effective_borehole_thermal_resistance(self.mfr, self.Cp)
+            return pipe.effective_borehole_thermal_resistance(self.fluid_data.mfr, self.fluid_data.Cp)
         except AttributeError:
-            return gt.pipes.borehole_thermal_resistance(pipe, self.mfr, self.Cp)
+            return gt.pipes.borehole_thermal_resistance(pipe, self.fluid_data.mfr, self.fluid_data.Cp)
 
     @property
     def _axis_symmetrical_pipe(self) -> list:
@@ -506,12 +478,15 @@ class Borefield:
         This function gives back the coordinates of the pipes in an axis-symmetrical pipe.
 
         :return: list of coordinates of the pipes in the borehole"""
-        dt: float = pi / float(self.number_of_pipes)
-        pos: list = [(0., 0.)] * 2 * self.number_of_pipes
-        for i in range(self.number_of_pipes):
-            pos[i] = (self.D_s * np.cos(2.0 * i * dt + pi), self.D_s * np.sin(2.0 * i * dt + pi))
-            pos[i + self.number_of_pipes] = (self.D_s * np.cos(2.0 * i * dt + pi + dt),
-                                             self.D_s * np.sin(2.0 * i * dt + pi + dt))
+        if self.pipe_data is None:
+            return []
+        if isinstance(self.pipe_data, CoaxialPipe):
+            return [(0., 0.)]
+        dt: float = pi / float(self.pipe_data.number_of_pipes)
+        pos: list = [(0., 0.)] * 2 * self.pipe_data.number_of_pipes
+        for i in range(self.pipe_data.number_of_pipes):
+            pos[i] = (self.pipe_data.D_s * np.cos(2.0 * i * dt + pi), self.pipe_data.D_s * np.sin(2.0 * i * dt + pi))
+            pos[i + self.pipe_data.number_of_pipes] = (self.pipe_data.D_s * np.cos(2.0 * i * dt + pi + dt), self.pipe_data.D_s * np.sin(2.0 * i * dt + pi + dt))
         return pos
 
     @property
@@ -1321,10 +1296,10 @@ class Borefield:
             # check if jit calculation is available
             if self.jit_calculation:
                 # create custom Borefield
-                custom_borefield = gt.boreholes.rectangle_field(self.N_1, self.N_2, self.B, self.B, H, D=4, r_b= self.r_b if self.r_b != 0. else 0.075)
+                custom_borefield = gt.boreholes.rectangle_field(
+                    self.N_1, self.N_2, self.B, self.B, H, D=4, r_b=0.075 if self.pipe_data is None else self.pipe_data.r_b)
                 # return the gfunctions
-                return gt.gfunction.gFunction(custom_borefield, self.alpha, np.asarray(time_value),
-                                                     options=self.options_pygfunction).gFunc
+                return gt.gfunction.gFunction(custom_borefield, self.alpha, np.asarray(time_value), options=self.options_pygfunction).gFunc
 
             raise Exception('There is no precalculated data available. Please use the create_custom_datafile.')
 
@@ -2075,7 +2050,8 @@ class Borefield:
 
         :return: None
         """
-
+        if self.pipe_data is None:
+            raise ValueError('No pipe defined which can be drawn')
         # calculate the pipe positions
         pos = self._axis_symmetrical_pipe
 
@@ -2087,22 +2063,22 @@ class Borefield:
         circles_inner = []
 
         # color inner circles and outer circles
-        for i in range(self.number_of_pipes):
-            circles_outer.append(plt.Circle(pos[i], self.r_out, color="black"))
-            circles_inner.append(plt.Circle(pos[i], self.r_in, color="red"))
-            circles_outer.append(plt.Circle(pos[i + self.number_of_pipes], self.r_out, color="black"))
-            circles_inner.append(plt.Circle(pos[i + self.number_of_pipes], self.r_in, color="blue"))
+        for i in range(self.pipe_data.number_of_pipes):
+            circles_outer.append(plt.Circle(pos[i], self.pipe_data.r_out, color="black"))
+            circles_inner.append(plt.Circle(pos[i], self.pipe_data.r_in, color="red"))
+            circles_outer.append(plt.Circle(pos[i + self.pipe_data.number_of_pipes], self.pipe_data.r_out, color="black"))
+            circles_inner.append(plt.Circle(pos[i + self.pipe_data.number_of_pipes], self.pipe_data.r_in, color="blue"))
 
         # set visual settings for figure
         axes.set_aspect('equal')
-        axes.set_xlim([-self.r_b, self.r_b])
-        axes.set_ylim([-self.r_b, self.r_b])
+        axes.set_xlim([-self.pipe_data.r_b, self.pipe_data.r_b])
+        axes.set_ylim([-self.pipe_data.r_b, self.pipe_data.r_b])
         axes.get_xaxis().set_visible(False)
         axes.get_yaxis().set_visible(False)
         plt.tight_layout()
 
         # define borehole circle
-        borehole_circle = plt.Circle((0, 0), self.r_b, color="white")
+        borehole_circle = plt.Circle((0, 0), self.pipe_data.r_b, color="white")
 
         # add borehole circle to canvas
         axes.add_artist(borehole_circle)
