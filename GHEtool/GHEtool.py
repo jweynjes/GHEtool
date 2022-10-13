@@ -58,8 +58,8 @@ class Borefield:
                 'hourly_cooling_load', 'number_of_boreholes', 'borefield', 'custom_gfunction', 'cost_investment', \
                 'length_peak', 'th', 'Tf_H', 'Tf_C', 'limiting_quadrant', 'monthly_load', 'monthly_load_heating', \
                 'monthly_load_cooling', 'peak_heating', 'imbalance', 'qa', 'Tf', 'qm', 'qh', 'qpm', 'tcm', 'tpm', \
-                'peak_cooling', 'simulation_period', 'gfunction_interpolation_array', 'fluid_data_available', \
-                'results_peak_heating', 'pipe_data_available', 'alpha', 'time_L4', 'temperature_result', 'options_pygfunction',\
+                'peak_cooling', 'simulation_period', 'gfunction_interpolation_array',  \
+                'results_peak_heating', 'alpha', 'time_L4', 'temperature_result', 'options_pygfunction',\
                 'results_peak_cooling', 'results_month_cooling', 'results_month_heating', 'Tb', 'THRESHOLD_WARNING_SHALLOW_FIELD', \
                 'gui', 'time_L3_first_year', 'time_L3_last_year', 'peak_heating_external', 'peak_cooling_external', \
                 'monthly_load_heating_external', 'monthly_load_cooling_external', 'hourly_heating_load_external', \
@@ -549,8 +549,9 @@ class Borefield:
             self.H = L / self.number_of_boreholes
         return self.H
 
-    def sizing_setup(self, H_init: float = 100, *, use_constant_Rb: Optional[bool] = None, use_constant_Tg: Optional[bool] = None, quadrant_sizing: Optional[
-        int] = 0, L2_sizing: Optional[bool] = None, L3_sizing: Optional[bool] = None, L4_sizing: Optional[bool] = None) -> None:
+    def sizing_setup(self, H_init: float = 100, *, use_constant_Rb: Optional[bool] = None, use_constant_Tg: Optional[bool] = None,
+                     quadrant_sizing: Optional[int] = 0, L2_sizing: Optional[bool] = None, L3_sizing: Optional[bool] = None,
+                     L4_sizing: Optional[bool] = None) -> None:
         """
         This function sets the options for the sizing function.
         * The L2 sizing is the one explained in (Peere et al., 2021) and is the quickest method (it uses 3 pulses)
@@ -563,7 +564,7 @@ class Borefield:
         :param quadrant_sizing: differs from 0 when a sizing in a certain quadrant is desired
         :param L2_sizing: true if a sizing with the L2 method is needed
         :param L3_sizing: true if a sizing with the L3 method is needed
-	    :param L4_sizing: true if a sizing with the L4 method is needed
+        :param L4_sizing: true if a sizing with the L4 method is needed
         :return: None
         """
 
