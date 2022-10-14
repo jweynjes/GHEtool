@@ -2,7 +2,7 @@
 This document is an example on how to import hourly load profiles into GHEtool.
 """
 # import all the relevant functions
-from GHEtool import *
+from GHEtool import GroundData, Borefield, L2
 
 if __name__ == "__main__":
 
@@ -20,6 +20,6 @@ if __name__ == "__main__":
     borefield.convert_hourly_to_monthly()
 
     # size the borefield and plot the resulting temperature evolution
-    depth = borefield.size(100, L2_sizing=True)
+    depth = borefield.size(100, sizing_method=L2)
     print(depth)
     borefield.print_temperature_profile()

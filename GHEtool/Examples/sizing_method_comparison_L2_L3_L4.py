@@ -3,7 +3,7 @@ This document is an example of the different sizing methods in GHEtool.
 The example load profile is for a profile limited in the first year of operation.
 """
 # import all the relevant functions
-from GHEtool import *
+from GHEtool import GroundData, Borefield, L2, L3, L4
 import time
 
 if __name__ == "__main__":
@@ -24,18 +24,18 @@ if __name__ == "__main__":
     # according to L2
     L2_start = time.time()
     borefield.convert_hourly_to_monthly()
-    depth_L2 = borefield.size(100, L2_sizing=True)
+    depth_L2 = borefield.size(100, sizing_method=L2)
     L2_stop = time.time()
 
     # according to L3
     L3_start = time.time()
     borefield.convert_hourly_to_monthly()
-    depth_L3 = borefield.size(100, L3_sizing=True)
+    depth_L3 = borefield.size(100, sizing_method=L3)
     L3_stop = time.time()
 
     # according to L4
     L4_start = time.time()
-    depth_L4 = borefield.size(100, L4_sizing=True)
+    depth_L4 = borefield.size(100, sizing_method=L4)
     L4_stop = time.time()
 
     ### print results

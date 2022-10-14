@@ -1,5 +1,5 @@
 # test if model can be imported
-from GHEtool import GroundData, FluidData, PipeData, Borefield
+from GHEtool import GroundData, FluidData, PipeData, Borefield, L2, L3, L4
 from GHEtool.GHEtool import FOLDER
 import pytest
 import numpy as np
@@ -154,17 +154,12 @@ def test_to_small_field(borefield):
     borefield._Carcel
 
 
-def test_too_much_sizing_methods(borefield):
-    with pytest.raises(ValueError):
-        borefield.sizing_setup(L2_sizing=True, L3_sizing=True)
-
-
 def test_size_L3(borefield):
-    assert np.isclose(borefield.size(L3_sizing=True), 91.99202686026176)
+    assert np.isclose(borefield.size(sizing_method=L3), 91.99202686026176)
 
 
 def test_size_L4(hourly_borefield):
-    assert np.isclose(hourly_borefield.size(L4_sizing=True), 257.22412362020594)
+    assert np.isclose(hourly_borefield.size(sizing_method=L4), 257.22412362020594)
 
 
 def test_cooling_dom(borefield_cooling_dom):
@@ -176,7 +171,7 @@ def test_sizing_different_quadrants(borefield):
     assert np.isclose(borefield.size(quadrant_sizing=2), 61.209623787664945)
     assert np.isclose(borefield.size(quadrant_sizing=3), 41.274037653246715)
     assert np.isclose(borefield.size(quadrant_sizing=4), 62.22270240809501)
-    assert np.isclose(borefield.size(quadrant_sizing=1, L3_sizing=True), 91.99185578488837)
+    assert np.isclose(borefield.size(quadrant_sizing=1, sizing_method=L3), 91.99185578488837)
 
 
 def test_convergence(borefield_cooling_dom):
@@ -192,15 +187,15 @@ def test_quadrant_4(borefield):
 
 def test_sizing_L3(borefield):
     borefield.set_peak_heating(np.array(peakHeating)*8)
-    assert np.isclose(borefield.size(L3_sizing=True), 322.9371682851255)
+    assert np.isclose(borefield.size(sizing_method=L3), 322.9371682851255)
 
 
 def test_sizing_L32(borefield_cooling_dom):
-    assert np.isclose(borefield_cooling_dom.size(L3_sizing=True), 111.35367751858108)
+    assert np.isclose(borefield_cooling_dom.size(sizing_method=L3), 111.35367751858108)
     borefield_cooling_dom.set_peak_heating(np.array(peakHeating) * 5)
-    assert np.isclose(borefield_cooling_dom.size(L3_sizing=True),  181.06232590246438)
+    assert np.isclose(borefield_cooling_dom.size(sizing_method=L3),  181.06232590246438)
 
 
 def test_size_L4_fail(borefield):
     with pytest.raises(ValueError):
-        borefield.size(L4_sizing=True)
+        borefield.size(sizing_method=L4)
