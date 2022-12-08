@@ -68,8 +68,10 @@ class Borefield:
     DEFAULT_NUMBER_OF_TIMESTEPS: int = 100
     THRESHOLD_DEPTH_ERROR: int = 10000  # m
 
-    HOURLY_LOAD_ARRAY: np.ndarray = np.array([0, 24 * 31, 24 * 28, 24 * 31, 24 * 30, 24 * 31, 24 * 30, 24 * 31, 24 * 31, 24 * 30, 24 * 31, 24 * 30,
-                                              24 * 31]).cumsum()
+    # HOURLY_LOAD_ARRAY: np.ndarray = np.array([0, 24 * 31, 24 * 28, 24 * 31, 24 * 30, 24 * 31, 24 * 30, 24 * 31, 24 * 31, 24 * 30, 24 * 31, 24 * 30,
+    #                                           24 * 31]).cumsum()
+    HOURLY_LOAD_ARRAY = np.insert(np.resize(np.array([24 * 31, 24 * 28, 24 * 31, 24 * 30, 24 * 31, 24 * 30, 24 * 31, 24 * 31, 24 * 30, 24 * 31, 24 * 30,
+                                              24 * 31]), 40*12).cumsum(), 0, 0)
 
     __slots__ = 'baseload_heating', 'baseload_cooling', 'H', 'H_init', 'Rb', 'ty', 'tm', \
                 'td', 'time', 'hourly_heating_load', 'H_max', 'use_constant_Tg', 'flux', 'volumetric_heat_capacity',\
@@ -144,7 +146,7 @@ class Borefield:
         """
 
         # initiate vars
-        LIST_OF_ZEROS = np.zeros(12)
+        LIST_OF_ZEROS = np.zeros(12*40)
         if baseload_cooling is None:
             baseload_cooling: list = LIST_OF_ZEROS
         if baseload_heating is None:
@@ -1221,7 +1223,7 @@ class Borefield:
         :param baseload: baseload in kWh (np.array or list)
         :return: None
         """
-        self.baseload_heating = np.maximum(baseload, np.zeros(12))  # kWh
+        self.baseload_heating = np.maximum(baseload, np.zeros(12*40))  # kWh
         self.monthly_load_heating = self.baseload_heating / Borefield.UPM  # kW
         self.calculate_monthly_load()
         self.calculate_imbalance()
@@ -1236,7 +1238,7 @@ class Borefield:
         :param baseload: baseload in kWh (np.array or list)
         :return None
         """
-        self.baseload_cooling = np.maximum(baseload, np.zeros(12))  # kWh
+        self.baseload_cooling = np.maximum(baseload, np.zeros(12*40))  # kWh
         self.monthly_load_cooling = self.baseload_cooling / Borefield.UPM # kW
         self.calculate_monthly_load()
         self.calculate_imbalance()
@@ -1497,9 +1499,9 @@ class Borefield:
 
         # make a time array
         if plot_hourly:
-            time_array = self.time_L4 / 12 / 3600 / 730
+            time_array = self.time_L4 / 12*40 / 3600 / 730
         else:
-            time_array = self.time_L3_last_year / 12 / 730. / 3600.
+            time_array = self.time_L3_last_year / 12*40 / 730. / 3600.
 
         plt.rc('figure')
         fig = plt.figure()
@@ -1615,6 +1617,7 @@ class Borefield:
             # [kW]
             # hourly_load = np.tile(self.hourly_cooling_load - self.hourly_heating_load, self.simulation_period)
             hourly_load = self.hourly_cooling_load - self.hourly_heating_load
+
             # self.g-function is a function that uses the precalculated data to interpolate the correct values of the
             # g-function. This dataset is checked over and over again and is correct
             g_values = self.gfunction(self.time_L4, H)
@@ -1984,7 +1987,7 @@ class Borefield:
         monthly baseloads : list
             list with monthly baseloads [kW]
         """
-        month_load = [np.sum(np.minimum(peak, load[Borefield.HOURLY_LOAD_ARRAY[i]:Borefield.HOURLY_LOAD_ARRAY[i + 1] + 1])) for i in range(12)]
+        month_load = [np.sum(np.minimum(peak, load[Borefield.HOURLY_LOAD_ARRAY[i]:Borefield.HOURLY_LOAD_ARRAY[i + 1]])) for i in range(12*40)]
 
         return month_load
 
@@ -2007,7 +2010,7 @@ class Borefield:
             list with monthly peak loads [kW]
         """
 
-        peak_load = [max(np.minimum(peak, load[Borefield.HOURLY_LOAD_ARRAY[i]:Borefield.HOURLY_LOAD_ARRAY[i + 1] + 1])) for i in range(12)]
+        peak_load = [max(np.minimum(peak, load[Borefield.HOURLY_LOAD_ARRAY[i]:Borefield.HOURLY_LOAD_ARRAY[i + 1]])) for i in range(12*40)]
         return peak_load
 
     def optimise_load_profile(self, depth: float = None, print_results: bool = False) -> None:
