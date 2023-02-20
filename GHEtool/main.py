@@ -14,7 +14,7 @@ import numpy as np
 import pandas as pd
 import pygfunction as gt
 import os
-from typing import Callable, Union, Dict
+from typing import Callable, Union, Dict, List
 from Weather import Weather
 from matplotlib import pyplot as plt
 
@@ -126,67 +126,6 @@ class ElectricalRegen:
         return self.hourly_load*boolean_mask
 
 
-class ThermalLoad:
-
-    def __init__(self, hourly_load_data: Union[DependentLoad, np.ndarray], heatpump: Union[HeatPump, Callable], regime, borefield: Borefield):
-        if regime not in ("I", "E", "Injection", "Extraction"):
-            raise ValueError("Invalid regime")
-        self.hourly_load_data = hourly_load_data
-        self.heatpump = heatpump
-        self.injection = regime in ("I", "Injection")
-        self.extraction = regime in ("E", "Extraction")
-        self.borefield = borefield
-
-    def calculate_electrical_load(self):
-        fluid_temperatures = self.borefield.results_peak_heating
-        if len(fluid_temperatures) == 0:
-            raise ValueError("Borefield has no fluid temperature data available!")
-        if isinstance(self.hourly_load_data, Callable):
-            load_data = self.hourly_load_data(fluid_temperatures)
-        else:
-            load_data = self.hourly_load_data
-        if self.heatpump.heating:
-            COP_list = self.heatpump.performance_curve(fluid_temperatures)
-            return load_data/COP_list
-        elif self.heatpump.cooling:
-            EER_list = self.heatpump.performance_curve(fluid_temperatures)
-            return load_data/EER_list
-
-    def calculate_ground_load(self):
-        fluid_temperatures = self.borefield.results_peak_cooling
-        if len(fluid_temperatures) == 0:
-            fluid_temperatures = np.full(8760*40, self.borefield.ground_data.Tg)
-        if isinstance(self.hourly_load_data, Callable):
-            load_data = self.hourly_load_data(fluid_temperatures)
-            return load_data
-        else:
-            load_data = self.hourly_load_data
-        performances = self.heatpump.performance_curve(fluid_temperatures)
-        if self.heatpump.heating:
-            return (1-1/performances) * load_data
-        elif self.heatpump.cooling:
-            return (1+1/performances) * load_data
-
-    # def get_performance(self, fluid_temperatures: np.ndarray):
-    #     if isinstance(self.heatpump, HeatPump):
-    #         return self.heatpump.performance_curve(fluid_temperatures)
-    #     else:
-    #         target_temperatures = np.ndarray(self.heatpump.keys())
-    #         target_temperatures.sort()
-    #         midpoints = (target_temperatures[1:] + target_temperatures[:-1])/2
-    #         minimum = min(target_temperatures)
-    #         maximum = max(target_temperatures) + 1
-    #         np.insert(midpoints, 0, minimum)
-    #         np.insert(midpoints, len(midpoints), maximum)
-    #         performance = np.full(8760, 0)
-    #         for i in range(1, len(midpoints)-1):
-    #             temps = deepcopy(fluid_temperatures)
-    #             temps[temps >= midpoints[i]] = 0
-    #             temps[temps < midpoints[i-1]] = 0
-    #             performance += self.heatpump[target_temperatures[i]].performance_curve(temps)
-    #         return performance
-
-
 def constant_COP(COP, regime):
     return HeatPump([(-10, COP), (50, COP)], regime)
 
@@ -266,8 +205,9 @@ def create_borefield():
 
 def calculate_scenarios(scenario_dict: Dict[str, Union[SolarRegen, ElectricalRegen]], r, output_file=None):
     result_columns = ["Electrical energy used", "Regeneration energy used", "Electrical energy savings",
-                      "Borefield depth", "Borefield depth reduction", "NPV", "Difference to sell all"]
-    c0, c1, c2, c3, c4, c5, c6 = result_columns
+                      "Borefield depth", "Borefield depth reduction", "Borefield cost reduction", "NPV savings",
+                      "NPV revenue", "NPV all sold"]
+    c = result_columns
     results = pd.DataFrame(columns=result_columns)
     results_container = dict()
     base_load = None
@@ -278,32 +218,38 @@ def calculate_scenarios(scenario_dict: Dict[str, Union[SolarRegen, ElectricalReg
             base_load = sum([tl.calculate_electrical_load() for tl in thermal_demand])
         results_container[title] = dict()
         current_result = results_container[title]
-        current_result[c0] = sum(sum([tl.calculate_electrical_load() for tl in thermal_demand]))     # elec for heating
-        current_result[c1] = sum(regen_scenario.calculate_electrical_load())                         # elec for regen
-        current_result[c2] = results_container["Base case"][c0] - current_result[c0]                 # elec savings
-        current_result[c3] = borefield1.H                                                            # depth
-        current_result[c4] = results_container["Base case"][c3] - current_result[c3]                 # depth reduction
+        current_result[c[0]] = sum(sum([tl.calculate_electrical_load() for tl in thermal_demand]))      # elec for heating
+        current_result[c[1]] = sum(regen_scenario.calculate_electrical_load())                          # elec for regen
+        current_result[c[2]] = results_container["Base case"][c[0]] - current_result[c[0]]              # elec savings
+        current_result[c[3]] = borefield1.H                                                             # depth
+        current_result[c[4]] = results_container["Base case"][c[3]] - current_result[c[3]]              # depth reduction
+        current_result[c[5]] = current_result[c[4]]*borefield1.number_of_boreholes*35                                       # reduced investment cost
         if isinstance(regen_scenario, ElectricalRegen):
-            elec_savings = base_load - sum([tl.calculate_electrical_load() for tl in thermal_demand])
+            elec_reduction = base_load - sum([tl.calculate_electrical_load() for tl in thermal_demand])
             elec_remainder = regen_scenario.calculate_remainder()
-            yearly_revenue = np.resize((elec_savings + elec_remainder), [40, 8760])
+            elec_savings = np.resize(elec_reduction, [40, 8760])
+            yearly_revenue = np.resize(elec_remainder, [40, 8760])
             all_sold = np.resize(regen_scenario.hourly_load, [40, 8760])
             discounted_revenue = 0
             discount_all_sold = 0
+            discounted_savings = 0
             for y in range(0, 40):
+                discounted_savings += sum(elec_savings[y])*0.43/(1+r)**(1+y)
                 discounted_revenue += sum(yearly_revenue[y])*0.43/(1+r)**(1+y)
                 discount_all_sold += sum(all_sold[y])*0.43/(1+r)**(1+y)
-            current_result[c5] = current_result[c4]*121*35 + discounted_revenue
-            current_result[c6] = current_result[c5] - discount_all_sold
+            current_result[c[6]] = discounted_savings
+            current_result[c[7]] = discounted_revenue
+            current_result[c[8]] = discount_all_sold
         else:
-            elec_savings = base_load - sum([tl.calculate_electrical_load() for tl in thermal_demand])
+            elec_reduction = base_load - sum([tl.calculate_electrical_load() for tl in thermal_demand])
             elec_used = regen_scenario.calculate_electrical_load()
-            yearly_revenue = np.resize((elec_savings - elec_used)*0.57, [40, 8760])
-            discounted_revenue = 0
+            elec_savings = np.resize((elec_reduction-elec_used)*0.57, [40, 8760])
+            discounted_savings = 0
             for y in range(0, 40):
-                discounted_revenue += sum(yearly_revenue[y])/(1+r)**(1+y)
-            current_result[c5] = current_result[c4]*121*35 + discounted_revenue
-            current_result[c6] = 0
+                discounted_savings += sum(elec_savings[y])/(1+r)**(1+y)
+            current_result[c[6]] = discounted_savings
+            current_result[c[7]] = 0
+            current_result[c[8]] = 0
     for title, result in results_container.items():
         results.loc[title] = result
     print(results.to_string())
@@ -314,16 +260,42 @@ def calculate_scenarios(scenario_dict: Dict[str, Union[SolarRegen, ElectricalReg
 if __name__ == "__main__":
     borefield1 = create_borefield()
     thermal_demand = get_thermal_demand(borefield1)
-
     regen_scenarios = {"Base case": SolarRegen(0, 0, borefield1)}
     elec_scenarios = dict()
     thermal_scenarios = dict()
-    for i in range(11):  # controls amount of panels
-        elec_scenarios["{} panels, th {}".format(80+3*i, 8.5)] = ElectricalRegen(80+3*i, HP_REGEN2, "Injection", borefield1, 8.5)
+    for i in range(1, 11):  # controls amount of panels
+        amt_panels = 15*i
+        th = 8.5
+        elec_scenarios["{} panels, th {}".format(amt_panels, th)] = ElectricalRegen(amt_panels, HP_REGEN2, "Injection", borefield1, th)
     for i in range(1, 11):  # controls amount of surface
-        thermal_scenarios["Surface {} m2".format(i*4*4)] = SolarRegen(i*4, 40, borefield1)
-    regen_scenarios.update(thermal_scenarios)
-
-    SolarRegen
+        length = i*4
+        surface = length*4
+        thermal_scenarios["Surface {} m2".format(surface)] = SolarRegen(length, 40, borefield1)
+    # regen_scenarios = {"Base case": SolarRegen(0, 0, borefield1)}
+    # regen_scenarios.update(thermal_scenarios)
     # calculate_scenarios(regen_scenarios, 0.05, os.getcwd() + "/solar_regen.csv")
+    # regen_scenarios = {"Base case": SolarRegen(0, 0, borefield1)}
+    # regen_scenarios.update(elec_scenarios)
+    # calculate_scenarios(regen_scenarios, 0.05, os.getcwd() + "/elec_regen.csv")
+
+    test_scenarios = dict()
+    for th in [8.5 + 0.2*i for i in range(10)]:
+        test_scenarios["th {}".format(th)] = ElectricalRegen(200, HP_REGEN2, "Injection", borefield1, th)
+    regen_scenarios = {"Base case": SolarRegen(0, 0, borefield1)}
+    regen_scenarios.update(test_scenarios)
+    calculate_scenarios(regen_scenarios, 0.05, os.getcwd() + "/experiment_200.csv")
+    for th in [8.5 + 0.2*i for i in range(10)]:
+        test_scenarios["th {}".format(th)] = ElectricalRegen(180, HP_REGEN2, "Injection", borefield1, th)
+    regen_scenarios = {"Base case": SolarRegen(0, 0, borefield1)}
+    regen_scenarios.update(test_scenarios)
+    calculate_scenarios(regen_scenarios, 0.05, os.getcwd() + "/experiment_180.csv")
+
+    # test = np.resize(test, [40, 8760])
+    # npv = 0
+    # for i in range(40):
+    #     npv += sum(test[i])/(1+0.05)**(1+i)
+    # print(npv)
+
+
+
 

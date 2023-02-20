@@ -1499,9 +1499,9 @@ class Borefield:
 
         # make a time array
         if plot_hourly:
-            time_array = self.time_L4 / 12*40 / 3600 / 730
+            time_array = self.time_L4 / 12 / 3600 / 730
         else:
-            time_array = self.time_L3_last_year / 12*40 / 730. / 3600.
+            time_array = self.time_L3_last_year / 12 / 730. / 3600.
 
         plt.rc('figure')
         fig = plt.figure()
