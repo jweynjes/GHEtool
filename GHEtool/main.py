@@ -25,16 +25,16 @@ WEATHER_FILE = os.getcwd() + "/BEl_Brussels.064510_IWEC.epw"
 
 # Convention when creating HP: heat network side first
 # file:///C:/Users/jaspe/Desktop/School/Thesis/Referenties/Heat%20pumps/WRE092HSG0_[C].PDF
-HP_HEATING = HeatPump([[3, 6, 9, 12, 15]], [4.58, 4.90, 5.25, 5.62, 6.05])
+HP_HEATING = HeatPump([[3, 6, 9, 12, 15]], [4.58, 4.90, 5.25, 5.62, 6.05], "extraction")
 # file:///C:/Users/jaspe/Desktop/School/Thesis/Referenties/Heat%20pumps/WRE092HSG0_[C].PDF
-HP_COOLING = HeatPump([[16, 17, 18, 19, 20, 22, 25]], [11.19, 10.73, 10.21, 9.77, 9.36, 8.62, 7.67])
+HP_COOLING = HeatPump([[16, 17, 18, 19, 20, 22, 25]], [11.19, 10.73, 10.21, 9.77, 9.36, 8.62, 7.67], "injection")
 # file:///C:/Users/jaspe/Desktop/School/Thesis/Referenties/Heat%20pumps/WRE092HSG0_[C]%20(1).PDF
-HP_DHW = HeatPump([[3, 6, 9, 12, 15]], [2.69, 2.85, 3.02, 3.21, 3.39])
+HP_DHW = HeatPump([[3, 6, 9, 12, 15]], [2.69, 2.85, 3.02, 3.21, 3.39], "extraction")
 # file:///C:/Users/jaspe/Desktop/School/Thesis/Referenties/Heat%20pumps/VLE162H_[C]%20(1)[2505].PDF
 # file:///C:/Users/jaspe/Desktop/School/Thesis/Referenties/Heat%20pumps/VLE162H_[C].PDF
 HP_REGEN = HeatPump([[10, 18], [0, 5, 10, 15, 20, 25, 30]],
-                    [[4.76, 5.43, 6.13, 7.26, 8.80, 10.98, 14.16], [4.14, 4.70, 5.20, 6.03, 7.11, 8.45, 10.21]])
-
+                    [[4.76, 5.43, 6.13, 7.26, 8.80, 10.98, 14.16], [4.14, 4.70, 5.20, 6.03, 7.11, 8.45, 10.21]], "injection")
+HP_DUMMY = HeatPump([[0, 10, 20, 40]], [1,1,1,1], "extraction")
 
 DependentLoad = Callable[[np.ndarray], np.ndarray]
 
@@ -110,25 +110,86 @@ class ElectricalRegen:
         return dc_output
 
     def calculate_electrical_load(self):
-        performances = self.heatpump.performance_curve(self.ambient_temperatures)
+        performances = self.heatpump.calculate_cop(self.ambient_temperatures)
         boolean_mask = copy.deepcopy(performances)
         boolean_mask[boolean_mask <= self.cop_limit] = 0
         boolean_mask[boolean_mask > self.cop_limit] = 1
         return self.hourly_load*boolean_mask
 
     def calculate_ground_load(self):
-        performances = self.heatpump.performance_curve(self.ambient_temperatures)
+        performances = self.heatpump.calculate_cop(self.ambient_temperatures)
         boolean_mask = copy.deepcopy(performances)
         boolean_mask[boolean_mask <= self.cop_limit] = 0
         boolean_mask[boolean_mask > self.cop_limit] = 1
         return performances*self.hourly_load*boolean_mask
 
     def calculate_remainder(self):
-        performances = self.heatpump.performance_curve(self.ambient_temperatures)
+        performances = self.heatpump.calculate_cop(self.ambient_temperatures)
         boolean_mask = copy.deepcopy(performances)
         boolean_mask[boolean_mask <= self.cop_limit] = 1
         boolean_mask[boolean_mask > self.cop_limit] = 0
         return self.hourly_load*boolean_mask
+
+
+class ThermalLoad:
+
+    def __init__(self, hourly_load_data: Union[DependentLoad, np.ndarray], heatpump: Union[HeatPump, Callable], regime, borefield: Borefield):
+        if regime not in ("I", "E", "Injection", "Extraction"):
+            raise ValueError("Invalid regime")
+        self.hourly_load_data = hourly_load_data
+        self.heatpump = heatpump
+        self.injection = regime in ("I", "Injection")
+        self.extraction = regime in ("E", "Extraction")
+        self.borefield = borefield
+
+    def calculate_electrical_load(self):
+        fluid_temperatures = self.borefield.results_peak_heating
+        if len(fluid_temperatures) == 0:
+            raise ValueError("Borefield has no fluid temperature data available!")
+        if isinstance(self.hourly_load_data, Callable):
+            load_data = self.hourly_load_data(fluid_temperatures)
+        else:
+            load_data = self.hourly_load_data
+        if self.heatpump.extraction:
+            COP_list = self.heatpump.calculate_cop(fluid_temperatures)
+            return load_data/COP_list
+        elif self.heatpump.injection:
+            EER_list = self.heatpump.calculate_cop(fluid_temperatures)
+            return load_data/EER_list
+
+    def calculate_ground_load(self):
+        fluid_temperatures = self.borefield.results_peak_cooling
+        if len(fluid_temperatures) == 0:
+            fluid_temperatures = np.full(8760*40, self.borefield.ground_data.Tg)
+        if isinstance(self.hourly_load_data, Callable):
+            load_data = self.hourly_load_data(fluid_temperatures)
+            return load_data
+        else:
+            load_data = self.hourly_load_data
+        performances = self.heatpump.calculate_cop(fluid_temperatures)
+        if self.heatpump.extraction:
+            return (1-1/performances) * load_data
+        elif self.heatpump.injection:
+            return (1+1/performances) * load_data
+
+    # def get_performance(self, fluid_temperatures: np.ndarray):
+    #     if isinstance(self.heatpump, HeatPump):
+    #         return self.heatpump.performance_curve(fluid_temperatures)
+    #     else:
+    #         target_temperatures = np.ndarray(self.heatpump.keys())
+    #         target_temperatures.sort()
+    #         midpoints = (target_temperatures[1:] + target_temperatures[:-1])/2
+    #         minimum = min(target_temperatures)
+    #         maximum = max(target_temperatures) + 1
+    #         np.insert(midpoints, 0, minimum)
+    #         np.insert(midpoints, len(midpoints), maximum)
+    #         performance = np.full(8760, 0)
+    #         for i in range(1, len(midpoints)-1):
+    #             temps = deepcopy(fluid_temperatures)
+    #             temps[temps >= midpoints[i]] = 0
+    #             temps[temps < midpoints[i-1]] = 0
+    #             performance += self.heatpump[target_temperatures[i]].performance_curve(temps)
+    #         return performance
 
 
 def constant_COP(COP, regime):
@@ -162,6 +223,7 @@ def size_borefield(borefield: Borefield, *thermal_loads: Union[ThermalLoad, Elec
                 extraction_kwh = extraction_kwh + thermal_load.calculate_ground_load()
             else:
                 injection_kwh = injection_kwh + thermal_load.calculate_ground_load()
+        print(sum(extraction_kwh.tolist()))
         borefield.set_hourly_heating_load(extraction_kwh.tolist())
         borefield.set_hourly_cooling_load(injection_kwh.tolist())
         old_depth = depth
@@ -188,7 +250,7 @@ def get_thermal_demand(borefield):
 
     domestic_hot_water_kwh = building_B["DHW"]/1000
     total_heating_kwh = np.resize(bdg_A_heating + bdg_B_heating + bdg_C_heating + bdg_D_heating, 8760*40)
-    total_heating_kwh += constant_power_output(12, 12, 14.2, 40)
+    # total_heating_kwh += constant_power_output(12, 12, 14.2, 40)
     total_cooling_kwh = np.resize(bdg_B_cooling + bdg_C_cooling + bdg_D_cooling, 8760*40)
     domestic_hot_water_kwh = np.resize(domestic_hot_water_kwh, 8760*40)
     heating_load_kwh = ThermalLoad(total_heating_kwh, HP_HEATING, "Extraction", borefield)
@@ -228,7 +290,7 @@ def calculate_scenarios(scenario_dict: Dict[str, Union[SolarRegen, ElectricalReg
         current_result[c[2]] = results_container["Base case"][c[0]] - current_result[c[0]]              # elec savings
         current_result[c[3]] = borefield1.H                                                             # depth
         current_result[c[4]] = results_container["Base case"][c[3]] - current_result[c[3]]              # depth reduction
-        current_result[c[5]] = current_result[c[4]]*borefield1.number_of_boreholes*35                                       # reduced investment cost
+        current_result[c[5]] = current_result[c[4]]*borefield1.number_of_boreholes*35                   # reduced investment cost
         if isinstance(regen_scenario, ElectricalRegen):
             elec_reduction = base_load - sum([tl.calculate_electrical_load() for tl in thermal_demand])
             elec_remainder = regen_scenario.calculate_remainder()
@@ -265,13 +327,15 @@ def calculate_scenarios(scenario_dict: Dict[str, Union[SolarRegen, ElectricalReg
 if __name__ == "__main__":
     borefield1 = create_borefield()
     thermal_demand = get_thermal_demand(borefield1)
+    size_borefield(borefield1, *thermal_demand)
+    print("Depth: ", borefield1.H)
     regen_scenarios = {"Base case": SolarRegen(0, 0, borefield1)}
     elec_scenarios = dict()
     thermal_scenarios = dict()
     for i in range(1, 11):  # controls amount of panels
         amt_panels = 15*i
         th = 8.5
-        elec_scenarios["{} panels, th {}".format(amt_panels, th)] = ElectricalRegen(amt_panels, HP_REGEN2, "Injection", borefield1, th)
+        elec_scenarios["{} panels, th {}".format(amt_panels, th)] = ElectricalRegen(amt_panels, HP_REGEN, "Injection", borefield1, th)
     for i in range(1, 11):  # controls amount of surface
         length = i*4
         surface = length*4
@@ -285,12 +349,12 @@ if __name__ == "__main__":
 
     test_scenarios = dict()
     for th in [8.5 + 0.2*i for i in range(10)]:
-        test_scenarios["th {}".format(th)] = ElectricalRegen(200, HP_REGEN2, "Injection", borefield1, th)
+        test_scenarios["th"] = ElectricalRegen(200, HP_REGEN, "Injection", borefield1, th)
     regen_scenarios = {"Base case": SolarRegen(0, 0, borefield1)}
     regen_scenarios.update(test_scenarios)
     calculate_scenarios(regen_scenarios, 0.05, os.getcwd() + "/experiment_200.csv")
     for th in [8.5 + 0.2*i for i in range(10)]:
-        test_scenarios["th {}".format(th)] = ElectricalRegen(180, HP_REGEN2, "Injection", borefield1, th)
+        test_scenarios["th"] = ElectricalRegen(180, HP_REGEN, "Injection", borefield1, th)
     regen_scenarios = {"Base case": SolarRegen(0, 0, borefield1)}
     regen_scenarios.update(test_scenarios)
     calculate_scenarios(regen_scenarios, 0.05, os.getcwd() + "/experiment_180.csv")

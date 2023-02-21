@@ -12,6 +12,8 @@ class HeatPump:
         self.constant_source = len(data_points) == 1
         self.extraction = regime in ["extraction"]
         self.injection = regime in ["injection"]
+        if not (self.extraction or self.injection):
+            raise ValueError("'regime' argument must be 'injection' or 'extraction'")
 
     def calculate_cop(self, fluid_temperatures: list, air_temperatures: list = None):
         """

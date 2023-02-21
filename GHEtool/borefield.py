@@ -18,6 +18,7 @@ def size_borefield(borefield: Borefield, heat_network: HeatNetwork):
     while abs(depth-old_depth) > 0.2:
         iteration += 1
         print("Iteration {}\n\tCurrent depth: {}".format(iteration, borefield.H))
+        print(sum(heat_network.borefield_extraction.tolist()))
         borefield.set_hourly_heating_load(heat_network.borefield_extraction.tolist())
         borefield.set_hourly_cooling_load(heat_network.borefield_injection.tolist())
         old_depth = depth
@@ -88,4 +89,5 @@ if __name__ == "__main__":
                           hp_domestic_hw)
     heat_network.add_thermal_connections([heating_load_kwh, cooling_load_kwh, dhw_kwh])
     size_borefield(borefield1, heat_network)
+    print("Depth: ", borefield1.H)
 

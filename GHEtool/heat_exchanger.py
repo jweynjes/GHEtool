@@ -3,13 +3,14 @@ class HeatExchanger:
     def __init__(self, heat_network, temperature_drop: float, regime: str):
         self.heat_network = heat_network
         self.temperature_drop = temperature_drop
-        if regime == "injection":
-            self.interaction_temperature = self.heat_network.temperature_profile + self.temperature_drop
-            self.injection = True
-            self.extraction = False
-        elif regime == "extraction":
-            self.interaction_temperature = self.heat_network.temperature_profile - self.temperature_drop
-            self.injection = False
-            self.extraction = True
-        else:
+        self.extraction = regime in ["extraction"]
+        self.injection = regime in ["injection"]
+        if not (self.extraction or self.injection):
             raise ValueError("'regime' argument must be 'injection' or 'extraction'")
+
+    @property
+    def interaction_temperature(self):
+        if self.injection:
+            return self.heat_network.temperature_profile + self.temperature_drop
+        elif self.extraction:
+            return self.heat_network.temperature_profile - self.temperature_drop
