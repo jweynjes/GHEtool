@@ -4,7 +4,9 @@ from heat_exchanger import HeatExchanger
 
 class ThermalLoad:
 
-    def __init__(self, hourly_demand_profile, profile_type, heat_exchanger: HeatExchanger, pump: HeatPump, weather):
+    def __init__(self, hourly_demand_profile, profile_type, heat_exchanger: HeatExchanger, pump: HeatPump):
+        if not self.is_valid_input(profile_type):
+            raise ValueError("Invalid input!")
         self.hourly_demand_profile = hourly_demand_profile
         self.profile_type = profile_type
         self.heat_exchanger = heat_exchanger
@@ -14,7 +16,12 @@ class ThermalLoad:
         self.injection = self.heat_exchanger.injection
         if self.extraction != self.pump.extraction or self.injection != self.pump.injection:
             raise ValueError("Regime mismatch between pump and HEX!")
-        self.weather = weather
+
+    @classmethod
+    def is_valid_input(cls, profile_type):
+        if profile_type not in ("thermal", "electrical"):
+            return False
+        return True
 
     @property
     def source_temperature(self):
@@ -23,9 +30,9 @@ class ThermalLoad:
     @property
     def electrical_energy_demand_profile(self):
         if isinstance(self.pump, HeatPump):
-            if self.hourly_demand_profile == "electrical":
+            if self.profile_type == "electrical":
                 return self.hourly_demand_profile
-            elif self.hourly_demand_profile == "thermal":
+            elif self.profile_type == "thermal":
                 return self.pump.calculate_electrical_power_demand(self.hourly_demand_profile, self.source_temperature)
 
     @property

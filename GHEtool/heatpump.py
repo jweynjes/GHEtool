@@ -1,59 +1,61 @@
-import numpy.polynomial.polynomial as polynomial
-from typing import List, Tuple, Union
-import numpy as np
-from bisect import bisect
+from typing import List
 from scipy import interpolate
-from matplotlib import pyplot as plt
-from itertools import groupby
-
-VariableSource = List[Tuple[Tuple[float, float], float]]
-ConstantSource = List[Tuple[float, float]]
-InterpolationData = Union[ConstantSource, VariableSource]
+import numpy as np
 
 
 class HeatPump:
-    def __init__(self, cooling_data: InterpolationData = None, heating_data: InterpolationData = None):
-        self.cooling_pump = self.create_interpolator(cooling_data)
-        self.heating_pump = self.create_interpolator(heating_data)
+    def __init__(self, data_points: List, data_values: List, regime):
+        if len(data_points) > 2:
+            raise ValueError("Too many dimensions: COP can only be dependent on source/sink temperature")
+        self._performance = interpolate.RegularGridInterpolator(data_points, data_values,
+                                                                bounds_error=False, fill_value=None)
+        self.constant_source = len(data_points) == 1
+        self.extraction = regime in ["extraction"]
+        self.injection = regime in ["injection"]
 
-    @staticmethod
-    def all_equal(iterable):
-        g = groupby(iterable)
-        return next(g, True) and not next(g, False)
+    def calculate_cop(self, fluid_temperatures: list, air_temperatures: list = None):
+        """
 
-    @staticmethod
-    def create_interpolator(operating_points: InterpolationData):
-        if operating_points is None:
-            return None
-        points = [operating_point[0] for operating_point in operating_points]
-        values = [operating_point[1] for operating_point in operating_points]
-        if isinstance(points[0], float) or isinstance(points[0], int):
-            return interpolate.interp1d(points, values)
+        :param fluid_temperatures:
+        :param air_temperatures:
+        :return:
+        :rtype: np.ndarray
+        """
+        if self.constant_source:
+            return self._performance(fluid_temperatures)
         else:
-            return interpolate.LinearNDInterpolator(points, values)
+            return self._performance(list(zip(fluid_temperatures, air_temperatures)))
 
-    def calculate_cooling_cop(self, consumption_temperatures: list, source_temperatures: list = None):
-        if self.cooling_pump is None:
-            raise AttributeError("No cooling data was provided for this heat pump!")
-        elif source_temperatures is None:
-            return self.cooling_pump(consumption_temperatures)
-        else:
-            return self.cooling_pump(source_temperatures, consumption_temperatures)
+    def calculate_network_load_from_demand(self, thermal_demand_profile, fluid_temperatures, air_temperatures: list = None):
+        performance_list = self.calculate_cop(fluid_temperatures, air_temperatures)
+        if self.injection:
+            return (1 + 1 / performance_list) * thermal_demand_profile
+        elif self.extraction:
+            return (1 - 1 / performance_list) * thermal_demand_profile
 
-    def calculate_heating_cop(self, consumption_temperatures: list, source_temperatures: list = None):
-        if self.heating_pump is None:
-            raise AttributeError("No heating data was provided for this heat pump!")
-        elif source_temperatures is None:
-            return self.heating_pump(consumption_temperatures)
-        else:
-            return self.heating_pump(source_temperatures, consumption_temperatures)
+    def calculate_network_load_from_power(self, power_supply_profile, fluid_temperatures, air_temperatures: list = None):
+        performance_list = self.calculate_cop(fluid_temperatures, air_temperatures)
+        if self.injection:
+            return (performance_list + 1) * power_supply_profile
+        elif self.extraction:
+            return (performance_list - 1) * power_supply_profile
+
+    def calculate_electrical_power_demand(self, thermal_demand_profile, fluid_temperatures, air_temperatures: list = None):
+        performance_list = self.calculate_cop(fluid_temperatures, air_temperatures)
+        return thermal_demand_profile / performance_list
 
 
 if __name__ == "__main__":
-    cooling_test1 = [((0, 0), 0), ((10, 10), 10), ((10, 0), 5), ((0, 10), 5)]
-    heat_pump1 = HeatPump(cooling_test1)
-    print(heat_pump1.calculate_cooling_cop([5], [5]))
-    cooling_test2 = [(0, 0), (1, 1), (2, 2), (3,3)]
-    heat_pump2 = HeatPump(cooling_test2)
-    print(heat_pump2.calculate_cooling_cop([2.5, 1.25]))
+    # Convention when creating HP: heat network side first
+    # file:///C:/Users/jaspe/Desktop/School/Thesis/Referenties/Heat%20pumps/WRE092HSG0_[C].PDF
+    HP_HEATING = HeatPump([[3, 6, 9, 12, 15]], [4.58, 4.90, 5.25, 5.62, 6.05], "extraction")
+    # file:///C:/Users/jaspe/Desktop/School/Thesis/Referenties/Heat%20pumps/WRE092HSG0_[C].PDF
+    HP_COOLING = HeatPump([[16, 17, 18, 19, 20, 22, 25]], [11.19, 10.73, 10.21, 9.77, 9.36, 8.62, 7.67], "injection")
+    # file:///C:/Users/jaspe/Desktop/School/Thesis/Referenties/Heat%20pumps/WRE092HSG0_[C]%20(1).PDF
+    HP_DHW = HeatPump([[3, 6, 9, 12, 15]], [2.69, 2.85, 3.02, 3.21, 3.39], "extraction")
+    # file:///C:/Users/jaspe/Desktop/School/Thesis/Referenties/Heat%20pumps/VLE162H_[C]%20(1)[2505].PDF
+    # file:///C:/Users/jaspe/Desktop/School/Thesis/Referenties/Heat%20pumps/VLE162H_[C].PDF
+    HP_REGEN = HeatPump([[10, 18], [0, 5, 10, 15, 20, 25, 30]],
+                        [[4.76, 5.43, 6.13, 7.26, 8.80, 10.98, 14.16], [4.14, 4.70, 5.20, 6.03, 7.11, 8.45, 10.21]], "injection")
+    print(HP_REGEN.calculate_cop([12], [15]))
 

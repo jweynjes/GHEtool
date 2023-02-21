@@ -23,13 +23,18 @@ HOURS_MONTH: np.ndarray = np.array([24 * 31, 24 * 28, 24 * 31, 24 * 30, 24 * 31,
                                     24 * 31, 24 * 30, 24 * 31])
 WEATHER_FILE = os.getcwd() + "/BEl_Brussels.064510_IWEC.epw"
 
-HP_HEATING = HeatPump([(3, 4.58), (6, 4.9), (9, 5.25), (12, 5.62), (15, 6.05)], "Heating")
-HP_COOLING = HeatPump([(16, 11.19), (17, 10.73), (18, 10.21), (19, 9.77), (20, 9.36), (22, 8.62), (25, 7.67)], "Cooling")
-HP_DHW = HeatPump([(3, 2.69), (6, 2.85), (9, 6.15), (12, 3.21), (15, 3.39)], "Heating")
-HP_REGEN = HeatPump([(25, 10.98), (30, 14.16), (20, 8.8), (15, 7.26), (5, 5.43), (0, 4.76), (10, 6.13)], "Heating")  # 10 °C target temperature
-HP_REGEN2 = HeatPump([(-5, 3.62), (0, 4.14), (5, 4.70), (10, 5.20), (15, 6.03), (20, 7.11), (25, 8.45), (30, 10.21),
-                      (35, 12.58)], "Heating")  # 18 °C target temperature
-HP_DUMMY = HeatPump([(0, 1), (30, 1)], "Heating")
+# Convention when creating HP: heat network side first
+# file:///C:/Users/jaspe/Desktop/School/Thesis/Referenties/Heat%20pumps/WRE092HSG0_[C].PDF
+HP_HEATING = HeatPump([[3, 6, 9, 12, 15]], [4.58, 4.90, 5.25, 5.62, 6.05])
+# file:///C:/Users/jaspe/Desktop/School/Thesis/Referenties/Heat%20pumps/WRE092HSG0_[C].PDF
+HP_COOLING = HeatPump([[16, 17, 18, 19, 20, 22, 25]], [11.19, 10.73, 10.21, 9.77, 9.36, 8.62, 7.67])
+# file:///C:/Users/jaspe/Desktop/School/Thesis/Referenties/Heat%20pumps/WRE092HSG0_[C]%20(1).PDF
+HP_DHW = HeatPump([[3, 6, 9, 12, 15]], [2.69, 2.85, 3.02, 3.21, 3.39])
+# file:///C:/Users/jaspe/Desktop/School/Thesis/Referenties/Heat%20pumps/VLE162H_[C]%20(1)[2505].PDF
+# file:///C:/Users/jaspe/Desktop/School/Thesis/Referenties/Heat%20pumps/VLE162H_[C].PDF
+HP_REGEN = HeatPump([[10, 18], [0, 5, 10, 15, 20, 25, 30]],
+                    [[4.76, 5.43, 6.13, 7.26, 8.80, 10.98, 14.16], [4.14, 4.70, 5.20, 6.03, 7.11, 8.45, 10.21]])
+
 
 DependentLoad = Callable[[np.ndarray], np.ndarray]
 
