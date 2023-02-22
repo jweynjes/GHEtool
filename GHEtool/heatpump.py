@@ -15,7 +15,7 @@ class HeatPump:
         if not (self.extraction or self.injection):
             raise ValueError("'regime' argument must be 'injection' or 'extraction'")
 
-    def calculate_cop(self, fluid_temperatures: list, air_temperatures: list = None):
+    def calculate_cop(self, fluid_temperatures, air_temperatures=None):
         """
 
         :param fluid_temperatures:
@@ -28,21 +28,21 @@ class HeatPump:
         else:
             return self._performance(list(zip(fluid_temperatures, air_temperatures)))
 
-    def calculate_network_load_from_demand(self, thermal_demand_profile, fluid_temperatures, air_temperatures: list = None):
+    def calculate_network_load_from_demand(self, thermal_demand_profile, fluid_temperatures, air_temperatures=None):
         performance_list = self.calculate_cop(fluid_temperatures, air_temperatures)
         if self.injection:
             return (1 + 1 / performance_list) * thermal_demand_profile
         elif self.extraction:
             return (1 - 1 / performance_list) * thermal_demand_profile
 
-    def calculate_network_load_from_power(self, power_supply_profile, fluid_temperatures, air_temperatures: list = None):
+    def calculate_network_load_from_power(self, power_supply_profile, fluid_temperatures, air_temperatures=None):
         performance_list = self.calculate_cop(fluid_temperatures, air_temperatures)
         if self.injection:
             return (performance_list + 1) * power_supply_profile
         elif self.extraction:
             return (performance_list - 1) * power_supply_profile
 
-    def calculate_electrical_power_demand(self, thermal_demand_profile, fluid_temperatures, air_temperatures: list = None):
+    def calculate_electrical_power_demand(self, thermal_demand_profile, fluid_temperatures, air_temperatures=None):
         performance_list = self.calculate_cop(fluid_temperatures, air_temperatures)
         return thermal_demand_profile / performance_list
 
