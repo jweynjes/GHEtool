@@ -3,8 +3,8 @@ import numpy as np
 import pandas as pd
 import pygfunction as gt
 from heat_network import HeatNetwork
-from heatpump import HeatPump
-from thermal_load import ThermalLoad
+from heat_pump import HeatPump
+from thermal_load import ThermalDemand
 from heat_exchanger import HeatExchanger
 
 EMPTY_ARRAY = np.full(8760*40, 0)
@@ -18,7 +18,6 @@ def size_borefield(borefield: Borefield, heat_network: HeatNetwork):
     while abs(depth-old_depth) > 0.2:
         iteration += 1
         print("Iteration {}\n\tCurrent depth: {}".format(iteration, borefield.H))
-        print(sum(heat_network.borefield_extraction.tolist()))
         borefield.set_hourly_heating_load(heat_network.borefield_extraction.tolist())
         borefield.set_hourly_cooling_load(heat_network.borefield_injection.tolist())
         old_depth = depth
@@ -40,7 +39,7 @@ def create_borefield():
 
 if __name__ == "__main__":
     borefield1 = create_borefield()
-    heat_network = HeatNetwork(borefield1)
+    heat_network1 = HeatNetwork(borefield1)
     building_A = pd.read_excel("load_profile.xlsx", "Building A")
     building_B = pd.read_excel("load_profile.xlsx", "Building B")
     building_C = pd.read_excel("load_profile.xlsx", "Building C")
@@ -64,6 +63,7 @@ if __name__ == "__main__":
         np.ndarray)
 
     domestic_hot_water_kwh = building_B["DHW"] / 1000
+
     total_heating_kwh = np.resize(bdg_A_heating + bdg_B_heating + bdg_C_heating + bdg_D_heating, 8760 * 40)
     total_cooling_kwh = np.resize(bdg_B_cooling + bdg_C_cooling + bdg_D_cooling, 8760 * 40)
     # total_heating_kwh += constant_power_output(12, 12, 14.2, 40)
@@ -71,23 +71,36 @@ if __name__ == "__main__":
 
     # Convention when creating HP: heat network side first
     # file:///C:/Users/jaspe/Desktop/School/Thesis/Referenties/Heat%20pumps/WRE092HSG0_[C].PDF
-    hp_heating_demand = HeatPump([[3, 6, 9, 12, 15]], [4.58, 4.90, 5.25, 5.62, 6.05], "extraction")
+    hp_heating_demand = HeatPump([[3, 6, 9, 12, 15]],
+                                 [4.58, 4.90, 5.25, 5.62, 6.05],
+                                 [20941, 23089, 25444, 27902, 30569],
+                                 [92.7, 100.3, 108.6, 117.2, 126.5],
+                                 "extraction")
     # file:///C:/Users/jaspe/Desktop/School/Thesis/Referenties/Heat%20pumps/WRE092HSG0_[C].PDF
-    hp_cooling_demand = HeatPump([[16, 17, 18, 19, 20, 22, 25]], [11.19, 10.73, 10.21, 9.77, 9.36, 8.62, 7.67], "injection")
+    hp_cooling_demand = HeatPump([[16, 17, 18, 19, 20, 22, 25]],
+                                 [11.19, 10.73, 10.21, 9.77, 9.36, 8.62, 7.67],
+                                 [45128, 44992, 44711, 44533, 44271, 43809, 43115],
+                                 [144.9, 143.9, 142.3, 141.2, 139.8, 137.1, 133.2],
+                                 "injection")
     # file:///C:/Users/jaspe/Desktop/School/Thesis/Referenties/Heat%20pumps/WRE092HSG0_[C]%20(1).PDF
-    hp_domestic_hw = HeatPump([[3, 6, 9, 12, 15]], [2.69, 2.85, 3.02, 3.21, 3.39], "extraction")
+    hp_domestic_hw = HeatPump([[3, 6, 9, 12, 15]],
+                              [2.69, 2.85, 3.02, 3.21, 3.39],
+                              [15309, 16908, 18593, 20445, 22377],
+                              [83.1, 88.8, 94.8, 101.5, 108.4],
+                              "extraction")
     # file:///C:/Users/jaspe/Desktop/School/Thesis/Referenties/Heat%20pumps/VLE162H_[C]%20(1)[2505].PDF
     # file:///C:/Users/jaspe/Desktop/School/Thesis/Referenties/Heat%20pumps/VLE162H_[C].PDF
     hp_regeneration = HeatPump([[10, 18], [0, 5, 10, 15, 20, 25, 30]],
                                [[4.76, 5.43, 6.13, 7.26, 8.80, 10.98, 14.16], [4.14, 4.70, 5.20, 6.03, 7.11, 8.45, 10.21]],
+                               [[25454, 29396, 33283, 39033, 45493, 52994, 60919], [31534, 36496, 40896, 47926, 56078, 64853, 74256]],
+                               [[148.0, 170.9, 193.5, 227.0, 264.6, 308.2, 354.3], [146.3, 169.3, 189.7, 222.3, 260.1, 300.8, 344.4]],
                                "injection")
-    heating_load_kwh = ThermalLoad(total_heating_kwh, "thermal", HeatExchanger(heat_network, 1, "extraction"),
-                                   hp_heating_demand)
-    cooling_load_kwh = ThermalLoad(total_cooling_kwh, "thermal", HeatExchanger(heat_network, 1, "injection"),
-                                   hp_cooling_demand)
-    dhw_kwh = ThermalLoad(domestic_hot_water_kwh, "thermal", HeatExchanger(heat_network, 1, "extraction"),
-                          hp_domestic_hw)
-    heat_network.add_thermal_connections([heating_load_kwh, cooling_load_kwh, dhw_kwh])
-    size_borefield(borefield1, heat_network)
+    heating_load_kwh = ThermalDemand(total_heating_kwh, HeatExchanger(heat_network1, 1, "extraction"), hp_heating_demand)
+    cooling_load_kwh = ThermalDemand(total_cooling_kwh, HeatExchanger(heat_network1, 1, "injection"), hp_cooling_demand)
+    dhw_kwh = ThermalDemand(domestic_hot_water_kwh, HeatExchanger(heat_network1, 1, "extraction"), hp_domestic_hw)
+    heat_network1.add_thermal_connections([heating_load_kwh, cooling_load_kwh, dhw_kwh])
+    size_borefield(borefield1, heat_network1)
     print("Depth: ", borefield1.H)
+    print("Radius: ", heat_network1.radius)
+    print("Max mass flow rate: ", heat_network1.max_mass_flow_rate)
 

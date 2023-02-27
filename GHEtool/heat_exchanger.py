@@ -1,8 +1,8 @@
 class HeatExchanger:
 
-    def __init__(self, heat_network, temperature_drop: float, regime: str):
+    def __init__(self, heat_network, temp_drop: float, regime: str):
         self.heat_network = heat_network
-        self.temperature_drop = temperature_drop
+        self.temp_drop = temp_drop
         self.extraction = regime in ["extraction"]
         self.injection = regime in ["injection"]
         if not (self.extraction or self.injection):
@@ -11,6 +11,6 @@ class HeatExchanger:
     @property
     def interaction_temperature(self):
         if self.injection:
-            return self.heat_network.temperature_profile + self.temperature_drop
+            return self.heat_network.temperature_profile + self.temp_drop
         elif self.extraction:
-            return self.heat_network.temperature_profile - self.temperature_drop
+            return self.heat_network.temperature_profile - self.temp_drop

@@ -9,7 +9,7 @@ import numpy_financial as npf
 import pvlib.temperature
 
 from GHEtool import Borefield, GroundData
-from heatpump import HeatPump
+from heat_pump import HeatPump
 import numpy as np
 import pandas as pd
 import pygfunction as gt
