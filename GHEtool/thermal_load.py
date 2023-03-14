@@ -25,15 +25,15 @@ class ThermalLoad(ABC):
 
     @property
     def electrical_energy_demand_profile(self):
-        return None
+        return list()
 
     @property
     def heat_network_demand_profile(self):
-        return None
+        return list()
 
     @property
     def total_electricity_demand(self):
-        return None
+        return sum(self.electrical_energy_demand_profile)
 
     @property
     def source_temperature(self):
@@ -86,22 +86,44 @@ class ThermalDemand(ThermalLoad):
     def amt_heat_pumps(self):
         return math.ceil(max(self.hourly_demand_profile / self.heat_pump.calculate_max_powers(self.source_temperature)))
 
+    @property
+    def cost(self):
+        return self.amt_heat_pumps * self.heat_pump.price
+
 
 class SolarRegen(ThermalLoad):
-    def __init__(self, length, amt_rows, heat_exchanger: HeatExchanger):
+    def __init__(self, amt_installations, heat_exchanger: HeatExchanger):
         super().__init__(heat_exchanger)
-        self.length = length
-        self.amt_rows = amt_rows
-        self.surface = length * amt_rows * 0.1
+        self._amt_installations = np.repeat(amt_installations, 8760)
+        self.length = 10
+        self.width = 0.1
+        self.amt_rows = 10
+        self.surface = self.length * self.amt_rows * self.width
         self.injection = True
         self.extraction = False
+        self._generation_profile = np.ones(8760*40)
+
+    def set_amt_installations(self, amt_installations):
+        self._amt_installations = np.repeat(amt_installations, 8760)
+
+    @property
+    def amt_installations(self):
+        return self._amt_installations
 
     @property
     def heat_network_demand_profile(self):
-        A = self.length * 0.1 * self.amt_rows
         K = 15.66
         eta_0 = 0.912
-        powers = A * (self.irradiances * eta_0 - K * (self.source_temperature - self.ambient_temperatures)) / 1000
+        powers = self.surface * (self.irradiances * eta_0 - K * (self.source_temperature - self.ambient_temperatures)) / 1000
+        powers[powers < 0] = 0
+        return powers*self._amt_installations
+
+    @property
+    def unit_injection(self):
+        K = 15.66
+        eta_0 = 0.912
+        powers = self.surface * (
+                    self.irradiances * eta_0 - K * (self.source_temperature - self.ambient_temperatures)) / 1000
         powers[powers < 0] = 0
         return powers
 
@@ -114,25 +136,21 @@ class SolarRegen(ThermalLoad):
         a2b = 1.338e-5
         a2s = 5.025e-5
         flow_parameter = 100  # [l/m2h]
-        width = 0.1  # [m]
-        absorber_area = self.length * width * self.amt_rows  # [m2]
-        volumetric_flow_rate = flow_parameter * absorber_area / 1000 / 3600  # [m3/s]
-        pressure_drop = flow_parameter * self.length * width * (a1b * self.length + a1s) + \
-                        (flow_parameter * self.length * width) ** 2 * (a2b * self.length + a2s)  # [mbar]
+        pressure_drop = flow_parameter * self.length * self.width * (a1b * self.length + a1s) + \
+                        (flow_parameter * self.length * self.width) ** 2 * (a2b * self.length + a2s)  # [mbar]
+
         pressure_drop *= 100  # [Pa]
+        volumetric_flow_rate = flow_parameter * self.surface / 1000 / 3600  # [m3/s]
         pumping_power = volumetric_flow_rate * pressure_drop  # [Wh]
-        boolean_mask = self.heat_network_demand_profile()
+        boolean_mask = self.heat_network_demand_profile
         boolean_mask[boolean_mask > 0] = 1
-        return pumping_power / 1000 * boolean_mask  # [kWh]
+        return pumping_power / 1000 * boolean_mask*self._amt_installations  # [kWh]
 
     @property
     def mass_flow_rates(self):
         flow_parameter = 100  # [l/m2h]
-        width = 0.1
-        absorber_area = self.length * width * self.amt_rows
-        mass_flow_rate = flow_parameter * absorber_area / 3600
-        return np.resize(mass_flow_rate, 8760 * 40)
-
+        mass_flow_rate = flow_parameter * self.surface / 3600
+        return np.resize(mass_flow_rate, 8760 * 40)*self._amt_installations
 
 class ElectricalRegen(ThermalLoad):
     def __init__(self, amt_panels: int, heat_pump: HeatPump, heat_exchanger: HeatExchanger, cop_limit: float):
@@ -141,10 +159,15 @@ class ElectricalRegen(ThermalLoad):
         self.heat_pump = heat_pump
         self.surface = 0
         self.cop_limit = cop_limit
+        self.capacity = 400
+        self.extraction = self.heat_exchanger.extraction
+        self.injection = self.heat_exchanger.injection
+        if self.extraction != self.heat_pump.extraction or self.injection != self.heat_pump.injection:
+            raise ValueError("Regime mismatch between pump and HEX!")
 
     def calculate_ac_generation(self):
         mount = pvs.FixedMount(35, 180)  # paneel configuratie
-        array = pvs.Array(mount, None, None, None, None, {'pdc0': 400, 'gamma_pdc': -0.0033}, None, 1,
+        array = pvs.Array(mount, None, None, None, None, {'pdc0': self.capacity, 'gamma_pdc': -0.0033}, None, 1,
                           1)  # single string with single panel
         pvsystem = pvs.PVSystem([array])
         cell_temperatures = pvlib.temperature.sapm_cell(self.irradiances, self.ambient_temperatures,
@@ -193,3 +216,15 @@ class ElectricalRegen(ThermalLoad):
         performance_demand = self.electrical_energy_demand_profile * cop
         return math.ceil(max(performance_demand / self.heat_pump.calculate_max_powers(self.source_temperature,
                                                                                       self.ambient_temperatures)))
+
+    @property
+    def cost(self):
+        return self.amt_heat_pumps * self.heat_pump.price
+
+
+if __name__ == "__main__":
+    weather = Weather(WEATHER_FILE)
+    irradiances = weather.solar_irradiance
+    irradiances[irradiances <= 0] = 0
+    irradiances[irradiances > 0] = 1
+    print(sum(irradiances))
