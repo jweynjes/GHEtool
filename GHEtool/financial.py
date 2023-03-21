@@ -90,11 +90,12 @@ def create_target_function(heat_network: HeatNetwork, hc_cost_func, imbalance_fu
                            year_2_temp, year_40_temp):
     def target_function(solution):
         temperatures = np.array([year_2_temp, *solution, year_40_temp])
-        req_imbalances = imbalance_func(temperatures[:-1], temperatures[1:])
-        load_imbalances = load_imbalance_func(temperatures[1:])
+        req_imbalances = imbalance_func(temperatures[:-1] - temperatures[1:])
+        load_imbalances = load_imbalance_func(temperatures[:-1])
         solar_regen = heat_network.regenerator
         required_injection = req_imbalances-load_imbalances
         amt_installations = required_injection/(sum(solar_regen.unit_injection) / 40)
+        assert all(amt_installations > 0)
         solar_regen.set_amt_installations(np.array([0, *amt_installations, 0]))
         # CALCULATE VALUE
         hc_energy = npf.npv(0.05, hc_cost_func(temperatures[1:]))
@@ -169,54 +170,68 @@ if __name__ == "__main__":
     cooling_load_kwh = ThermalDemand(total_cooling_kwh, HeatExchanger(heat_network1, 1, "injection"), hp_cooling_demand)
     dhw_kwh = ThermalDemand(domestic_hot_water_kwh, HeatExchanger(heat_network1, 1, "extraction"), hp_domestic_hw)
     # elec_regen = ElectricalRegen(50, hp_regeneration, HeatExchanger(heat_network1, 1, "injection"), 11.5)
-    heat_network1.add_thermal_connections([heating_load_kwh, cooling_load_kwh, dhw_kwh])
+    solar_regen = SolarRegen(np.resize([0], 40), HeatExchanger(heat_network1, 1, "injection"))
+    heat_network1.add_thermal_connections([heating_load_kwh, cooling_load_kwh, dhw_kwh, solar_regen])
 
     # Determine temperature-electric power function
     size_borefield(heat_network1)
     average_temperatures = np.array([sum(year)/8760 for year in np.resize(heat_network1.borefield.results_peak_cooling, [40, 8760])])
-    energy_usage = [sum(year) for year in np.resize(heat_network1.total_electricity_demand, [40, 8760])]
-    f_hc_cost = interpolate.interp1d(average_temperatures, energy_usage, fill_value="extrapolate")
-    f_load_imbalance = interpolate.interp1d(average_temperatures, heat_network1.load_imbalances, fill_value="extrapolate")
-    plt.figure()
-    plt.scatter(average_temperatures, heat_network1.load_imbalances)
-    plt.xlabel("Average temperature [°C]")
-    plt.ylabel("Yearly load imbalance as seen by borefield [kWh]")
-    plt.figure()
-    plt.scatter(average_temperatures, energy_usage, fill_value="extrapolate")
-    plt.xlabel("Average temperature [°C]")
-    plt.ylabel("Yearly electricity demand for heating and cooling [kWh]")
+    energy_usage = [sum(year) for year in np.resize(heat_network1.load_electricity_demand, [40, 8760])]
     Ty2 = average_temperatures[1]
     # Determine minimum depth
-    solar_regen = SolarRegen(np.resize([1], 40), HeatExchanger(heat_network1, 1, "injection"))
     max_size = abs(heat_network1.load_imbalances) / (sum(solar_regen.unit_injection) / 40)
     max_size[0] = 0
     max_size[1] *= 0.1
     max_size[2] *= 0.15
     solar_regen.set_amt_installations(max_size * 0.25)
     size_borefield(heat_network1)
+    solar_regen.set_amt_installations(np.repeat([0], 40))
+    heat_network1.update_borefield()
+    heat_network1.borefield.print_temperature_profile(plot_hourly=True, recalculate=True)
+    solar_regen.set_amt_installations(max_size)
+    heat_network1.update_borefield()
+    heat_network1.borefield._calculate_temperature_profile(hourly=True)
+    load_energy = np.array([sum(year) for year in np.resize(heat_network1.load_electricity_demand, [40, 8760])])
+    regen_energy = np.array([sum(year) for year in np.resize(solar_regen.electrical_energy_demand_profile, [40, 8760])])
     current_temps = np.array([])
     target_temps = np.array([])
     total_imbalances = np.array([])
-    for i in range(4):
-        solar_regen.set_amt_installations(max_size*np.array([0.25-0.01*j+0.1*i for j in range(40)]))
-        heat_network1.add_thermal_connection(solar_regen)
-        # Determine imbalance-temperature delta function
-        heat_network1.borefield._calculate_temperature_profile(hourly=True)
-        average_temperatures2 = np.array([sum(year)/8760 for year in np.resize(heat_network1.borefield.results_peak_cooling, [40, 8760])])
-        current_temps = np.append(current_temps, average_temperatures2[:-1])
-        target_temps = np.append(target_temps, average_temperatures2[1:])
-        total_imbalances = np.append(total_imbalances, heat_network1.imbalances[:-1])
+    installation_sizes = np.array([])
+    # for i in range(6):
+    #     print("check: {}".format(i))
+    #     solar_regen.set_amt_installations(max_size/5*i)
+    #     heat_network1.update_borefield()
+    #     # Determine imbalance-temperature delta function
+    #     heat_network1.borefield._calculate_temperature_profile(hourly=True)
+    #     average_temperatures = np.array([sum(year)/8760 for year in np.resize(heat_network1.borefield.results_peak_cooling, [40, 8760])])
+    #     current_temps = np.append(current_temps, average_temperatures[:-1])
+    #     target_temps = np.append(target_temps, average_temperatures[1:])
+    #     total_imbalances = np.append(total_imbalances, heat_network1.imbalances[:-1])
+    #     installation_sizes = np.append(installation_sizes, solar_regen.amt_installations[:-1])
+    #     plt.figure()
+    #     plt.xlabel("Average temperature [°C]")
+    #     plt.ylabel("Yearly load imbalance as seen by borefield [kWh]")
+    #     plt.scatter(average_temperatures, heat_network1.load_imbalances)
+    #     plt.figure()
+    #     plt.xlabel("Average temperature [°C]")
+    #     plt.ylabel("Yearly electricity demand for heating and cooling [kWh]")
+    #     energy_usage = [sum(year) for year in np.resize(heat_network1.load_electricity_demand, [40, 8760])]
+    #     plt.scatter(average_temperatures, energy_usage)
+    #     heat_network1.borefield.print_temperature_profile(plot_hourly=True)
     # Interpolate
-    f_imbalance = interpolate.NearestNDInterpolator(list(zip(current_temps, target_temps)), total_imbalances)
-    plt.plot(np.linspace())
+    deltas = current_temps-target_temps
+    # f_imbalance = interpolate.NearestNDInterpolator(list(zip(current_temps, target_temps)), total_imbalances)
+    f_imbalance = interpolate.interp1d(deltas, total_imbalances, fill_value="extrapolate")
     max_temp = 100
     best_solution = None
     average_temperatures = np.array([sum(year)/8760 for year in np.resize(heat_network1.borefield.results_peak_cooling, [40, 8760])])
     min_temperature = np.array([min(year) for year in np.resize(heat_network1.borefield.results_peak_cooling, [40, 8760])])
     max_temperature = np.array([max(year) for year in np.resize(heat_network1.borefield.results_peak_cooling, [40, 8760])])
     delta_to_min = max(average_temperatures - min_temperature)
-    upper_bound = heat_network1.borefield.Tf_max
+    upper_bound = Ty2
     lower_bound = heat_network1.borefield.Tf_min + delta_to_min
+    f_hc_cost = interpolate.interp1d(average_temperatures, energy_usage, fill_value="extrapolate")
+    f_load_imbalance = interpolate.interp1d(average_temperatures, heat_network1.load_imbalances, fill_value="extrapolate")
     print(heat_network1.borefield.Tf_max)
     while max_temp > heat_network1.borefield.Tf_max:
         print(max_temp)

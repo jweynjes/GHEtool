@@ -10,6 +10,7 @@ HOURS_MONTH: np.ndarray = np.array([24 * 31, 24 * 28, 24 * 31, 24 * 30, 24 * 31,
 
 
 def size_borefield(heat_network: HeatNetwork, verbose=False):
+    heat_network.update_borefield()
     borefield = heat_network.borefield
     iteration = 0
     old_depth = borefield.H

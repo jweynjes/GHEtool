@@ -15,7 +15,7 @@ class HeatNetwork:
     def __init__(self, borefield=None):
         self.weather = Weather(WEATHER_FILE)
         self._borefield = borefield
-        self.thermal_connections = list()
+        self.thermal_connections = set()
         self.max_flow_velocity = 2  # [m/s]
         self.length = 1638
         self.density = 1033
@@ -25,11 +25,11 @@ class HeatNetwork:
         return
 
     def add_thermal_connection(self, thermal_connection: ThermalLoad):
-        self.thermal_connections.extend([thermal_connection])
+        self.thermal_connections.add(thermal_connection)
         self.update_borefield()
 
     def add_thermal_connections(self, thermal_connections: Iterable[ThermalLoad]):
-        self.thermal_connections.extend(thermal_connections)
+        self.thermal_connections.update(thermal_connections)
         self.update_borefield()
 
     def update_borefield(self):
@@ -156,6 +156,11 @@ class HeatNetwork:
     def total_electricity_demand(self):
         load_demand = sum([thermal_load.electrical_energy_demand_profile for thermal_load in self.thermal_connections])
         return self.electric_pump_power + load_demand
+
+    @property
+    def load_electricity_demand(self):
+        thermal_demand = list(filter(lambda x: isinstance(x, ThermalDemand), self.thermal_connections))
+        return sum([load.electrical_energy_demand_profile for load in thermal_demand])
 
     @property
     def regenerator(self):
