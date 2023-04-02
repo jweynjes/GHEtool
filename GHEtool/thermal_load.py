@@ -94,17 +94,19 @@ class ThermalDemand(ThermalLoad):
 class SolarRegen(ThermalLoad):
     def __init__(self, amt_installations, heat_exchanger: HeatExchanger):
         super().__init__(heat_exchanger)
-        self._amt_installations = np.repeat(amt_installations, 8760)
+        self._amt_installations = amt_installations
         self.length = 10
         self.width = 0.1
         self.amt_rows = 10
         self.surface = self.length * self.amt_rows * self.width
         self.injection = True
         self.extraction = False
-        self._generation_profile = np.ones(8760*40)
 
     def set_amt_installations(self, amt_installations):
-        self._amt_installations = np.repeat(amt_installations, 8760)
+        if len(amt_installations) != 40*8760:
+            raise ValueError("An installation size for each time instance is required!")
+        self._amt_installations = amt_installations
+        return self._amt_installations
 
     @property
     def amt_installations(self):
@@ -151,6 +153,7 @@ class SolarRegen(ThermalLoad):
         flow_parameter = 100  # [l/m2h]
         mass_flow_rate = flow_parameter * self.surface / 3600
         return np.resize(mass_flow_rate, 8760 * 40)*self._amt_installations
+
 
 class ElectricalRegen(ThermalLoad):
     def __init__(self, amt_panels: int, heat_pump: HeatPump, heat_exchanger: HeatExchanger, cop_limit: float):

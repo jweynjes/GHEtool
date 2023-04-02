@@ -163,7 +163,7 @@ class Borefield:
         # parameter that determines whether or not the Rb-value should be altered in the optimisation
         self.use_constant_Rb = True
         # parameter that determines whether or not the Tg should be calculated with a heat flux or without
-        self.use_constant_Tg = True
+        self.use_constant_Tg = False
 
         self.H_max: float = 350  # max threshold for interpolation (will with first sizing)
         # setting this to False will make sure every gvalue is calculated on the spot

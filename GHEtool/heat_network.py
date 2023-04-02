@@ -34,8 +34,8 @@ class HeatNetwork:
 
     def update_borefield(self):
         borefield = self.borefield
-        borefield.set_hourly_heating_load(self.borefield_extraction.tolist()[:borefield.simulation_period * 8760])
-        borefield.set_hourly_cooling_load(self.borefield_injection.tolist()[:borefield.simulation_period * 8760])
+        borefield.set_hourly_heating_load(self.borefield_extraction.tolist())
+        borefield.set_hourly_cooling_load(self.borefield_injection.tolist())
 
     @property
     def load_imbalances(self):
@@ -165,3 +165,34 @@ class HeatNetwork:
     @property
     def regenerator(self):
         return list(filter(lambda l: isinstance(l, SolarRegen) or isinstance(l, ElectricalRegen), self.thermal_connections))[0]
+
+    def size_borefield(self, verbose=False):
+        borefield = self.borefield
+        iteration = 0
+        old_depth = borefield.H
+        depth = borefield.H
+        max_iter = 10
+        while True:
+            if iteration >= max_iter:
+                new_depth = max(depth, old_depth)
+                borefield.H = new_depth
+                borefield.calculate_temperatures(hourly=True)
+                return borefield
+            iteration += 1
+            if verbose:
+                print("Iteration {}\n\tCurrent depth: {}".format(iteration, borefield.H))
+            borefield.set_hourly_heating_load(
+                self.borefield_extraction.tolist())
+            borefield.set_hourly_cooling_load(
+                self.borefield_injection.tolist())
+            old_depth = depth
+            depth = borefield.size(L4_sizing=True)
+            borefield.calculate_temperatures(hourly=True)
+            if abs(old_depth - depth) <= 0.5:
+                break
+        return borefield
+
+    def calculate_temperatures(self):
+        self.update_borefield()
+        self.borefield._calculate_temperature_profile(hourly=True)
+        return
