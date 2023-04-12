@@ -68,7 +68,7 @@ def calculate_total_energy_cost(installation_size, heat_network):
     return total_energy_cost
 
 
-def size_regeneration(heat_network: HeatNetwork, steady_state_time: float, tol=0.1):
+def size_for_steady_state(heat_network: HeatNetwork, steady_state_time: float, tol=0.1):
     """
     Find the optimal dimension of the regeneration technology for a steady state starting from a given year
 
@@ -102,6 +102,9 @@ def size_regeneration(heat_network: HeatNetwork, steady_state_time: float, tol=0
 
 
 def determine_min_size(heat_network, max_power: float = 0):
+    # CLEANUP
+    heat_network.regenerator.set_installation_size(0)
+    heat_network.calculate_temperatures()
     # INIT
     start_index = np.where(heat_network.regenerator.schedule > 0)[0][0]
     first_regen_year = math.ceil(start_index / 8760) + 1
@@ -204,6 +207,54 @@ def create_target_function(heat_network):
     return regen_costs
 
 
+def size_regen(heat_network: HeatNetwork):
+    best_price = math.inf
+    best_size = None
+    for i in range(62,83):
+        output_file = os.getcwd() + "/results.csv"
+        results = pd.DataFrame(columns=["Regen start", "Total elec demand", "Regenerator size", "TCO"])
+        print(datetime.now())
+        print("=============================")
+        year = (20/100*i)
+        print("Year: ", year)
+        size_for_steady_state(heat_network, year/40)
+        electricity_consumption = np.array([sum(year) for year in np.resize(heat_network.total_electricity_demand, [40, 8760])])
+        total_electricity_consumption = sum(electricity_consumption)
+        total_cost = electricity_consumption * 0.35
+        regen_invest = heat_network.regenerator.installation_size * 600 * 10
+        start_regen_index = np.where(heat_network.regenerator.schedule)[0][0] // 8760
+        total_cost[start_regen_index] += regen_invest
+        total_cost[0] += heat_network.total_investment_cost + 35*heat_network.borefield.number_of_boreholes
+        TCO = npf.npv(0.05, total_cost)
+        if TCO < best_price:
+            best_size = heat_network.regenerator.installation_size
+            best_price = TCO
+        print("Total electricity consumption: ", total_electricity_consumption)
+        print("Regenerator size: ", heat_network.regenerator.installation_size)
+        print("TCO: ", TCO)
+        results.loc[0] = {"Total elec demand": total_electricity_consumption,
+                          "Regenerator size": heat_network.regenerator.installation_size,
+                          "TCO": TCO,
+                          "Regen start": year}
+        results.to_csv(output_file, mode="a", index=False, header=(i == 1))
+        print("============================")
+
+    heat_network.regenerator.set_installation_size(best_size)
+    upper_bound = determine_injection_schedule(heat_network)[1]
+    lower_bound = determine_min_size(heat_network)
+    print("Lower bound: ", lower_bound)
+    res = minimize_scalar(create_target_function(heat_network), bounds=[lower_bound, upper_bound], method="bounded",
+                          options={"xatol": 1e-4})
+    year_schedule = determine_injection_schedule(heat_network, res.x)
+    full_schedule = np.zeros(40 * 8760)
+    start = np.where(heat_network.regenerator.schedule > 0)[0][0]
+    full_schedule[start:] = np.resize(year_schedule, 40 * 8760 - start)
+    heat_network.regenerator.set_installation_size(res.x)
+    heat_network.regenerator.set_schedule(full_schedule)
+    heat_network.update_borefield()
+    heat_network.borefield.print_temperature_profile(plot_hourly=True)
+
+
 if __name__ == "__main__":
     building_A = pd.read_excel("load_profile.xlsx", "Building A")
     building_B = pd.read_excel("load_profile.xlsx", "Building B")
@@ -269,55 +320,13 @@ if __name__ == "__main__":
     # elec_regen = ElectricalRegen(50, hp_regeneration, HeatExchanger(heat_network1, 1, "injection"), 11.5)
     solar_regen = SolarRegen(0, HeatExchanger(heat_network1, 1, "injection"))
     heat_network1.add_thermal_connections([heating_load_kwh, cooling_load_kwh, dhw_kwh, solar_regen])
-    plt.figure()
-    yearly_regen = solar_regen.unit_injection[:8760]
-    plt.scatter([i for i in range(8760)], yearly_regen)
-    plt.show()
     # heat_network1.size_borefield()
-    # heat_network1.borefield.print_temperature_profile(plot_hourly=True)
-    best_price = math.inf
-    best_size = None
-    for i in range(50,51):
-        output_file = os.getcwd() + "/results.csv"
-        results = pd.DataFrame(columns=["Regen start", "Total elec demand", "Regenerator size", "TCO"])
-        print(datetime.now())
-        print("=============================")
-        year = (20/100*i)
-        print("Year: ", year)
-        size_regeneration(heat_network1, year/40)
-        electricity_consumption = np.array([sum(year) for year in np.resize(heat_network1.total_electricity_demand, [40, 8760])])
-        total_electricity_consumption = sum(electricity_consumption)
-        total_cost = electricity_consumption * 0.35
-        regen_invest = heat_network1.regenerator.installation_size * 600 * 10
-        start_regen_index = np.where(heat_network1.regenerator.schedule)[0][0] // 8760
-        total_cost[start_regen_index] += regen_invest
-        total_cost[0] += heat_network1.total_investment_cost + 35*heat_network1.borefield.number_of_boreholes
-        TCO = npf.npv(0.05, total_cost)
-        if TCO < best_price:
-            best_size = heat_network1.regenerator.installation_size
-            best_price = TCO
-        print("Total electricity consumption: ", total_electricity_consumption)
-        print("Regenerator size: ", heat_network1.regenerator.installation_size)
-        print("TCO: ", TCO)
-        results.loc[0] = {"Total elec demand": total_electricity_consumption,
-                          "Regenerator size": heat_network1.regenerator.installation_size,
-                          "TCO": TCO,
-                          "Regen start": year}
-        results.to_csv(output_file, mode="a", index=False, header=(i == 1))
-        print("============================")
-
-    heat_network1.regenerator.set_installation_size(best_size)
-    upper_bound = determine_injection_schedule(heat_network1)[1]
-    lower_bound = determine_min_size(heat_network1)
-    print("Lower bound: ", lower_bound)
-    res = minimize_scalar(create_target_function(heat_network1), bounds=[lower_bound, upper_bound], method="bounded",
-                          options={"xatol": 1e-4})
-    year_schedule = determine_injection_schedule(heat_network1, res.x)
-    full_schedule = np.zeros(40 * 8760)
-    start = np.where(heat_network1.regenerator.schedule > 0)[0][0]
-    full_schedule[start:] = np.resize(year_schedule, 40 * 8760 - start)
-    heat_network1.regenerator.set_installation_size(res.x)
-    heat_network1.regenerator.set_schedule(full_schedule)
-    heat_network1.update_borefield()
     heat_network1.borefield.print_temperature_profile(plot_hourly=True)
+    start_index = round(12.6*8760)
+    schedule = np.zeros(40*8760)
+    schedule[start_index:] = 1
+    solar_regen.set_installation_size(3.06)
+    heat_network1.calculate_temperatures()
+    heat_network1.borefield.print_temperature_profile(plot_hourly=True)
+
 
