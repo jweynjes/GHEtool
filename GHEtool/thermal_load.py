@@ -92,25 +92,34 @@ class ThermalDemand(ThermalLoad):
 
 
 class SolarRegen(ThermalLoad):
-    def __init__(self, amt_installations, heat_exchanger: HeatExchanger):
+    def __init__(self, installation_size: int, heat_exchanger: HeatExchanger):
         super().__init__(heat_exchanger)
-        self._amt_installations = amt_installations
+        self._installation_size = installation_size
         self.length = 10
         self.width = 0.1
         self.amt_rows = 10
         self.surface = self.length * self.amt_rows * self.width
         self.injection = True
         self.extraction = False
+        self._schedule = np.ones(40*8760)
+        self.nominal_energy = self.calculate_nominal_energy()
 
-    def set_amt_installations(self, amt_installations):
-        if len(amt_installations) != 40*8760:
-            raise ValueError("An installation size for each time instance is required!")
-        self._amt_installations = amt_installations
-        return self._amt_installations
+    def set_installation_size(self, installation_size: float):
+        self._installation_size = installation_size
+        return self._installation_size
+
+    def set_schedule(self, schedule):
+        if len(schedule) != 40*8760 or not (all(0 <= schedule) and all(schedule <= 1)):
+            raise ValueError("Incorrect schedule!")
+        self._schedule = schedule
 
     @property
-    def amt_installations(self):
-        return self._amt_installations
+    def schedule(self):
+        return self._schedule
+
+    @property
+    def installation_size(self):
+        return self._installation_size
 
     @property
     def heat_network_demand_profile(self):
@@ -118,7 +127,7 @@ class SolarRegen(ThermalLoad):
         eta_0 = 0.912
         powers = self.surface * (self.irradiances * eta_0 - K * (self.source_temperature - self.ambient_temperatures)) / 1000
         powers[powers < 0] = 0
-        return powers*self._amt_installations
+        return powers*self.installation_size*self.schedule
 
     @property
     def unit_injection(self):
@@ -129,30 +138,42 @@ class SolarRegen(ThermalLoad):
         powers[powers < 0] = 0
         return powers
 
-    # file:///C:/Users/jaspe/Desktop/School/Thesis/Referenties/Solare%20Freibadbeheizung%20-%20Testergebnisse%20komplett.pdf
-    # ANHANG G
-    @property
-    def electrical_energy_demand_profile(self):
+    def calculate_nominal_energy(self):
         a1b = 7.630e-4
         a1s = 7.442e-4
         a2b = 1.338e-5
         a2s = 5.025e-5
         flow_parameter = 100  # [l/m2h]
-        pressure_drop = flow_parameter * self.length * self.width * (a1b * self.length + a1s) + \
-                        (flow_parameter * self.length * self.width) ** 2 * (a2b * self.length + a2s)  # [mbar]
-
+        flow_rate = flow_parameter * self.length * self.width  # [l/h]
+        pressure_drop = flow_parameter * flow_rate * (a1b * self.length + a1s) + \
+                        flow_rate ** 2 * (a2b * self.length + a2s)  # [mbar]
         pressure_drop *= 100  # [Pa]
         volumetric_flow_rate = flow_parameter * self.surface / 1000 / 3600  # [m3/s]
-        pumping_power = volumetric_flow_rate * pressure_drop  # [Wh]
+        pumping_energy = volumetric_flow_rate * pressure_drop  # [Wh]
+        return pumping_energy
+
+    # file:///C:/Users/jaspe/Desktop/School/Thesis/Referenties/Solare%20Freibadbeheizung%20-%20Testergebnisse%20komplett.pdf
+    # ANHANG G
+    @property
+    def electrical_energy_demand_profile(self):
         boolean_mask = self.heat_network_demand_profile
         boolean_mask[boolean_mask > 0] = 1
-        return pumping_power / 1000 * boolean_mask*self._amt_installations  # [kWh]
+        return self.nominal_energy / 1000 * boolean_mask*self.installation_size * self.schedule  # [kWh]
 
     @property
     def mass_flow_rates(self):
         flow_parameter = 100  # [l/m2h]
         mass_flow_rate = flow_parameter * self.surface / 3600
-        return np.resize(mass_flow_rate, 8760 * 40)*self._amt_installations
+        return np.resize(mass_flow_rate, 8760 * 40)*self.installation_size * self.schedule
+
+    @property
+    def performances(self):
+        elec_demand = self.electrical_energy_demand_profile
+        elec_demand[elec_demand == 0] = -1
+        performances = self.heat_network_demand_profile/elec_demand
+        if any(performances < 0):
+            raise ValueError("Negative COP!")
+        return performances
 
 
 class ElectricalRegen(ThermalLoad):

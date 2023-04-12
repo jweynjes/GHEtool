@@ -1,8 +1,12 @@
+import math
+import os
+
 import numpy_financial as npf
 import numpy as np
 import pandas as pd
 from scipy import interpolate
-from scipy.optimize import minimize, LinearConstraint, brute
+from scipy.optimize import minimize_scalar
+from copy import deepcopy
 
 from heat_pump import HeatPump
 from borefield import create_borefield
@@ -52,58 +56,6 @@ def calculate_electricity_price(heat_network: HeatNetwork):
     return npf.npv(rate, total_costs)/npf.npv(rate, generation)
 
 
-# def create_target_function(heat_network: HeatNetwork, verbose=False):
-#     def calculate_TCO(solution):
-#         repetitions = 40/len(solution)
-#         yearly_regen = np.repeat(np.array(solution)/repetitions, repetitions)
-#         regenerator = heat_network.regenerator
-#         amt_installations = max(yearly_regen)/(sum(regenerator.unit_injection))
-#         regenerator.set_amt_installations(yearly_regen)
-#         size_borefield(heat_network, verbose)
-#         heat_network.borefield.print_temperature_profile(plot_hourly=True)
-#         I_b = heat_network.borefield.investment_cost
-#         I_w = heat_network.total_investment_cost
-#         I_r = 2000 + 200*amt_installations
-#         electricity_costs = [sum(year)*0.35 for year in np.resize(heat_network.total_electricity_demand, [40, 8760])]
-#         rate = 0.05
-#         op_costs = npf.npv(rate, electricity_costs)
-#         TCO = I_b + I_w + I_r + op_costs
-#         return TCO
-#     return calculate_TCO
-
-
-def calculate_installation_size(solution, heat_network: HeatNetwork, imbalance_func, load_imbalance_func,
-                                year_2_temp, year_40_temp):
-    temperatures = np.array([year_2_temp, *solution, year_40_temp])
-    req_imbalances = imbalance_func(temperatures[:-1], temperatures[1:])
-    load_imbalances = load_imbalance_func(temperatures[1:])
-    solar_regen = heat_network.regenerator
-    required_injection = req_imbalances - load_imbalances
-    amt_installations = required_injection / (sum(solar_regen.unit_injection) / 40)
-    solar_regen.set_amt_installations(np.array([0, *amt_installations, 0]))
-    heat_network1.update_borefield()
-    heat_network1.borefield._calculate_temperature_profile(hourly=True)
-    return amt_installations
-
-
-def create_target_function(heat_network: HeatNetwork, hc_cost_func, imbalance_func, load_imbalance_func,
-                           year_2_temp, year_40_temp):
-    def target_function(solution):
-        temperatures = np.array([year_2_temp, *solution, year_40_temp])
-        req_imbalances = imbalance_func(temperatures[:-1] - temperatures[1:])
-        load_imbalances = load_imbalance_func(temperatures[:-1])
-        solar_regen = heat_network.regenerator
-        required_injection = req_imbalances-load_imbalances
-        amt_installations = required_injection/(sum(solar_regen.unit_injection) / 40)
-        assert all(amt_installations > 0)
-        solar_regen.set_amt_installations(np.array([0, *amt_installations, 0]))
-        # CALCULATE VALUE
-        hc_energy = npf.npv(0.05, hc_cost_func(temperatures[1:]))
-        regen_energy = npf.npv(0.05, np.array([sum(year) for year in np.resize(solar_regen.electrical_energy_demand_profile, [40, 8760])]))
-        return regen_energy + hc_energy
-    return target_function
-
-
 def calculate_total_energy_cost(installation_size, heat_network):
     regen = heat_network.regenerator
     regen.set_amt_installations(installation_size)
@@ -116,28 +68,140 @@ def calculate_total_energy_cost(installation_size, heat_network):
     return total_energy_cost
 
 
-def determine_steady_state_installation(heat_network: HeatNetwork, steady_state_time: float, tol=0.01):
+def size_regeneration(heat_network: HeatNetwork, steady_state_time: float, tol=0.1):
+    """
+    Find the optimal dimension of the regeneration technology for a steady state starting from a given year
+
+    :param heat_network:
+    :param steady_state_time:
+    :param tol:
+    :return:
+    """
     start_index = round(steady_state_time*40*8760)
     full_years_remaining = (40*8760-1-start_index) // 8760
     end_index = start_index + full_years_remaining*8760
+    regen_schedule = np.zeros(40*8760)
+    regen_schedule[start_index:] = 1
+    heat_network.regenerator.set_schedule(regen_schedule)
     lower_bound = 0
     upper_bound = abs(max(heat_network1.load_imbalances) / (sum(solar_regen.unit_injection) / 40))
     while True:
         mid_point = (lower_bound + upper_bound) / 2
-        installation = np.zeros(40*8760)
-        installation[start_index:] = mid_point
-        heat_network.regenerator.set_amt_installations(installation)
+        heat_network.regenerator.set_installation_size(mid_point)
         heat_network.calculate_temperatures()
         start_temperature = heat_network.borefield.results_peak_cooling[start_index]
         end_temperature = heat_network.borefield.results_peak_cooling[end_index]
         if abs(end_temperature-start_temperature) < tol:
-            heat_network.borefield.print_temperature_profile(plot_hourly=True)
-            return mid_point
+            break
         else:
             if end_temperature > start_temperature:
                 upper_bound = mid_point
             else:
                 lower_bound = mid_point
+    return
+
+
+def determine_min_size(heat_network, max_power: float = 0):
+    # INIT
+    start_index = np.where(heat_network.regenerator.schedule > 0)[0][0]
+    first_regen_year = math.ceil(start_index / 8760) + 1
+    target_imbalance = heat_network.imbalances[first_regen_year] - heat_network.load_imbalances[first_regen_year]
+    injection_margin = (heat_network.borefield_injection - heat_network.borefield_extraction)[start_index: start_index+8760]
+    max_power = max((max_power, max(injection_margin)))
+    injection_margin = max_power - injection_margin
+    unit_power = heat_network.regenerator.unit_injection[start_index: start_index+8760]
+    energy_injected = 0
+    boolean_mask = deepcopy(unit_power)
+    boolean_mask[boolean_mask > 0] = 1
+    unit_power[unit_power == 0] = -1
+    injection_margin *= boolean_mask
+    min_size = 0
+    while energy_injected < target_imbalance:
+        # purge zeros
+        zero_margin = np.where(injection_margin <= 1e-9)
+        injection_margin = np.delete(injection_margin, zero_margin)
+        unit_power = np.delete(unit_power, zero_margin)
+        size = min(injection_margin/unit_power)
+        injection_profile = size * unit_power
+        injection_margin -= injection_profile
+        energy_to_inject = sum(injection_profile)
+        if energy_to_inject + energy_injected > target_imbalance:
+            energy_to_inject = target_imbalance - energy_injected
+            min_size += energy_to_inject/sum(unit_power)
+            energy_injected += energy_to_inject
+        else:
+            energy_injected += energy_to_inject
+            min_size += size
+    return min_size
+
+
+def determine_injection_schedule(heat_network, max_size: float = None, max_power: float = 0):
+    """
+    Determine the optimal injection schedule for a given imbalance
+
+    :param heat_network:
+    :param max_size:
+    :param max_power:
+    :return:
+    """
+    # INIT
+    start_index = np.where(heat_network.regenerator.schedule > 0)[0][0]
+    first_regen_year = math.ceil(start_index/8760) + 1
+    target_imbalance = heat_network.imbalances[first_regen_year] - heat_network.load_imbalances[first_regen_year]
+    injection_margin = (heat_network.borefield_injection - heat_network.borefield_extraction)[start_index: start_index+8760]
+    max_power = max((max_power, max(injection_margin)))
+    injection_margin = max_power - injection_margin
+    unit_injection = heat_network.regenerator.unit_injection[start_index: start_index+8760]
+    if max_size is not None:
+        injection_margin = np.minimum(injection_margin, unit_injection*max_size)
+    performances = heat_network.regenerator.performances[start_index:start_index+8760]
+    energy_injected = 0
+    size = np.zeros(8760)
+    while not math.isclose(energy_injected, target_imbalance):
+        if max(performances) <= 0:
+            raise RuntimeError("Could not inject desired energy without increasing heat network!")
+        max_performance_point = np.where(performances == max(performances))
+        index = max_performance_point[0][0]
+        unit_power = unit_injection[index]
+        energy_to_inject = injection_margin[index]
+        energy_to_inject = min([energy_to_inject, (target_imbalance - energy_injected)])
+        size[index] = energy_to_inject/unit_power
+        energy_injected += energy_to_inject
+        performances[index] = 0
+    if max_size is None:
+        unit_injection = heat_network.regenerator.unit_injection[start_index: start_index+8760]
+        unit_injection[unit_injection == 0] = -1
+        max_size = max(size)
+        year_schedule = size/max_size
+        return year_schedule, max_size
+    else:
+        year_schedule = size / max(size)
+        return year_schedule
+
+
+def create_target_function(heat_network):
+    start_index = np.where(heat_network.regenerator.schedule > 0)[0][0]
+
+    def regen_costs(max_size):
+        year_schedule = determine_injection_schedule(heat_network, max_size)
+        current_size = heat_network.regenerator.installation_size
+        heat_network.regenerator.set_installation_size(max_size)
+        full_schedule = np.zeros(40*8760)
+        full_schedule[start_index:] = np.resize(year_schedule, 40*8760-start_index)
+        heat_network.regenerator.set_schedule(full_schedule)
+        total_cost = np.zeros(40)
+        unit_cost = 600*10  # 600 €/m2 * 10 m2
+        invest_regen = heat_network.regenerator.installation_size*unit_cost
+        start_regen_index = np.where(heat_network.regenerator.schedule)[0][0] // 8760
+        total_cost[start_regen_index] += invest_regen
+        electric_energy = heat_network.regenerator.electrical_energy_demand_profile
+        electric_energy = np.array([sum(year) for year in np.resize(electric_energy, [40, 8760])])
+        total_cost += electric_energy*0.35
+        full_schedule[start_index:] = 1
+        heat_network.regenerator.set_schedule(full_schedule)
+        heat_network.regenerator.set_installation_size(current_size)
+        return npf.npv(0.05, total_cost)
+    return regen_costs
 
 
 if __name__ == "__main__":
@@ -198,28 +262,62 @@ if __name__ == "__main__":
                                "injection", 0)
 
     heat_network1 = HeatNetwork(create_borefield())
+    heat_network1.borefield.H = 113.91273956056114
     heating_load_kwh = ThermalDemand(total_heating_kwh, HeatExchanger(heat_network1, 1, "extraction"), hp_heating_demand)
     cooling_load_kwh = ThermalDemand(total_cooling_kwh, HeatExchanger(heat_network1, 1, "injection"), hp_cooling_demand)
     dhw_kwh = ThermalDemand(domestic_hot_water_kwh, HeatExchanger(heat_network1, 1, "extraction"), hp_domestic_hw)
     # elec_regen = ElectricalRegen(50, hp_regeneration, HeatExchanger(heat_network1, 1, "injection"), 11.5)
-    solar_regen = SolarRegen(np.zeros(40*8760), HeatExchanger(heat_network1, 1, "injection"))
+    solar_regen = SolarRegen(0, HeatExchanger(heat_network1, 1, "injection"))
     heat_network1.add_thermal_connections([heating_load_kwh, cooling_load_kwh, dhw_kwh, solar_regen])
+    plt.figure()
+    yearly_regen = solar_regen.unit_injection[:8760]
+    plt.scatter([i for i in range(8760)], yearly_regen)
+    plt.show()
+    # heat_network1.size_borefield()
+    # heat_network1.borefield.print_temperature_profile(plot_hourly=True)
+    best_price = math.inf
+    best_size = None
+    for i in range(50,51):
+        output_file = os.getcwd() + "/results.csv"
+        results = pd.DataFrame(columns=["Regen start", "Total elec demand", "Regenerator size", "TCO"])
+        print(datetime.now())
+        print("=============================")
+        year = (20/100*i)
+        print("Year: ", year)
+        size_regeneration(heat_network1, year/40)
+        electricity_consumption = np.array([sum(year) for year in np.resize(heat_network1.total_electricity_demand, [40, 8760])])
+        total_electricity_consumption = sum(electricity_consumption)
+        total_cost = electricity_consumption * 0.35
+        regen_invest = heat_network1.regenerator.installation_size * 600 * 10
+        start_regen_index = np.where(heat_network1.regenerator.schedule)[0][0] // 8760
+        total_cost[start_regen_index] += regen_invest
+        total_cost[0] += heat_network1.total_investment_cost + 35*heat_network1.borefield.number_of_boreholes
+        TCO = npf.npv(0.05, total_cost)
+        if TCO < best_price:
+            best_size = heat_network1.regenerator.installation_size
+            best_price = TCO
+        print("Total electricity consumption: ", total_electricity_consumption)
+        print("Regenerator size: ", heat_network1.regenerator.installation_size)
+        print("TCO: ", TCO)
+        results.loc[0] = {"Total elec demand": total_electricity_consumption,
+                          "Regenerator size": heat_network1.regenerator.installation_size,
+                          "TCO": TCO,
+                          "Regen start": year}
+        results.to_csv(output_file, mode="a", index=False, header=(i == 1))
+        print("============================")
 
-    heat_network1.size_borefield()
+    heat_network1.regenerator.set_installation_size(best_size)
+    upper_bound = determine_injection_schedule(heat_network1)[1]
+    lower_bound = determine_min_size(heat_network1)
+    print("Lower bound: ", lower_bound)
+    res = minimize_scalar(create_target_function(heat_network1), bounds=[lower_bound, upper_bound], method="bounded",
+                          options={"xatol": 1e-4})
+    year_schedule = determine_injection_schedule(heat_network1, res.x)
+    full_schedule = np.zeros(40 * 8760)
+    start = np.where(heat_network1.regenerator.schedule > 0)[0][0]
+    full_schedule[start:] = np.resize(year_schedule, 40 * 8760 - start)
+    heat_network1.regenerator.set_installation_size(res.x)
+    heat_network1.regenerator.set_schedule(full_schedule)
+    heat_network1.update_borefield()
     heat_network1.borefield.print_temperature_profile(plot_hourly=True)
-    print(heat_network1.borefield.H)
 
-    # Determine minimum depth
-    max_size = abs(heat_network1.load_imbalances) / (sum(solar_regen.unit_injection) / 40)
-    max_size[0] = 0
-    max_size[1] *= 0.1
-    max_size[2] *= 0.15
-    solar_regen.set_amt_installations(np.repeat(max_size, 8760) * 0.25)
-    heat_network1.size_borefield()
-    heat_network1.borefield.print_temperature_profile(plot_hourly=True)
-    print(heat_network1.borefield.H)
-
-    # Find
-    solar_regen.set_amt_installations(np.zeros(40*8760))
-    heat_network1.calculate_temperatures()
-    determine_steady_state_installation(heat_network1, 14/40)

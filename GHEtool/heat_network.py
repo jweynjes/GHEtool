@@ -65,9 +65,9 @@ class HeatNetwork:
         extractions = list(filter(lambda x: x.extraction, self.thermal_connections))
         injection_powers = sum(list(map(lambda x: np.array(x.heat_network_demand_profile), injections)))
         extraction_powers = sum(list(map(lambda x: np.array(x.heat_network_demand_profile), extractions)))
-        net_injection = injection_powers - extraction_powers
+        net_injection = injection_powers + self.pump_losses - extraction_powers
         net_injection[net_injection < 0] = 0
-        return net_injection + self.pump_losses
+        return net_injection
 
     @property
     def borefield_extraction(self):
@@ -75,7 +75,7 @@ class HeatNetwork:
         extractions = list(filter(lambda x: x.extraction, self.thermal_connections))
         injection_powers = sum(list(map(lambda x: np.array(x.heat_network_demand_profile), injections)))
         extraction_powers = sum(list(map(lambda x: np.array(x.heat_network_demand_profile), extractions)))
-        net_extraction = extraction_powers - injection_powers
+        net_extraction = extraction_powers - injection_powers - self.pump_losses
         net_extraction[net_extraction < 0] = 0
         return net_extraction
 
@@ -106,7 +106,7 @@ class HeatNetwork:
 
     @property
     def mass_flow_rates(self):
-        return sum(list(map(lambda x: x.mass_flow_rates, self.thermal_connections)))*4186/self.heat_capacity
+        return sum([x.mass_flow_rates for x in self.thermal_connections])*4186/self.heat_capacity
 
     @property
     def max_mass_flow_rate(self):
@@ -163,7 +163,7 @@ class HeatNetwork:
         return sum([load.electrical_energy_demand_profile for load in thermal_demand])
 
     @property
-    def regenerator(self):
+    def regenerator(self) -> SolarRegen:
         return list(filter(lambda l: isinstance(l, SolarRegen) or isinstance(l, ElectricalRegen), self.thermal_connections))[0]
 
     def size_borefield(self, verbose=False):

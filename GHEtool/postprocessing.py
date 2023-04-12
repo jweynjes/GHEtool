@@ -117,6 +117,10 @@ def thermal_post_processing():
 
 
 if __name__ == "__main__":
-    elec_post_processing()
-    thermal_post_processing()
+    df = pd.read_csv(os.getcwd() + "/results_low_tolerance.csv")
+    year = df["Regen start"].to_list()
+    regen_size = df["Regenerator size"].to_list()
+    plt.figure()
+    plt.scatter(year, regen_size)
+    plt.show()
     # a = pd.read_csv(os.getcwd() + "/elec_regen.csv", sep="\t")
