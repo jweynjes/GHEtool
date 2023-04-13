@@ -43,8 +43,8 @@ class HeatNetwork:
         extractions = list(filter(lambda x: x.extraction and isinstance(x, ThermalDemand), self.thermal_connections))
         injection_powers = sum(list(map(lambda x: np.array(x.heat_network_demand_profile), injections)))
         extraction_powers = sum(list(map(lambda x: np.array(x.heat_network_demand_profile), extractions)))
-        net_injection = injection_powers - extraction_powers
-        return np.array([sum(year) for year in np.resize(net_injection + self.pump_losses, [40, 8760])])
+        net_injection = injection_powers - extraction_powers + self.pump_losses
+        return net_injection
 
     @property
     def imbalances(self):
@@ -52,8 +52,8 @@ class HeatNetwork:
         extractions = list(filter(lambda x: x.extraction, self.thermal_connections))
         injection_powers = sum(list(map(lambda x: np.array(x.heat_network_demand_profile), injections)))
         extraction_powers = sum(list(map(lambda x: np.array(x.heat_network_demand_profile), extractions)))
-        net_injection = injection_powers - extraction_powers
-        return np.array([sum(year) for year in np.resize(net_injection + self.pump_losses, [40, 8760])])
+        net_injection = injection_powers - extraction_powers + self.pump_losses
+        return net_injection
 
     @property
     def borefield(self):
@@ -67,7 +67,7 @@ class HeatNetwork:
         extraction_powers = sum(list(map(lambda x: np.array(x.heat_network_demand_profile), extractions)))
         net_injection = injection_powers + self.pump_losses - extraction_powers
         net_injection[net_injection < 0] = 0
-        return net_injection
+        return np.array(net_injection)
 
     @property
     def borefield_extraction(self):
@@ -77,7 +77,7 @@ class HeatNetwork:
         extraction_powers = sum(list(map(lambda x: np.array(x.heat_network_demand_profile), extractions)))
         net_extraction = extraction_powers - injection_powers - self.pump_losses
         net_extraction[net_extraction < 0] = 0
-        return net_extraction
+        return np.array(net_extraction)
 
     @property
     def total_cooling_demand(self):
