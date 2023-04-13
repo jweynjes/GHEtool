@@ -106,7 +106,7 @@ class HeatNetwork:
 
     @property
     def mass_flow_rates(self):
-        return np.array(list(map(lambda x: x.mass_flow_rates, self.thermal_connections)))*4186/self.heat_capacity
+        return sum([x.mass_flow_rates for x in self.thermal_connections])*4186/self.heat_capacity
 
     @property
     def max_mass_flow_rate(self):
