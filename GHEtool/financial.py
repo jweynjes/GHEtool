@@ -53,7 +53,7 @@ def determine_injection_schedule(heat_network, max_size: float = None, max_power
     start_index = np.where(heat_network.regenerator.schedule > 0)[0][0]
     total_imbalance = heat_network.imbalances[start_index: start_index+8760]
     load_imbalance = heat_network.load_imbalances[start_index: start_index+8760]
-    target_imbalance = total_imbalance - load_imbalance
+    target_imbalance = sum(total_imbalance - load_imbalance)
     injection_margin = (heat_network.borefield_injection - heat_network.borefield_extraction)[start_index: start_index+8760]
     max_power = max((max_power, max(injection_margin)))
     injection_margin = max_power - injection_margin
@@ -124,6 +124,7 @@ def size_for_steady_state(heat_network: HeatNetwork, steady_state_time: float, t
     :param tol:
     :return:
     """
+    print(datetime.now())
     start_index = round(steady_state_time*40*8760)
     full_years_remaining = (40*8760-1-start_index) // 8760
     end_index = start_index + full_years_remaining*8760
@@ -134,18 +135,22 @@ def size_for_steady_state(heat_network: HeatNetwork, steady_state_time: float, t
     max_year_imbalance = abs(min([sum(year) for year in np.resize(heat_network.load_imbalances, [40, 8760])]))
     upper_bound = max_year_imbalance / (sum(heat_network.regenerator.unit_injection) / 40)
     while True:
-        mid_point = (lower_bound + upper_bound) / 2
+        mid_point = (lower_bound*2 + upper_bound*3)/5
         heat_network.regenerator.set_installation_size(mid_point)
         heat_network.calculate_temperatures()
         start_temperature = heat_network.borefield.results_peak_cooling[start_index]
         end_temperature = heat_network.borefield.results_peak_cooling[end_index]
-        if abs(end_temperature-start_temperature) < tol:
+        if abs(upper_bound - lower_bound) < tol:
+            print(abs(end_temperature-start_temperature))
+            if abs(end_temperature-start_temperature) > 0.1:
+                raise RuntimeError("Installation size converged but temperatures did not")
             break
         else:
             if end_temperature > start_temperature:
                 upper_bound = mid_point
             else:
                 lower_bound = mid_point
+    print(datetime.now())
     return
 
 
@@ -153,7 +158,7 @@ def size_regen(heat_network: HeatNetwork, start_years):
     best_price = math.inf
     best_size = None
     start = True
-    for i in range(1, 21):
+    for i in range(1, 20):
         start_year = (20/20*i)
         output_file = os.getcwd() + "/results.csv"
         results = pd.DataFrame(columns=["Regen start", "Total elec demand", "Regenerator size", "TCO", "Yearly imbalance"])

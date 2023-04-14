@@ -117,10 +117,13 @@ def thermal_post_processing():
 
 
 if __name__ == "__main__":
-    df = pd.read_csv(os.getcwd() + "/results_low_tolerance.csv")
+    df = pd.read_csv(os.getcwd() + "/results.csv")
     year = df["Regen start"].to_list()
     regen_size = df["Regenerator size"].to_list()
+    imbalance = df["Yearly imbalance"]
     plt.figure()
     plt.scatter(year, regen_size)
+    plt.figure()
+    plt.scatter(year, abs(imbalance))
     plt.show()
     # a = pd.read_csv(os.getcwd() + "/elec_regen.csv", sep="\t")
