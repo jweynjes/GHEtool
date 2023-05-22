@@ -122,6 +122,9 @@ if __name__ == "__main__":
     regen_size = df["Regenerator size"].to_list()
     imbalance = df["Yearly imbalance"]
     plt.figure()
+    plt.title("Soepele tolerantie")
+    plt.ylabel("Grootte regeneratiesysteem")
+    plt.xlabel("Startjaar regeneratie")
     plt.scatter(year, regen_size)
     plt.figure()
     plt.scatter(year, abs(imbalance))

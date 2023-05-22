@@ -10,7 +10,7 @@ from scipy.optimize import minimize_scalar
 
 from thermal_load import ElectricalRegen
 from heat_network import HeatNetwork
-from case import create_heat_network
+from case import create_heat_network, create_dummy_case
 from matplotlib import pyplot as plt
 
 
@@ -18,7 +18,7 @@ def create_target_function(heat_network):
     start_index = np.where(heat_network.regenerator.schedule > 0)[0][0]
 
     def regen_costs(max_size):
-        year_schedule = determine_injection_schedule(heat_network, max_size)
+        year_schedule = determine_injection_schedule(heat_network, max_size)[0]
         current_size = heat_network.regenerator.installation_size
         heat_network.regenerator.set_installation_size(max_size)
         full_schedule = np.zeros(40 * 8760)
@@ -158,8 +158,7 @@ def size_regen(heat_network: HeatNetwork, start_years):
     best_price = math.inf
     best_size = None
     start = True
-    for i in range(1, 20):
-        start_year = (20/20*i)
+    for start_year in start_years:
         output_file = os.getcwd() + "/results.csv"
         results = pd.DataFrame(columns=["Regen start", "Total elec demand", "Regenerator size", "TCO", "Yearly imbalance"])
         print(datetime.now())
@@ -194,7 +193,7 @@ def size_regen(heat_network: HeatNetwork, start_years):
     print("Lower bound: ", lower_bound)
     res = minimize_scalar(create_target_function(heat_network), bounds=[lower_bound, upper_bound], method="bounded",
                           options={"xatol": 1e-4})
-    year_schedule = determine_injection_schedule(heat_network, res.x)
+    year_schedule = determine_injection_schedule(heat_network, res.x)[0]
     full_schedule = np.zeros(40 * 8760)
     start = np.where(heat_network.regenerator.schedule > 0)[0][0]
     full_schedule[start:] = np.resize(year_schedule, 40 * 8760 - start)
@@ -206,9 +205,14 @@ def size_regen(heat_network: HeatNetwork, start_years):
 
 if __name__ == "__main__":
     heat_network1 = create_heat_network()
-    schedule = np.zeros(40 * 8760)
-    schedule[round(12.6 * 8760):] = 1
-    heat_network1.regenerator.set_installation_size(3.06)
-    heat_network1.regenerator.set_schedule(schedule)
-    heat_network1.size_borefield()
-    size_regen(heat_network1, [13.6, 13.8])
+    size_for_steady_state(heat_network1, 16/40, tol=0.01)
+    heat_network1.borefield.print_temperature_profile(plot_hourly=True)
+    min_size = determine_min_size(heat_network1)
+    year_schedule = determine_injection_schedule(heat_network1, min_size)[0]
+    full_schedule = np.zeros(40 * 8760)
+    start = np.where(heat_network1.regenerator.schedule > 0)[0][0]
+    full_schedule[start:] = np.resize(year_schedule, 40 * 8760 - start)
+    heat_network1.regenerator.set_installation_size(min_size)
+    heat_network1.regenerator.set_schedule(full_schedule)
+    heat_network1.update_borefield()
+    heat_network1.borefield.print_temperature_profile(plot_hourly=True)
