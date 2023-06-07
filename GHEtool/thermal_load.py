@@ -5,7 +5,6 @@ import numpy as np
 import math
 import os
 from abc import ABC
-import copy
 import pvlib.pvsystem as pvs
 import pvlib.temperature
 
@@ -91,18 +90,17 @@ class ThermalDemand(ThermalLoad):
         return self.amt_heat_pumps * self.heat_pump.price
 
 
-class SolarRegen(ThermalLoad):
+class Regenerator(ThermalLoad):
     def __init__(self, installation_size: int, heat_exchanger: HeatExchanger):
         super().__init__(heat_exchanger)
         self._installation_size = installation_size
-        self.length = 10
-        self.width = 0.1
-        self.amt_rows = 10
-        self.surface = self.length * self.amt_rows * self.width
+        self._schedule = np.ones(40*8760)
         self.injection = True
         self.extraction = False
-        self._schedule = np.ones(40*8760)
-        self.nominal_energy = self.calculate_nominal_energy()
+        if self.extraction != self.heat_exchanger.extraction or self.injection != self.heat_exchanger.injection:
+            raise ValueError("Regime mismatch between pump and HEX!")
+        self.unit_cost = 0
+        self._start = 0
 
     def set_installation_size(self, installation_size: float):
         self._installation_size = installation_size
@@ -122,19 +120,42 @@ class SolarRegen(ThermalLoad):
         return self._installation_size
 
     @property
+    def unit_injection(self):
+        return np.array([])
+
+    @property
     def heat_network_demand_profile(self):
-        K = 15.66
-        eta_0 = 0.912
-        powers = self.surface * (self.irradiances * eta_0 - K * (self.source_temperature - self.ambient_temperatures)) / 1000
-        powers[powers < 0] = 0
-        return powers*self.installation_size*self.schedule
+        return self.unit_injection * self.installation_size * self.schedule
+
+    @property
+    def start(self):
+        return self._start
+
+    def set_start(self, start_index):
+        self._start = start_index
+
+
+class SolarRegen(Regenerator):
+    def __init__(self, installation_size: int, heat_exchanger: HeatExchanger):
+        super().__init__(installation_size, heat_exchanger)
+        self._installation_size = installation_size
+        self.length = 10
+        self.width = 0.1
+        self.amt_rows = 10
+        self.surface = self.length * self.amt_rows * self.width
+        self.nominal_energy = self.calculate_nominal_energy()
+        self.unit_cost = 59 * 10  # 600 €/m2 * 10 m2
+        self.cost = self.installation_size*self.unit_cost
 
     @property
     def unit_injection(self):
-        K = 15.66
+        b_u = 0.015
+        b1 = 15.66
+        b2 = 2.15
         eta_0 = 0.912
-        powers = self.surface * (
-                    self.irradiances * eta_0 - K * (self.source_temperature - self.ambient_temperatures)) / 1000
+        t_delta = self.source_temperature - self.ambient_temperatures
+        eta = eta_0 * (1 - b_u * self.wind_speed) * self.irradiances - (b1 + b2*self.wind_speed)*t_delta
+        powers = self.surface * eta/1000
         powers[powers < 0] = 0
         return powers
 
@@ -150,15 +171,13 @@ class SolarRegen(ThermalLoad):
         pressure_drop *= 100  # [Pa]
         volumetric_flow_rate = flow_parameter * self.surface / 1000 / 3600  # [m3/s]
         pumping_energy = volumetric_flow_rate * pressure_drop  # [Wh]
-        return pumping_energy
+        return pumping_energy / 1000
 
     # file:///C:/Users/jaspe/Desktop/School/Thesis/Referenties/Solare%20Freibadbeheizung%20-%20Testergebnisse%20komplett.pdf
     # ANHANG G
     @property
     def electrical_energy_demand_profile(self):
-        boolean_mask = self.heat_network_demand_profile
-        boolean_mask[boolean_mask > 0] = 1
-        return self.nominal_energy / 1000 * boolean_mask*self.installation_size * self.schedule  # [kWh]
+        return self.nominal_energy * self.installation_size * self.schedule  # [kWh]
 
     @property
     def mass_flow_rates(self):
@@ -176,20 +195,26 @@ class SolarRegen(ThermalLoad):
         return performances
 
 
-class ElectricalRegen(ThermalLoad):
-    def __init__(self, amt_panels: int, heat_pump: HeatPump, heat_exchanger: HeatExchanger, cop_limit: float):
-        super().__init__(heat_exchanger)
-        self.amt_panels = amt_panels
+class ElectricalRegen(Regenerator):
+    def __init__(self, amt_panels: int, heat_pump: HeatPump, heat_exchanger: HeatExchanger):
+        super().__init__(amt_panels, heat_exchanger)
+        self._schedule = np.ones(40*8760)
         self.heat_pump = heat_pump
-        self.surface = 0
-        self.cop_limit = cop_limit
+        self.surface = 1.134*1.708
         self.capacity = 400
-        self.extraction = self.heat_exchanger.extraction
-        self.injection = self.heat_exchanger.injection
+        self.unit_generation = self.calculate_unit_generation()
         if self.extraction != self.heat_pump.extraction or self.injection != self.heat_pump.injection:
             raise ValueError("Regime mismatch between pump and HEX!")
 
-    def calculate_ac_generation(self):
+    @property
+    def cost(self):
+        return self.amt_heat_pumps * self.heat_pump.price
+
+    @property
+    def unit_injection(self):
+        return self.unit_generation * self.performances
+
+    def calculate_unit_generation(self):
         mount = pvs.FixedMount(35, 180)  # paneel configuratie
         array = pvs.Array(mount, None, None, None, None, {'pdc0': self.capacity, 'gamma_pdc': -0.0033}, None, 1,
                           1)  # single string with single panel
@@ -197,53 +222,33 @@ class ElectricalRegen(ThermalLoad):
         cell_temperatures = pvlib.temperature.sapm_cell(self.irradiances, self.ambient_temperatures,
                                                         self.wind_speed,
                                                         -2.98, -0.471, 1)
-        dc_output = self.amt_panels * pvsystem.pvwatts_dc(self.irradiances, cell_temperatures) / 1000
+        dc_output = pvsystem.pvwatts_dc(self.irradiances, cell_temperatures) / 1000
         efficiency_factor = 0.971  # https://files.sma.de/downloads/STP12000TL-DEN1723-V10web.pdf
         return dc_output * efficiency_factor
 
     @property
     def electrical_energy_demand_profile(self):
-        performances = self.heat_pump.calculate_cop(self.source_temperature, self.ambient_temperatures)
-        boolean_mask = copy.deepcopy(performances)
-        boolean_mask[boolean_mask <= self.cop_limit] = 0
-        boolean_mask[boolean_mask > self.cop_limit] = 1
-        return self.calculate_ac_generation() * boolean_mask
-
-    @property
-    def heat_network_demand_profile(self):
-        performances = self.heat_pump.calculate_cop(self.source_temperature, self.ambient_temperatures)
-        boolean_mask = copy.deepcopy(performances)
-        boolean_mask[boolean_mask <= self.cop_limit] = 0
-        boolean_mask[boolean_mask > self.cop_limit] = 1
-        return performances * self.calculate_ac_generation() * boolean_mask
+        return self.unit_generation * self.installation_size * self.schedule
 
     @property
     def excess_electrical_energy(self):
-        performances = self.heat_pump.calculate_cop(self.source_temperature, self.ambient_temperatures)
-        boolean_mask = copy.deepcopy(performances)
-        boolean_mask[boolean_mask <= self.cop_limit] = 1
-        boolean_mask[boolean_mask > self.cop_limit] = 0
-        return self.calculate_ac_generation() * boolean_mask
+        return self.unit_generation * self.installation_size * (1-self.schedule)
 
     @property
     def mass_flow_rates(self):
         max_mass_flow_rates = self.heat_pump.calculate_max_mass_flow_rate(self.source_temperature,
                                                                           self.ambient_temperatures)
         max_thermal_powers = self.heat_pump.calculate_max_powers(self.source_temperature, self.ambient_temperatures)
-        performances = self.heat_pump.calculate_cop(self.source_temperature, self.ambient_temperatures)
-        thermal_power_demand = self.electrical_energy_demand_profile * performances
-        return max_mass_flow_rates * thermal_power_demand / max_thermal_powers
+        return max_mass_flow_rates * self.heat_network_demand_profile / max_thermal_powers
 
     @property
     def amt_heat_pumps(self):
-        cop = self.heat_pump.calculate_cop(self.source_temperature, self.ambient_temperatures)
-        performance_demand = self.electrical_energy_demand_profile * cop
-        return math.ceil(max(performance_demand / self.heat_pump.calculate_max_powers(self.source_temperature,
-                                                                                      self.ambient_temperatures)))
+        max_powers = self.heat_pump.calculate_max_powers(self.source_temperature, self.ambient_temperatures)
+        return math.ceil(max(self.heat_network_demand_profile / max_powers))
 
     @property
-    def cost(self):
-        return self.amt_heat_pumps * self.heat_pump.price
+    def performances(self):
+        return self.heat_pump.calculate_cop(self.source_temperature, self.ambient_temperatures)
 
 
 if __name__ == "__main__":

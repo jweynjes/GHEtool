@@ -1,6 +1,6 @@
 import math
 
-from thermal_load import ThermalLoad, ThermalDemand, SolarRegen, ElectricalRegen
+from thermal_load import ThermalLoad, ThermalDemand, SolarRegen, ElectricalRegen, Regenerator
 from typing import Iterable
 import numpy as np
 import os
@@ -17,11 +17,12 @@ class HeatNetwork:
         self._borefield = borefield
         self.thermal_connections = set()
         self.max_flow_velocity = 2  # [m/s]
-        self.length = 1638
+        self.length = 500
         self.density = 1033
         self.heat_capacity = 3885
         self.viscosity = 2.38e-3
         self.pump_efficiency = 0.8
+        self._state = 0
         return
 
     def add_thermal_connection(self, thermal_connection: ThermalLoad):
@@ -120,7 +121,7 @@ class HeatNetwork:
     def invest_cost_per_meter(self):
         # https://www.agfw.de/securedl/sdl-eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2Nzc1MTUwMjQsImV4cCI6MTY3NzYwNTAyMywidXNlciI6MTUzMDMsImdyb3VwcyI6WzAsLTIsNF0sImZpbGUiOiJmaWxlYWRtaW5cL3VzZXJfdXBsb2FkXC9UZWNobmlrX3VuZF9Ob3JtdW5nXC9Ba3R1ZWxsZXMtSGlud2Vpc2VcLzIxMDNfUHJheGlzaGlsZmVfRmVybndhZXJtZWxlaXR1bmdzYmF1X1ZlcmxlZ2VzeXN0ZW1lX3VuZF9Lb3N0ZW4ucGRmIiwicGFnZSI6MTEyOX0.X9WPSUxwN08j9F-WeZl7xgtuRBpW5VIwmjxCdXVmSbE/2103_Praxishilfe_Fernwaermeleitungsbau_Verlegesysteme_und_Kosten.pdf
         diameter_mm = self.diameter/1000
-        return 664 + 2.610*diameter_mm
+        return 549 + 3.370*diameter_mm
 
     @property
     def total_investment_cost(self):
@@ -146,7 +147,7 @@ class HeatNetwork:
     @property
     def electric_pump_power(self):
         power_to_flow = self.mass_flow_rates*self.pressure_drops_kpa/self.density
-        return power_to_flow/self.pump_efficiency
+        return np.array(power_to_flow/self.pump_efficiency)
 
     @property
     def pump_losses(self):
@@ -155,7 +156,7 @@ class HeatNetwork:
     @property
     def total_electricity_demand(self):
         load_demand = sum([thermal_load.electrical_energy_demand_profile for thermal_load in self.thermal_connections])
-        return self.electric_pump_power + load_demand
+        return np.array(self.electric_pump_power + load_demand)
 
     @property
     def load_electricity_demand(self):
@@ -163,8 +164,8 @@ class HeatNetwork:
         return sum([load.electrical_energy_demand_profile for load in thermal_demand])
 
     @property
-    def regenerator(self) -> SolarRegen:
-        return list(filter(lambda l: isinstance(l, SolarRegen) or isinstance(l, ElectricalRegen), self.thermal_connections))[0]
+    def regenerator(self):
+        return tuple(filter(lambda l: isinstance(l, Regenerator), self.thermal_connections))[0]
 
     def size_borefield(self, verbose=False):
         borefield = self.borefield
@@ -192,7 +193,55 @@ class HeatNetwork:
                 break
         return borefield
 
+    def size_min_borefield(self, verbose=False):
+        borefield = self.borefield
+        iteration = 0
+        old_depth = borefield.H
+        depth = borefield.H
+        max_iter = 10
+        while True:
+            if iteration >= max_iter:
+                new_depth = max(depth, old_depth)
+                borefield.H = new_depth
+                borefield.calculate_temperatures(hourly=True)
+                return borefield
+            iteration += 1
+            if verbose:
+                print("Iteration {}\n\tCurrent depth: {}".format(iteration, borefield.H))
+            borefield.set_hourly_heating_load(
+                self.borefield_extraction.tolist())
+            borefield.set_hourly_cooling_load(
+                self.borefield_injection.tolist())
+            old_depth = depth
+            depth = borefield._size_based_on_temperature_profile(1, hourly=True)
+            borefield.calculate_temperatures(hourly=True)
+            if abs(old_depth - depth) <= 0.5:
+                break
+        return borefield
+
     def calculate_temperatures(self):
         self.update_borefield()
         self.borefield._calculate_temperature_profile(hourly=True)
         return
+
+    @property
+    def electricity_generation_profile(self):
+        if isinstance(ElectricalRegen, self.regenerator):
+            return self.regenerator.excess_energy_profile
+        else:
+            return np.zeros(40*8760)
+
+    @property
+    def amt_heat_pumps(self):
+        thermal_loads = filter(lambda y: isinstance(y, ThermalDemand), self.thermal_connections)
+        amt_heat_pumps = map(lambda x: x.amt_heat_pumps, thermal_loads)
+        return sum(tuple(amt_heat_pumps))
+
+    @property
+    def heat_pump_invest_cost(self):
+        thermal_loads = filter(lambda y: isinstance(y, ThermalDemand), self.thermal_connections)
+        return sum(tuple(map(lambda x: x.cost, thermal_loads)))
+
+    @property
+    def regen_invest_cost(self):
+        return self.regenerator.cost

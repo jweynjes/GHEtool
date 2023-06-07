@@ -1,0 +1,433 @@
+Profile;Weekday;Hour;Occupancy;Lighting;Appliances
+[EN16798] Office Landscape;True;1;0;0;0
+[EN16798] Office Landscape;True;2;0;0;0
+[EN16798] Office Landscape;True;3;0;0;0
+[EN16798] Office Landscape;True;4;0;0;0
+[EN16798] Office Landscape;True;5;0;0;0
+[EN16798] Office Landscape;True;6;0;0;0
+[EN16798] Office Landscape;True;7;0;0;0
+[EN16798] Office Landscape;True;8;0.2;0.2;0.2
+[EN16798] Office Landscape;True;9;0.6;0.6;0.6
+[EN16798] Office Landscape;True;10;0.6;0.6;0.6
+[EN16798] Office Landscape;True;11;0.7;0.7;0.7
+[EN16798] Office Landscape;True;12;0.7;0.7;0.7
+[EN16798] Office Landscape;True;13;0.4;0.4;0.4
+[EN16798] Office Landscape;True;14;0.6;0.6;0.6
+[EN16798] Office Landscape;True;15;0.7;0.7;0.7
+[EN16798] Office Landscape;True;16;0.7;0.7;0.7
+[EN16798] Office Landscape;True;17;0.6;0.6;0.6
+[EN16798] Office Landscape;True;18;0.2;0.2;0.2
+[EN16798] Office Landscape;True;19;0;0;0
+[EN16798] Office Landscape;True;20;0;0;0
+[EN16798] Office Landscape;True;21;0;0;0
+[EN16798] Office Landscape;True;22;0;0;0
+[EN16798] Office Landscape;True;23;0;0;0
+[EN16798] Office Landscape;True;24;0;0;0
+[EN16798] Office Landscape;False;1;0;0;0
+[EN16798] Office Landscape;False;2;0;0;0
+[EN16798] Office Landscape;False;3;0;0;0
+[EN16798] Office Landscape;False;4;0;0;0
+[EN16798] Office Landscape;False;5;0;0;0
+[EN16798] Office Landscape;False;6;0;0;0
+[EN16798] Office Landscape;False;7;0;0;0
+[EN16798] Office Landscape;False;8;0;0;0
+[EN16798] Office Landscape;False;9;0;0;0
+[EN16798] Office Landscape;False;10;0;0;0
+[EN16798] Office Landscape;False;11;0;0;0
+[EN16798] Office Landscape;False;12;0;0;0
+[EN16798] Office Landscape;False;13;0;0;0
+[EN16798] Office Landscape;False;14;0;0;0
+[EN16798] Office Landscape;False;15;0;0;0
+[EN16798] Office Landscape;False;16;0;0;0
+[EN16798] Office Landscape;False;17;0;0;0
+[EN16798] Office Landscape;False;18;0;0;0
+[EN16798] Office Landscape;False;19;0;0;0
+[EN16798] Office Landscape;False;20;0;0;0
+[EN16798] Office Landscape;False;21;0;0;0
+[EN16798] Office Landscape;False;22;0;0;0
+[EN16798] Office Landscape;False;23;0;0;0
+[EN16798] Office Landscape;False;24;0;0;0
+[EN16798] Residential;True;1;1;0;0.5
+[EN16798] Residential;True;2;1;0;0.5
+[EN16798] Residential;True;3;1;0;0.5
+[EN16798] Residential;True;4;1;0;0.5
+[EN16798] Residential;True;5;1;0;0.5
+[EN16798] Residential;True;6;1;0;0.5
+[EN16798] Residential;True;7;0.5;0.15;0.5
+[EN16798] Residential;True;8;0.5;0.15;0.7
+[EN16798] Residential;True;9;0.5;0.15;0.7
+[EN16798] Residential;True;10;0.1;0.15;0.5
+[EN16798] Residential;True;11;0.1;0.05;0.5
+[EN16798] Residential;True;12;0.1;0.05;0.6
+[EN16798] Residential;True;13;0.1;0.05;0.6
+[EN16798] Residential;True;14;0.2;0.05;0.6
+[EN16798] Residential;True;15;0.2;0.05;0.6
+[EN16798] Residential;True;16;0.2;0.05;0.5
+[EN16798] Residential;True;17;0.5;0.2;0.5
+[EN16798] Residential;True;18;0.5;0.2;0.7
+[EN16798] Residential;True;19;0.5;0.2;0.7
+[EN16798] Residential;True;20;0.8;0.2;0.8
+[EN16798] Residential;True;21;0.8;0.2;0.8
+[EN16798] Residential;True;22;0.8;0.2;0.8
+[EN16798] Residential;True;23;1;0.15;0.6
+[EN16798] Residential;True;24;1;0.15;0.6
+[EN16798] Residential;False;1;1;0;0.5
+[EN16798] Residential;False;2;1;0;0.5
+[EN16798] Residential;False;3;1;0;0.5
+[EN16798] Residential;False;4;1;0;0.5
+[EN16798] Residential;False;5;1;0;0.5
+[EN16798] Residential;False;6;1;0;0.5
+[EN16798] Residential;False;7;0.8;0.15;0.5
+[EN16798] Residential;False;8;0.8;0.15;0.7
+[EN16798] Residential;False;9;0.8;0.15;0.7
+[EN16798] Residential;False;10;0.8;0.15;0.5
+[EN16798] Residential;False;11;0.8;0.05;0.5
+[EN16798] Residential;False;12;0.8;0.05;0.6
+[EN16798] Residential;False;13;0.8;0.05;0.6
+[EN16798] Residential;False;14;0.8;0.05;0.6
+[EN16798] Residential;False;15;0.8;0.05;0.6
+[EN16798] Residential;False;16;0.8;0.05;0.5
+[EN16798] Residential;False;17;0.8;0.2;0.5
+[EN16798] Residential;False;18;0.8;0.2;0.7
+[EN16798] Residential;False;19;0.8;0.2;0.7
+[EN16798] Residential;False;20;0.8;0.2;0.8
+[EN16798] Residential;False;21;0.8;0.2;0.8
+[EN16798] Residential;False;22;0.8;0.2;0.8
+[EN16798] Residential;False;23;1;0.15;0.6
+[EN16798] Residential;False;24;1;0.15;0.6
+[Assembly] Auditorium;True;1;1;0;0.5
+[Assembly] Auditorium;True;2;1;0;0.5
+[Assembly] Auditorium;True;3;1;0;0.5
+[Assembly] Auditorium;True;4;1;0;0.5
+[Assembly] Auditorium;True;5;1;0;0.5
+[Assembly] Auditorium;True;6;1;0;0.5
+[Assembly] Auditorium;True;7;0.5;0.15;0.5
+[Assembly] Auditorium;True;8;0.5;0.15;0.7
+[Assembly] Auditorium;True;9;0.5;0.15;0.7
+[Assembly] Auditorium;True;10;0.1;0.15;0.5
+[Assembly] Auditorium;True;11;0.1;0.05;0.5
+[Assembly] Auditorium;True;12;0.1;0.05;0.6
+[Assembly] Auditorium;True;13;0.1;0.05;0.6
+[Assembly] Auditorium;True;14;0.2;0.05;0.6
+[Assembly] Auditorium;True;15;0.2;0.05;0.6
+[Assembly] Auditorium;True;16;0.2;0.05;0.5
+[Assembly] Auditorium;True;17;0.5;0.2;0.5
+[Assembly] Auditorium;True;18;0.5;0.2;0.7
+[Assembly] Auditorium;True;19;0.5;0.2;0.7
+[Assembly] Auditorium;True;20;0.8;0.2;0.8
+[Assembly] Auditorium;True;21;0.8;0.2;0.8
+[Assembly] Auditorium;True;22;0.8;0.2;0.8
+[Assembly] Auditorium;True;23;1;0.15;0.6
+[Assembly] Auditorium;True;24;1;0.15;0.6
+[Assembly] Auditorium;False;1;1;0;0.5
+[Assembly] Auditorium;False;2;1;0;0.5
+[Assembly] Auditorium;False;3;1;0;0.5
+[Assembly] Auditorium;False;4;1;0;0.5
+[Assembly] Auditorium;False;5;1;0;0.5
+[Assembly] Auditorium;False;6;1;0;0.5
+[Assembly] Auditorium;False;7;0.8;0.15;0.5
+[Assembly] Auditorium;False;8;0.8;0.15;0.7
+[Assembly] Auditorium;False;9;0.8;0.15;0.7
+[Assembly] Auditorium;False;10;0.8;0.15;0.5
+[Assembly] Auditorium;False;11;0.8;0.05;0.5
+[Assembly] Auditorium;False;12;0.8;0.05;0.6
+[Assembly] Auditorium;False;13;0.8;0.05;0.6
+[Assembly] Auditorium;False;14;0.8;0.05;0.6
+[Assembly] Auditorium;False;15;0.8;0.05;0.6
+[Assembly] Auditorium;False;16;0.8;0.05;0.5
+[Assembly] Auditorium;False;17;0.8;0.2;0.5
+[Assembly] Auditorium;False;18;0.8;0.2;0.7
+[Assembly] Auditorium;False;19;0.8;0.2;0.7
+[Assembly] Auditorium;False;20;0.8;0.2;0.8
+[Assembly] Auditorium;False;21;0.8;0.2;0.8
+[Assembly] Auditorium;False;22;0.8;0.2;0.8
+[Assembly] Auditorium;False;23;1;0.15;0.6
+[Assembly] Auditorium;False;24;1;0.15;0.6
+[Assembly] Multifunctional;True;1;1;0;0.5
+[Assembly] Multifunctional;True;2;1;0;0.5
+[Assembly] Multifunctional;True;3;1;0;0.5
+[Assembly] Multifunctional;True;4;1;0;0.5
+[Assembly] Multifunctional;True;5;1;0;0.5
+[Assembly] Multifunctional;True;6;1;0;0.5
+[Assembly] Multifunctional;True;7;0.5;0.15;0.5
+[Assembly] Multifunctional;True;8;0.5;0.15;0.7
+[Assembly] Multifunctional;True;9;0.5;0.15;0.7
+[Assembly] Multifunctional;True;10;0.1;0.15;0.5
+[Assembly] Multifunctional;True;11;0.1;0.05;0.5
+[Assembly] Multifunctional;True;12;0.1;0.05;0.6
+[Assembly] Multifunctional;True;13;0.1;0.05;0.6
+[Assembly] Multifunctional;True;14;0.2;0.05;0.6
+[Assembly] Multifunctional;True;15;0.2;0.05;0.6
+[Assembly] Multifunctional;True;16;0.2;0.05;0.5
+[Assembly] Multifunctional;True;17;0.5;0.2;0.5
+[Assembly] Multifunctional;True;18;0.5;0.2;0.7
+[Assembly] Multifunctional;True;19;0.5;0.2;0.7
+[Assembly] Multifunctional;True;20;0.8;0.2;0.8
+[Assembly] Multifunctional;True;21;0.8;0.2;0.8
+[Assembly] Multifunctional;True;22;0.8;0.2;0.8
+[Assembly] Multifunctional;True;23;1;0.15;0.6
+[Assembly] Multifunctional;True;24;1;0.15;0.6
+[Assembly] Multifunctional;False;1;1;0;0.5
+[Assembly] Multifunctional;False;2;1;0;0.5
+[Assembly] Multifunctional;False;3;1;0;0.5
+[Assembly] Multifunctional;False;4;1;0;0.5
+[Assembly] Multifunctional;False;5;1;0;0.5
+[Assembly] Multifunctional;False;6;1;0;0.5
+[Assembly] Multifunctional;False;7;0.8;0.15;0.5
+[Assembly] Multifunctional;False;8;0.8;0.15;0.7
+[Assembly] Multifunctional;False;9;0.8;0.15;0.7
+[Assembly] Multifunctional;False;10;0.8;0.15;0.5
+[Assembly] Multifunctional;False;11;0.8;0.05;0.5
+[Assembly] Multifunctional;False;12;0.8;0.05;0.6
+[Assembly] Multifunctional;False;13;0.8;0.05;0.6
+[Assembly] Multifunctional;False;14;0.8;0.05;0.6
+[Assembly] Multifunctional;False;15;0.8;0.05;0.6
+[Assembly] Multifunctional;False;16;0.8;0.05;0.5
+[Assembly] Multifunctional;False;17;0.8;0.2;0.5
+[Assembly] Multifunctional;False;18;0.8;0.2;0.7
+[Assembly] Multifunctional;False;19;0.8;0.2;0.7
+[Assembly] Multifunctional;False;20;0.8;0.2;0.8
+[Assembly] Multifunctional;False;21;0.8;0.2;0.8
+[Assembly] Multifunctional;False;22;0.8;0.2;0.8
+[Assembly] Multifunctional;False;23;1;0.15;0.6
+[Assembly] Multifunctional;False;24;1;0.15;0.6
+[FNB] Restaurant;True;1;1;0;0.5
+[FNB] Restaurant;True;2;1;0;0.5
+[FNB] Restaurant;True;3;1;0;0.5
+[FNB] Restaurant;True;4;1;0;0.5
+[FNB] Restaurant;True;5;1;0;0.5
+[FNB] Restaurant;True;6;1;0;0.5
+[FNB] Restaurant;True;7;0.5;0.15;0.5
+[FNB] Restaurant;True;8;0.5;0.15;0.7
+[FNB] Restaurant;True;9;0.5;0.15;0.7
+[FNB] Restaurant;True;10;0.1;0.15;0.5
+[FNB] Restaurant;True;11;0.1;0.05;0.5
+[FNB] Restaurant;True;12;0.1;0.05;0.6
+[FNB] Restaurant;True;13;0.1;0.05;0.6
+[FNB] Restaurant;True;14;0.2;0.05;0.6
+[FNB] Restaurant;True;15;0.2;0.05;0.6
+[FNB] Restaurant;True;16;0.2;0.05;0.5
+[FNB] Restaurant;True;17;0.5;0.2;0.5
+[FNB] Restaurant;True;18;0.5;0.2;0.7
+[FNB] Restaurant;True;19;0.5;0.2;0.7
+[FNB] Restaurant;True;20;0.8;0.2;0.8
+[FNB] Restaurant;True;21;0.8;0.2;0.8
+[FNB] Restaurant;True;22;0.8;0.2;0.8
+[FNB] Restaurant;True;23;1;0.15;0.6
+[FNB] Restaurant;True;24;1;0.15;0.6
+[FNB] Restaurant;False;1;0;0;0
+[FNB] Restaurant;False;2;0;0;0
+[FNB] Restaurant;False;3;0;0;0
+[FNB] Restaurant;False;4;0;0;0
+[FNB] Restaurant;False;5;0;0;0
+[FNB] Restaurant;False;6;0;0;0
+[FNB] Restaurant;False;7;0;0;0
+[FNB] Restaurant;False;8;0;0;0
+[FNB] Restaurant;False;9;0;0;0
+[FNB] Restaurant;False;10;0;0;0
+[FNB] Restaurant;False;11;0;0;0
+[FNB] Restaurant;False;12;0;0;0
+[FNB] Restaurant;False;13;0;0;0
+[FNB] Restaurant;False;14;0;0;0
+[FNB] Restaurant;False;15;0;0;0
+[FNB] Restaurant;False;16;0;0;0
+[FNB] Restaurant;False;17;0;0;0
+[FNB] Restaurant;False;18;0;0;0
+[FNB] Restaurant;False;19;0;0;0
+[FNB] Restaurant;False;20;0;0;0
+[FNB] Restaurant;False;21;0;0;0
+[FNB] Restaurant;False;22;0;0;0
+[FNB] Restaurant;False;23;0;0;0
+[FNB] Restaurant;False;24;0;0;0
+[Office] Meeting Room SS;True;1;1;0;0.5
+[Office] Meeting Room SS;True;2;1;0;0.5
+[Office] Meeting Room SS;True;3;1;0;0.5
+[Office] Meeting Room SS;True;4;1;0;0.5
+[Office] Meeting Room SS;True;5;1;0;0.5
+[Office] Meeting Room SS;True;6;1;0;0.5
+[Office] Meeting Room SS;True;7;0.5;0.15;0.5
+[Office] Meeting Room SS;True;8;0.5;0.15;0.7
+[Office] Meeting Room SS;True;9;0.5;0.15;0.7
+[Office] Meeting Room SS;True;10;0.1;0.15;0.5
+[Office] Meeting Room SS;True;11;0.1;0.05;0.5
+[Office] Meeting Room SS;True;12;0.1;0.05;0.6
+[Office] Meeting Room SS;True;13;0.1;0.05;0.6
+[Office] Meeting Room SS;True;14;0.2;0.05;0.6
+[Office] Meeting Room SS;True;15;0.2;0.05;0.6
+[Office] Meeting Room SS;True;16;0.2;0.05;0.5
+[Office] Meeting Room SS;True;17;0.5;0.2;0.5
+[Office] Meeting Room SS;True;18;0.5;0.2;0.7
+[Office] Meeting Room SS;True;19;0.5;0.2;0.7
+[Office] Meeting Room SS;True;20;0.8;0.2;0.8
+[Office] Meeting Room SS;True;21;0.8;0.2;0.8
+[Office] Meeting Room SS;True;22;0.8;0.2;0.8
+[Office] Meeting Room SS;True;23;1;0.15;0.6
+[Office] Meeting Room SS;True;24;1;0.15;0.6
+[Office] Meeting Room SS;False;1;0;0;0
+[Office] Meeting Room SS;False;2;0;0;0
+[Office] Meeting Room SS;False;3;0;0;0
+[Office] Meeting Room SS;False;4;0;0;0
+[Office] Meeting Room SS;False;5;0;0;0
+[Office] Meeting Room SS;False;6;0;0;0
+[Office] Meeting Room SS;False;7;0;0;0
+[Office] Meeting Room SS;False;8;0;0;0
+[Office] Meeting Room SS;False;9;0;0;0
+[Office] Meeting Room SS;False;10;0;0;0
+[Office] Meeting Room SS;False;11;0;0;0
+[Office] Meeting Room SS;False;12;0;0;0
+[Office] Meeting Room SS;False;13;0;0;0
+[Office] Meeting Room SS;False;14;0;0;0
+[Office] Meeting Room SS;False;15;0;0;0
+[Office] Meeting Room SS;False;16;0;0;0
+[Office] Meeting Room SS;False;17;0;0;0
+[Office] Meeting Room SS;False;18;0;0;0
+[Office] Meeting Room SS;False;19;0;0;0
+[Office] Meeting Room SS;False;20;0;0;0
+[Office] Meeting Room SS;False;21;0;0;0
+[Office] Meeting Room SS;False;22;0;0;0
+[Office] Meeting Room SS;False;23;0;0;0
+[Office] Meeting Room SS;False;24;0;0;0
+[Office] Meeting Room M;True;1;1;0;0.5
+[Office] Meeting Room M;True;2;1;0;0.5
+[Office] Meeting Room M;True;3;1;0;0.5
+[Office] Meeting Room M;True;4;1;0;0.5
+[Office] Meeting Room M;True;5;1;0;0.5
+[Office] Meeting Room M;True;6;1;0;0.5
+[Office] Meeting Room M;True;7;0.5;0.15;0.5
+[Office] Meeting Room M;True;8;0.5;0.15;0.7
+[Office] Meeting Room M;True;9;0.5;0.15;0.7
+[Office] Meeting Room M;True;10;0.1;0.15;0.5
+[Office] Meeting Room M;True;11;0.1;0.05;0.5
+[Office] Meeting Room M;True;12;0.1;0.05;0.6
+[Office] Meeting Room M;True;13;0.1;0.05;0.6
+[Office] Meeting Room M;True;14;0.2;0.05;0.6
+[Office] Meeting Room M;True;15;0.2;0.05;0.6
+[Office] Meeting Room M;True;16;0.2;0.05;0.5
+[Office] Meeting Room M;True;17;0.5;0.2;0.5
+[Office] Meeting Room M;True;18;0.5;0.2;0.7
+[Office] Meeting Room M;True;19;0.5;0.2;0.7
+[Office] Meeting Room M;True;20;0.8;0.2;0.8
+[Office] Meeting Room M;True;21;0.8;0.2;0.8
+[Office] Meeting Room M;True;22;0.8;0.2;0.8
+[Office] Meeting Room M;True;23;1;0.15;0.6
+[Office] Meeting Room M;True;24;1;0.15;0.6
+[Office] Meeting Room M;False;1;0;0;0
+[Office] Meeting Room M;False;2;0;0;0
+[Office] Meeting Room M;False;3;0;0;0
+[Office] Meeting Room M;False;4;0;0;0
+[Office] Meeting Room M;False;5;0;0;0
+[Office] Meeting Room M;False;6;0;0;0
+[Office] Meeting Room M;False;7;0;0;0
+[Office] Meeting Room M;False;8;0;0;0
+[Office] Meeting Room M;False;9;0;0;0
+[Office] Meeting Room M;False;10;0;0;0
+[Office] Meeting Room M;False;11;0;0;0
+[Office] Meeting Room M;False;12;0;0;0
+[Office] Meeting Room M;False;13;0;0;0
+[Office] Meeting Room M;False;14;0;0;0
+[Office] Meeting Room M;False;15;0;0;0
+[Office] Meeting Room M;False;16;0;0;0
+[Office] Meeting Room M;False;17;0;0;0
+[Office] Meeting Room M;False;18;0;0;0
+[Office] Meeting Room M;False;19;0;0;0
+[Office] Meeting Room M;False;20;0;0;0
+[Office] Meeting Room M;False;21;0;0;0
+[Office] Meeting Room M;False;22;0;0;0
+[Office] Meeting Room M;False;23;0;0;0
+[Office] Meeting Room M;False;24;0;0;0
+[Office] Meeting Room L;True;1;1;0;0.5
+[Office] Meeting Room L;True;2;1;0;0.5
+[Office] Meeting Room L;True;3;1;0;0.5
+[Office] Meeting Room L;True;4;1;0;0.5
+[Office] Meeting Room L;True;5;1;0;0.5
+[Office] Meeting Room L;True;6;1;0;0.5
+[Office] Meeting Room L;True;7;0.5;0.15;0.5
+[Office] Meeting Room L;True;8;0.5;0.15;0.7
+[Office] Meeting Room L;True;9;0.5;0.15;0.7
+[Office] Meeting Room L;True;10;0.1;0.15;0.5
+[Office] Meeting Room L;True;11;0.1;0.05;0.5
+[Office] Meeting Room L;True;12;0.1;0.05;0.6
+[Office] Meeting Room L;True;13;0.1;0.05;0.6
+[Office] Meeting Room L;True;14;0.2;0.05;0.6
+[Office] Meeting Room L;True;15;0.2;0.05;0.6
+[Office] Meeting Room L;True;16;0.2;0.05;0.5
+[Office] Meeting Room L;True;17;0.5;0.2;0.5
+[Office] Meeting Room L;True;18;0.5;0.2;0.7
+[Office] Meeting Room L;True;19;0.5;0.2;0.7
+[Office] Meeting Room L;True;20;0.8;0.2;0.8
+[Office] Meeting Room L;True;21;0.8;0.2;0.8
+[Office] Meeting Room L;True;22;0.8;0.2;0.8
+[Office] Meeting Room L;True;23;1;0.15;0.6
+[Office] Meeting Room L;True;24;1;0.15;0.6
+[Office] Meeting Room L;False;1;0;0;0
+[Office] Meeting Room L;False;2;0;0;0
+[Office] Meeting Room L;False;3;0;0;0
+[Office] Meeting Room L;False;4;0;0;0
+[Office] Meeting Room L;False;5;0;0;0
+[Office] Meeting Room L;False;6;0;0;0
+[Office] Meeting Room L;False;7;0;0;0
+[Office] Meeting Room L;False;8;0;0;0
+[Office] Meeting Room L;False;9;0;0;0
+[Office] Meeting Room L;False;10;0;0;0
+[Office] Meeting Room L;False;11;0;0;0
+[Office] Meeting Room L;False;12;0;0;0
+[Office] Meeting Room L;False;13;0;0;0
+[Office] Meeting Room L;False;14;0;0;0
+[Office] Meeting Room L;False;15;0;0;0
+[Office] Meeting Room L;False;16;0;0;0
+[Office] Meeting Room L;False;17;0;0;0
+[Office] Meeting Room L;False;18;0;0;0
+[Office] Meeting Room L;False;19;0;0;0
+[Office] Meeting Room L;False;20;0;0;0
+[Office] Meeting Room L;False;21;0;0;0
+[Office] Meeting Room L;False;22;0;0;0
+[Office] Meeting Room L;False;23;0;0;0
+[Office] Meeting Room L;False;24;0;0;0
+[General] Off;True;1;0;0;0
+[General] Off;True;2;0;0;0
+[General] Off;True;3;0;0;0
+[General] Off;True;4;0;0;0
+[General] Off;True;5;0;0;0
+[General] Off;True;6;0;0;0
+[General] Off;True;7;0;0;0
+[General] Off;True;8;0;0;0
+[General] Off;True;9;0;0;0
+[General] Off;True;10;0;0;0
+[General] Off;True;11;0;0;0
+[General] Off;True;12;0;0;0
+[General] Off;True;13;0;0;0
+[General] Off;True;14;0;0;0
+[General] Off;True;15;0;0;0
+[General] Off;True;16;0;0;0
+[General] Off;True;17;0;0;0
+[General] Off;True;18;0;0;0
+[General] Off;True;19;0;0;0
+[General] Off;True;20;0;0;0
+[General] Off;True;21;0;0;0
+[General] Off;True;22;0;0;0
+[General] Off;True;23;0;0;0
+[General] Off;True;24;0;0;0
+[General] Off;False;1;0;0;0
+[General] Off;False;2;0;0;0
+[General] Off;False;3;0;0;0
+[General] Off;False;4;0;0;0
+[General] Off;False;5;0;0;0
+[General] Off;False;6;0;0;0
+[General] Off;False;7;0;0;0
+[General] Off;False;8;0;0;0
+[General] Off;False;9;0;0;0
+[General] Off;False;10;0;0;0
+[General] Off;False;11;0;0;0
+[General] Off;False;12;0;0;0
+[General] Off;False;13;0;0;0
+[General] Off;False;14;0;0;0
+[General] Off;False;15;0;0;0
+[General] Off;False;16;0;0;0
+[General] Off;False;17;0;0;0
+[General] Off;False;18;0;0;0
+[General] Off;False;19;0;0;0
+[General] Off;False;20;0;0;0
+[General] Off;False;21;0;0;0
+[General] Off;False;22;0;0;0
+[General] Off;False;23;0;0;0
+[General] Off;False;24;0;0;0

@@ -1,0 +1,435 @@
+﻿Level	Number	Name	BARC_SPC_CATEGORY	BARC_SPC_GROUP_CLASS0	BARC_SPC_GROUP_CLASS1	BARC_SPC_KEY	Area	IES_AREA	Volume	IES_OCCUPATION_REAL	IES_OCCUPATION_DESIGN	IES_PROFILE	BARC_REF_ACTIVITY_PEOPLE_SENSIBLE	BARC_REF_ACTIVITY_PEOPLE_LATENT	IES_LIGHT_DENSITY	IES_ILLUMINANCE	BARC_EA_PLUG_EQUIP1_PERAREA	BARC_EA_PLUG_EQUIP1_PERPERSON	BARC_EA_PLUG_EQUIP1_PERROOM	IES_PLUG_TOTAL	IES_PLUG_TOTAL_DENSITY	IES_INT_GAINS_TOTAL_DENSITY	IES_VENTILATION_TYPE	BARC_VENT_SUPPLY_DESIGN	Condition Type	BARC_SPC_HEAT_TEMP_SETPOINT	BARC_SPC_CLG_TEMP_SETPOINT	IES_COMF_RH_MIN	IES_COMF_RH_MAX	IES_HEAT_POWER_DENSITY	IES_COOL_POWER_DENSITY
+00	A00.03	A-SA.00.01/1	GENERAL	A.00.04	A	[GEN] Restrooms	32.7	34.0	135.0	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+00	A00.06	[GEN] Stairway	GENERAL	A.00.05	A	[GEN] Stairway	19.6	21.7	80.9	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+00	A00.07	[GEN] Stairway	GENERAL	A.00.08	A	[GEN] Stairway	18.8	20.2	77.8	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+01	A1	6P	OFFICE	A.01.04	A	[OF] Meeting Room < 6p	13.4	15.0	66.4	6	6	[Office] Meeting Room SS	75	40	10.0	500	0	30	0	180	13.4	57.0	VAV	240	Heated and cooled	21	25	40	60	50	75
+01	A01.13	[GEN] Stairway	GENERAL	A.01.00	A	[GEN] Stairway	18.9	21.1	93.4	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+01	A01.14	[GEN] Stairway	GENERAL	A.01.00	A	[GEN] Stairway	19.2		95.2	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+01	A2	6P	OFFICE	A.01.05	A	[OF] Meeting Room < 6p	13.3	14.2	65.6	6	6	[Office] Meeting Room SS	75	40	10.0	500	0	30	0	180	13.6	57.5	VAV	240	Heated and cooled	21	25	40	60	50	75
+01	A3	12P	OFFICE	A.01.06	A	[OF] Meeting Room <= 12p	27.7	28.2	136.9	12	12	[Office] Meeting Room M	75	40	10.0	500	0	30	0	360	13.0	55.6	VAV	480	Heated and cooled	21	25	40	60	50	75
+01	A4	10P	OFFICE	A.01.08	A	[OF] Meeting Room <= 12p	21.4	22.0	105.7	10	10	[Office] Meeting Room M	75	40	10.0	500	0	30	0	300	14.0	59.2	VAV	400	Heated and cooled	21	25	40	60	50	75
+01	A5	12P	OFFICE	A.01.09	A	[OF] Meeting Room <= 12p	29.7	31.0	60.9	12	12	[Office] Meeting Room M	75	40	10.0	500	0	30	0	360	12.1	52.4	VAV	480	Heated and cooled	21	25	40	60	50	75
+01	A6	8P	OFFICE	A.01.07	A	[OF] Meeting Room <= 12p	18.7	19.9	38.2	8	8	[Office] Meeting Room M	75	40	10.0	500	0	30	0	240	12.9	55.0	VAV	320	Heated and cooled	21	25	40	60	50	75
+A01.1	A7	10P	OFFICE	A.01.07.01	A	[OF] Meeting Room <= 12p	25.7	27.3	60.4	10	10	[Office] Meeting Room M	75	40	10.0	500	0	30	0	300	11.7	50.9	VAV	400	Heated and cooled	21	25	40	60	50	75
+A01.1	A8	12P	OFFICE	A.01.09.01	A	[OF] Meeting Room <= 12p	29.7	31.0	69.8	12	12	[Office] Meeting Room M	75	40	10.0	500	0	30	0	360	12.1	52.4	VAV	480	Heated and cooled	21	25	40	60	50	75
+01	A9	6P	OFFICE	A.01.10	A	[OF] Meeting Room < 6p	13.9	14.9	28.6	6	6	[Office] Meeting Room SS	75	40	10.0	500	0	30	0	180	12.9	55.2	VAV	240	Heated and cooled	21	25	40	60	50	75
+A01.1	A10	6P	OFFICE	A.01.10.01	A	[OF] Meeting Room < 6p	13.9	14.8	32.8	6	6	[Office] Meeting Room SS	75	40	10.0	500	0	30	0	180	12.9	55.2	VAV	240	Heated and cooled	21	25	40	60	50	75
+A01.1	A11	6P	OFFICE	A.01.11.01	A	[OF] Meeting Room < 6p	14.8	15.0	34.9	6	6	[Office] Meeting Room SS	75	40	10.0	500	0	30	0	180	12.1	52.4	VAV	240	Heated and cooled	21	25	40	60	50	75
+A01.1	A12	6P	OFFICE	A.01.13.01	A	[OF] Meeting Room < 6p	14.3	14.6	33.6	6	6	[Office] Meeting Room SS	75	40	10.0	500	0	30	0	180	12.6	54.1	VAV	240	Heated and cooled	21	25	40	60	50	75
+01	A13	6P	OFFICE	A.01.11	A	[OF] Meeting Room < 6p	14.8	15.0	30.4	6	6	[Office] Meeting Room SS	75	40	10.0	500	0	30	0	180	12.1	52.4	VAV	240	Heated and cooled	21	25	40	60	50	75
+01	A14	8P	OFFICE	A.01.12	A	[OF] Meeting Room <= 12p	18.9	19.3	93.4	8	8	[Office] Meeting Room M	75	40	10.0	500	0	30	0	240	12.7	54.5	VAV	320	Heated and cooled	21	25	40	60	50	75
+01	A15	6P	OFFICE	A.01.13	A	[OF] Meeting Room < 6p	14.3	14.6	29.3	6	6	[Office] Meeting Room SS	75	40	10.0	500	0	30	0	180	12.6	54.1	VAV	240	Heated and cooled	21	25	40	60	50	75
+01	A16	10P	OFFICE	A.01.15	A	[OF] Meeting Room <= 12p	22.2	22.7	109.7	10	10	[Office] Meeting Room M	75	40	10.0	500	0	30	0	300	13.5	57.4	VAV	400	Heated and cooled	21	25	40	60	50	75
+01	A17	20P	OFFICE	A.01.16	A	[OF] Meeting Room >12p	44.7	49.1	221.4	20	20	[Office] Meeting Room L	75	40	10.0	500	0	30	0	600	13.4	56.9	VAV	800	Heated and cooled	21	25	40	60	50	75
+00	A-AF.00.01	Afvalberging	TECHNICAL SPACE	A.00.07	A	[TS] Storage	28.8	31.1	119.1	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	A-AF.00.02	Afvalberging	TECHNICAL SPACE	A.00.07	A	[TS] Storage	5.8	6.2	24.0	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	A-BE.00.01	berging	TECHNICAL SPACE	A.00.06	A	[TS] Storage	10.1	10.7	41.8	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+01	A-BE.01.01	berging	TECHNICAL SPACE	A.01.00	A	[TS] Storage	1.8	2.0	8.7	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A02	A-BE.02.01	berging	TECHNICAL SPACE	A.02.00	A	[TS] Storage	1.7	1.9	5.4	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A03	A-BE.03.01	berging	TECHNICAL SPACE	A.03.00	A	[TS] Storage	1.7	1.9	5.4	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A04	A-BE.04.01	berging	TECHNICAL SPACE	A.04.00	A	[TS] Storage	1.7	1.9	5.4	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A05	A-BE.05.01	berging	TECHNICAL SPACE	A.05.00	A	[TS] Storage	1.7	1.9	5.5	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	A-CO.00.01	Office	OFFICE	A.00.02	A	[OF] Office	37.3	38.2	153.9	2	2	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	150	4.0	15.5	VAV	80	Heated and cooled	21	25	40	60	50	75
+00	A-EH.00.01	EHBO	TECHNICAL SPACE	A.00.03	A	[TS] Technical Space	7.4	8.2	30.7	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	A-GA.00.01	Gang	OFFICE	A.00.01	A	[OF] Circulation	106.8	121.8	441.1	0	0	[EN16798] Office Landscape	75	40	3.0	150	0	0	0	0	0.0	3.0	None	0	Heated and cooled	18	28	0	100	0	0
+A01.1	A-GA.00.03.1	Flex desks	OFFICE	A.01.03	A	[OF] Office	94.8	100.9	222.8	14	14	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	1050	11.1	29.6	VAV	560	Heated and cooled	21	25	40	60	50	75
+01	A-GA.00.15	Office	OFFICE	A.01.17	A	[OF] Meeting Room <= 12p	24.2	25.3	119.7	12	12	[Office] Meeting Room M	75	40	10.0	500	0	30	0	360	14.9	62.1	VAV	480	Heated and cooled	21	25	40	60	50	75
+01	A-GA.00.16	Office	OFFICE	A.01.18	A	[OF] Meeting Room < 6p	12.7	13.1	62.6	6	6	[Office] Meeting Room SS	75	40	10.0	500	0	30	0	180	14.2	59.8	VAV	240	Heated and cooled	21	25	40	60	50	75
+01	A-GA.00.17	Office	OFFICE	A.01.19	A	[OF] Meeting Room < 6p	11.7	12.6	57.8	6	6	[Office] Meeting Room SS	75	40	10.0	500	0	30	0	180	15.4	64.0	VAV	240	Heated and cooled	21	25	40	60	50	75
+01	A-GA.01.00.01	Gang	OFFICE	A.01.20	A	[OF] Entrance	83.9	94.3	176.1	5	5	[EN16798] Office Landscape	75	40	3.0	300	3	0	0	252	3.0	10.5	CAV	200	Heated and cooled	21	25	0	100	50	50
+01	A-GA.01.01	Gang	OFFICE	A.01.00	A	[OF] Circulation	94.7	102.5	198.8	0	0	[EN16798] Office Landscape	75	40	3.0	150	0	0	0	0	0.0	3.0	None	0	Heated and cooled	18	28	0	100	0	0
+01	A-GA.01.02	Makerspace	OFFICE	A.01.02	A	[OF] Makerspace	124.8	130.1	617.6	8	8	[EN16798] Office Landscape	75	40	10.0	500	0	75	0	600	4.8	19.6	VAV	320	Heated and cooled	21	25	40	60	50	75
+01	A-GA.01.03	Flex desks	OFFICE	A.01.03	A	[OF] Office	94.8	100.9	195.3	6	6	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	450	4.7	17.0	VAV	240	Heated and cooled	21	25	40	60	50	75
+01	A-GA.01.04	Gang	OFFICE	A.01.20	A	[OF] Circulation	48.9	53.1	102.8	0	0	[EN16798] Office Landscape	75	40	3.0	150	0	0	0	0	0.0	3.0	None	0	Heated and cooled	18	28	0	100	0	0
+01	A-GA.01.05	Gang	OFFICE	A.01.20	A	[OF] Entrance	94.2	104.5	197.8	6	6	[EN16798] Office Landscape	75	40	3.0	300	3	0	0	283	3.0	10.8	CAV	240	Heated and cooled	21	25	0	100	50	50
+A02	A-GA.02.01	Gang	OFFICE	A.02.00	A	[OF] Circulation	54.6	58.1	174.1	0	0	[EN16798] Office Landscape	75	40	3.0	150	0	0	0	0	0.0	3.0	None	0	Heated and cooled	18	28	0	100	0	0
+A03	A-GA.02.04	Gang	OFFICE	A.03.00	A	[OF] Circulation	54.6	58.1	174.1	0	0	[EN16798] Office Landscape	75	40	3.0	150	0	0	0	0	0.0	3.0	None	0	Heated and cooled	18	28	0	100	0	0
+A05	A-GA.02.40	Gang	OFFICE	A.05.00	A	[OF] Circulation	54.6	58.1	176.2	0	0	[EN16798] Office Landscape	75	40	3.0	150	0	0	0	0	0.0	3.0	None	0	Heated and cooled	18	28	0	100	0	0
+A04	A-GA.04.01	Gang	OFFICE	A.04.00	A	[OF] Circulation	54.6	58.1	174.1	0	0	[EN16798] Office Landscape	75	40	3.0	150	0	0	0	0	0.0	3.0	None	0	Heated and cooled	18	28	0	100	0	0
+00	A-IN.00.01	Inkom	OFFICE	A.00.01	A	[OF] Entrance	108.1	114.3	446.5	7	7	[EN16798] Office Landscape	75	40	3.0	300	3	0	0	324	3.0	10.9	CAV	280	Heated and cooled	21	25	0	100	50	50
+00	A-IN.00.02	Inkom	OFFICE	A.00.05	A	[OF] Circulation	12.4	14.3	51.1	0	0	[EN16798] Office Landscape	75	40	3.0	150	0	0	0	0	0.0	3.0	None	0	Heated and cooled	18	28	0	100	0	0
+00	A-KE.00.01	Office	OFFICE	A.00.02	A	[OF] Office	27.4	28.2	113.3	2	2	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	150	5.5	18.4	VAV	80	Heated and cooled	21	25	40	60	50	75
+00	A-KO.00.06	Koker	TECHNICAL SPACE	A.00.08	A	[TS] Shaft	2.9	3.5	12.0	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+01	A-KO.01.01	Koker	TECHNICAL SPACE	A.01.00	A	[TS] Shaft	4.9	5.5	24.4	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+01	A-KO.01.02	Koker	TECHNICAL SPACE	A.01.00	A	[TS] Shaft	2.9	3.7	14.1	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+01	A-KO.01.04	Koker	TECHNICAL SPACE	A.01.00	A	[TS] Shaft	0.7	0.9	3.3	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+01	A-KO.01.05	Koker	TECHNICAL SPACE	A.01.00	A	[TS] Shaft	0.4	0.5	1.8	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+01	A-KO.01.06	Koker	TECHNICAL SPACE	A.01.20	A	[TS] Shaft	4.6	5.6	23.0	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A02	A-KO.02.01	Koker	TECHNICAL SPACE	A.02.00	A	[TS] Shaft	4.9	5.5	15.6	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A02	A-KO.02.02	Koker	TECHNICAL SPACE	A.02.00	A	[TS] Shaft	2.8	3.3	8.9	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A02	A-KO.02.05	Koker	TECHNICAL SPACE	A.02.00	A	[TS] Shaft	0.4	0.5	1.2	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A02	A-KO.02.06	Koker	TECHNICAL SPACE	A.02.00	A	[TS] Shaft	4.6	5.3	14.8	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A03	A-KO.03.01	Koker	TECHNICAL SPACE	A.03.00	A	[TS] Shaft	4.9	5.5	15.6	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A03	A-KO.03.02	Koker	TECHNICAL SPACE	A.03.00	A	[TS] Shaft	2.8	3.3	8.9	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A03	A-KO.03.05	Koker	TECHNICAL SPACE	A.03.00	A	[TS] Shaft	0.4	0.5	1.2	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A03	A-KO.03.06	Koker	TECHNICAL SPACE	A.03.00	A	[TS] Shaft	4.6	5.3	14.8	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A04	A-KO.04.01	Koker	TECHNICAL SPACE	A.04.00	A	[TS] Shaft	4.9	5.5	15.6	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A04	A-KO.04.02	Koker	TECHNICAL SPACE	A.04.00	A	[TS] Shaft	2.8	3.3	8.9	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A04	A-KO.04.05	Koker	TECHNICAL SPACE	A.04.00	A	[TS] Shaft	0.4	0.5	1.2	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A04	A-KO.04.06	Koker	TECHNICAL SPACE	A.04.00	A	[TS] Shaft	4.6	5.3	14.8	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A05	A-KO.05.01	Koker	TECHNICAL SPACE	A.05.00	A	[TS] Shaft	4.9	5.5	15.8	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A05	A-KO.05.02	Koker	TECHNICAL SPACE	A.05.00	A	[TS] Shaft	2.8	3.3	9.1	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A05	A-KO.05.05	Koker	TECHNICAL SPACE	A.05.00	A	[TS] Shaft	0.4	0.5	1.2	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A05	A-KO.05.06	Koker	TECHNICAL SPACE	A.05.00	A	[TS] Shaft	4.6	5.3	15.0	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A06	A-KO.06.01	Koker	TECHNICAL SPACE	A.06.00	A	[TS] Shaft	4.3	4.3	11.3	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A06	A-KO.06.02	Koker	TECHNICAL SPACE	A.06.00	A	[TS] Shaft	2.5	2.5	6.5	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A06	A-KO.06.06	Koker	TECHNICAL SPACE	A.06.01	A	[TS] Shaft	4.6	4.6	12.2	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	A-LI.00.01	Lift	TECHNICAL SPACE	A.00.06	A	[TS] Shaft	17.9	19.3	74.1	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+01	A-LI.01.01	[TS] Shaft	TECHNICAL SPACE	A.01.00	A	[TS] Shaft	18.6	20.6	91.8	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A02	A-LI.02.01	[TS] Shaft	TECHNICAL SPACE	A.02.00	A	[TS] Shaft	18.2	19.7	58.1	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A03	A-LI.03.01	[TS] Shaft	TECHNICAL SPACE	A.03.00	A	[TS] Shaft	18.2	19.7	58.1	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A04	A-LI.04.01	[TS] Shaft	TECHNICAL SPACE	A.04.00	A	[TS] Shaft	18.2	19.7	58.1	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A05	A-LI.05.01	[TS] Shaft	TECHNICAL SPACE	A.05.00	A	[TS] Shaft	18.2	19.7	58.8	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A02	A-OF.02.01	kantoorruimte	OFFICE	A.02.01	A	[OF] Office	362.1	365.6	1155.2	30	30	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	2250	6.2	19.9	VAV	1200	Heated and cooled	21	25	40	60	50	75
+A02	A-OF.02.02	kantoorruimte	OFFICE	A.02.02	A	[OF] Office	380.1	394.4	1212.5	31	31	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	2325	6.1	19.7	VAV	1240	Heated and cooled	21	25	40	60	50	75
+A02	A-OF.02.03	kantoorruimte	OFFICE	A.02.03	A	[OF] Office	196.4	198.5	626.5	16	16	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	1200	6.1	19.7	VAV	640	Heated and cooled	21	25	40	60	50	75
+A02	A-OF.02.04	kantoorruimte	OFFICE	A.02.04	A	[OF] Office	203.8	205.5	650.0	16	16	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	1200	5.9	19.3	VAV	640	Heated and cooled	21	25	40	60	50	75
+A03	A-OF.03.01	kantoorruimte	OFFICE	A.03.01	A	[OF] Office	362.1	365.6	1155.2	30	30	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	2250	6.2	19.9	VAV	1200	Heated and cooled	21	25	40	60	50	75
+A03	A-OF.03.02	kantoorruimte	OFFICE	A.03.02	A	[OF] Office	380.1	394.4	1212.5	31	31	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	2325	6.1	19.7	VAV	1240	Heated and cooled	21	25	40	60	50	75
+A03	A-OF.03.03	kantoorruimte	OFFICE	A.03.03	A	[OF] Office	196.4	198.5	626.5	16	16	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	1200	6.1	19.7	VAV	640	Heated and cooled	21	25	40	60	50	75
+A03	A-OF.03.04	kantoorruimte	OFFICE	A.03.04	A	[OF] Office	203.8	205.5	650.0	16	16	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	1200	5.9	19.3	VAV	640	Heated and cooled	21	25	40	60	50	75
+A04	A-OF.04.01	kantoorruimte	OFFICE	A.04.01	A	[OF] Office	362.1	365.6	1155.2	30	30	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	2250	6.2	19.9	VAV	1200	Heated and cooled	21	25	40	60	50	75
+A04	A-OF.04.02	kantoorruimte	OFFICE	A.04.02	A	[OF] Office	380.1	394.4	1212.5	31	31	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	2325	6.1	19.7	VAV	1240	Heated and cooled	21	25	40	60	50	75
+A04	A-OF.04.03	kantoorruimte	OFFICE	A.04.03	A	[OF] Office	196.4	198.5	626.5	16	16	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	1200	6.1	19.7	VAV	640	Heated and cooled	21	25	40	60	50	75
+A04	A-OF.04.04	kantoorruimte	OFFICE	A.04.04	A	[OF] Office	203.8	205.5	650.0	16	16	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	1200	5.9	19.3	VAV	640	Heated and cooled	21	25	40	60	50	75
+A05	A-OF.05.01	kantoorruimte	OFFICE	A.05.01	A	[OF] Office	362.1	365.6	1169.7	30	30	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	2250	6.2	19.9	VAV	1200	Heated and cooled	21	25	40	60	50	75
+A05	A-OF.05.02	kantoorruimte	OFFICE	A.05.02	A	[OF] Office	380.1	394.4	1227.7	31	31	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	2325	6.1	19.7	VAV	1240	Heated and cooled	21	25	40	60	50	75
+A05	A-OF.05.03	kantoorruimte	OFFICE	A.05.03	A	[OF] Office	196.4	198.5	634.3	16	16	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	1200	6.1	19.7	VAV	640	Heated and cooled	21	25	40	60	50	75
+A05	A-OF.05.04	kantoorruimte	OFFICE	A.05.04	A	[OF] Office	203.8	205.5	658.2	16	16	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	1200	5.9	19.3	VAV	640	Heated and cooled	21	25	40	60	50	75
+01	A-SA.01.01/1	Sanitair	GENERAL	A.01.00	A	[GEN] Restrooms	9.3	10.2	46.2	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+01	A-SA.01.02	Sanitair	GENERAL	A.01.00	A	[GEN] Restrooms	4.9	5.3	24.5	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+01	A-SA.01.03/1	Sanitair	GENERAL	A.01.00	A	[GEN] Restrooms	11.4	12.1	56.2	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+A02	A-SA.02.01/1	Sanitair	GENERAL	A.02.00	A	[GEN] Restrooms	9.2	10.1	29.3	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+A02	A-SA.02.02	Sanitair	GENERAL	A.02.00	A	[GEN] Restrooms	4.9	5.4	15.7	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+A02	A-SA.02.03/1	Sanitair	GENERAL	A.02.00	A	[GEN] Restrooms	10.9	11.9	34.9	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+A03	A-SA.03.01/1	Sanitair	GENERAL	A.03.00	A	[GEN] Restrooms	9.2	10.1	29.3	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+A03	A-SA.03.02	Sanitair	GENERAL	A.03.00	A	[GEN] Restrooms	4.9	5.4	15.7	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+A03	A-SA.03.03/1	Sanitair	GENERAL	A.03.00	A	[GEN] Restrooms	10.9	11.9	34.9	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+A04	A-SA.04.01/1	Sanitair	GENERAL	A.04.00	A	[GEN] Restrooms	9.2	10.1	29.3	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+A04	A-SA.04.02	Sanitair	GENERAL	A.04.00	A	[GEN] Restrooms	4.9	5.4	15.7	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+A04	A-SA.04.03/1	Sanitair	GENERAL	A.04.00	A	[GEN] Restrooms	10.9	11.9	34.9	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+A05	A-SA.05.01/1	Sanitair	GENERAL	A.05.00	A	[GEN] Restrooms	9.2	10.1	29.7	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+A05	A-SA.05.02	Sanitair	GENERAL	A.05.00	A	[GEN] Restrooms	4.9	5.4	15.9	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+A05	A-SA.05.03/1	Sanitair	GENERAL	A.05.00	A	[GEN] Restrooms	10.9	11.9	35.3	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+00	A-TL.00.01	technisch lokaal	TECHNICAL SPACE	A.00.06	A	[TS] Technical Space	5.3	5.8	22.0	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+01	A-TL.01.01	technisch lokaal	TECHNICAL SPACE	A.01.00	A	[TS] Technical Space	2.9	3.2	14.5	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A02	A-TL.02.01	technisch lokaal	TECHNICAL SPACE	A.02.00	A	[TS] Shaft	3.9	4.3	12.4	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A03	A-TL.03.01	technisch lokaal	TECHNICAL SPACE	A.03.00	A	[TS] Shaft	3.9	4.3	12.4	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A04	A-TL.04.01	technisch lokaal	TECHNICAL SPACE	A.04.00	A	[TS] Shaft	3.9	4.3	12.4	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A05	A-TL.05.01	technisch lokaal	TECHNICAL SPACE	A.05.00	A	[TS] Shaft	3.9	4.3	12.5	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+A02	A-TR.02.01	[GEN] Stairway	GENERAL	A.02.00	A	[GEN] Stairway	18.9	20.4	60.2	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+A02	A-TR.02.02	[GEN] Stairway	GENERAL	A.02.00	A	[GEN] Stairway	18.7	21.0	59.7	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+A03	A-TR.03.01	[GEN] Stairway	GENERAL	A.03.00	A	[GEN] Stairway	18.9	20.4	60.2	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+A03	A-TR.03.02	[GEN] Stairway	GENERAL	A.03.00	A	[GEN] Stairway	18.7	21.0	59.7	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+A04	A-TR.04.01	[GEN] Stairway	GENERAL	A.04.00	A	[GEN] Stairway	18.9	20.4	60.2	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+A04	A-TR.04.02	[GEN] Stairway	GENERAL	A.04.00	A	[GEN] Stairway	18.7	21.0	59.7	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+A05	A-TR.05.01	[GEN] Stairway	GENERAL	A.05.00	A	[GEN] Stairway	18.9	20.4	61.0	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+A05	A-TR.05.02	[GEN] Stairway	GENERAL	A.05.00	A	[GEN] Stairway	18.7	21.0	60.4	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+A06	A-TR.06.02	[GEN] Stairway	GENERAL	A.06.01	A	[GEN] Stairway	18.7	18.7	49.4	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+A06	A-TR.06.03	[GEN] Stairway	GENERAL	A.06.00	A	[GEN] Stairway	19.1	19.1	50.3	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+00	A.00.05.01	[TS] Shaft	TECHNICAL SPACE	A.00.05	A	[TS] Shaft	18.5	20.6	76.5	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+01	A.01.00.01	Afwas	TECHNICAL SPACE	A.01.20	A	[TS] Technical Space	11.7	13.1	23.9	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+01	A.01.00.02	technisch lokaal	TECHNICAL SPACE	A.01.00	A	[TS] Technical Space	0.3	0.0	1.5	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+01	A.01.00.03	technisch lokaal	TECHNICAL SPACE	A.01.00	A	[TS] Technical Space	0.2	0.0	1.1	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+01	A.01.00.04	technisch lokaal	TECHNICAL SPACE	A.01.00	A	[TS] Technical Space	0.2	0.0	0.8	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+01	A.01.07	Makerspace	OFFICE	A.01.01	A	[OF] Makerspace	264.1	275.1	1307.5	17	17	[EN16798] Office Landscape	75	40	10.0	500	0	75	0	1275	4.8	19.7	VAV	680	Heated and cooled	21	25	40	60	50	75
+01	A.01.14	creative studio	OFFICE	A.01.14	A	[OF] Meeting Room >12p	47.1		233.0	25	25	[Office] Meeting Room L	75	40	10.0	500	0	30	0	750	15.9	65.8	VAV	1000	Heated and cooled	21	25	40	60	50	75
+B02	B-02.02	[HP] Apartment	HOSPITALITY	B.02.02	B	[HP] Apartment	63.1	66.6	164.1	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	2.4	13.8	CAV	80	Heated and cooled	21	25	0	100	25	25
+B02	B-02.03	[HP] Apartment	HOSPITALITY	B.02.03	B	[HP] Apartment	79.0	82.4	205.3	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	1.9	12.8	CAV	80	Heated and cooled	21	25	0	100	25	25
+B02	B-02.04	[HP] Apartment	HOSPITALITY	B.02.04	B	[HP] Apartment	86.1	88.9	223.8	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	1.7	12.5	CAV	80	Heated and cooled	21	25	0	100	25	25
+B02	B-02.05	[HP] Apartment	HOSPITALITY	B.02.05	B	[HP] Apartment	56.3	59.3	146.5	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	2.7	14.3	CAV	80	Heated and cooled	21	25	0	100	25	25
+B02	B-02.06	[HP] Apartment	HOSPITALITY	B.02.06	B	[HP] Apartment	57.0	59.7	148.2	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	2.6	14.3	CAV	80	Heated and cooled	21	25	0	100	25	25
+B02	B-02.07	[HP] Apartment	HOSPITALITY	B.02.07	B	[HP] Apartment	54.7	57.1	142.3	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	2.7	14.5	CAV	80	Heated and cooled	21	25	0	100	25	25
+B02	B-02.08	[HP] Apartment	HOSPITALITY	B.02.08	B	[HP] Apartment	44.6	47.2	116.1	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	3.4	15.7	CAV	80	Heated and cooled	21	25	0	100	25	25
+B02	B-02.09	[HP] Apartment	HOSPITALITY	B.02.09	B	[HP] Apartment	40.6	42.7	105.5	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	3.7	16.4	CAV	80	Heated and cooled	21	25	0	100	25	25
+B02	B-02.10	[HP] Apartment	HOSPITALITY	B.02.09	B	[HP] Apartment	76.8	79.6	199.7	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	2.0	12.9	CAV	80	Heated and cooled	21	25	0	100	25	25
+B03	B-03.01	[HP] Apartment	HOSPITALITY	B.03.09	B	[HP] Apartment	76.8	79.6	199.7	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	2.0	12.9	CAV	80	Heated and cooled	21	25	0	100	25	25
+B03	B-03.02	[HP] Apartment	HOSPITALITY	B.03.02	B	[HP] Apartment	63.1	66.6	164.1	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	2.4	13.8	CAV	80	Heated and cooled	21	25	0	100	25	25
+B03	B-03.03	[HP] Apartment	HOSPITALITY	B.03.03	B	[HP] Apartment	79.0	82.4	205.3	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	1.9	12.8	CAV	80	Heated and cooled	21	25	0	100	25	25
+B03	B-03.04	[HP] Apartment	HOSPITALITY	B.03.04	B	[HP] Apartment	86.1	88.9	223.8	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	1.7	12.5	CAV	80	Heated and cooled	21	25	0	100	25	25
+B03	B-03.05	[HP] Apartment	HOSPITALITY	B.03.05	B	[HP] Apartment	56.3	59.3	146.5	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	2.7	14.3	CAV	80	Heated and cooled	21	25	0	100	25	25
+B03	B-03.06	[HP] Apartment	HOSPITALITY	B.03.06	B	[HP] Apartment	57.0	59.7	148.2	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	2.6	14.3	CAV	80	Heated and cooled	21	25	0	100	25	25
+B03	B-03.07	[HP] Apartment	HOSPITALITY	B.03.07	B	[HP] Apartment	54.7	57.1	142.3	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	2.7	14.5	CAV	80	Heated and cooled	21	25	0	100	25	25
+B03	B-03.08	[HP] Apartment	HOSPITALITY	B.03.08	B	[HP] Apartment	44.6	47.2	116.1	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	3.4	15.7	CAV	80	Heated and cooled	21	25	0	100	25	25
+B03	B-03.09	[HP] Apartment	HOSPITALITY	B.03.09	B	[HP] Apartment	40.6	42.7	105.5	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	3.7	16.4	CAV	80	Heated and cooled	21	25	0	100	25	25
+B04	B-04.01	[HP] Apartment	HOSPITALITY	B.04.01	B	[HP] Apartment	76.8	79.6	199.7	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	2.0	12.9	CAV	80	Heated and cooled	21	25	0	100	25	25
+B04	B-04.02	[HP] Apartment	HOSPITALITY	B.04.02	B	[HP] Apartment	63.1	66.6	164.1	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	2.4	13.8	CAV	80	Heated and cooled	21	25	0	100	25	25
+B04	B-04.03	[HP] Apartment	HOSPITALITY	B.04.03	B	[HP] Apartment	79.0	82.4	205.3	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	1.9	12.8	CAV	80	Heated and cooled	21	25	0	100	25	25
+B04	B-04.04	[HP] Apartment	HOSPITALITY	B.04.04	B	[HP] Apartment	86.1	88.9	223.8	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	1.7	12.5	CAV	80	Heated and cooled	21	25	0	100	25	25
+B04	B-04.05	[HP] Apartment	HOSPITALITY	B.04.05	B	[HP] Apartment	56.3	59.3	146.5	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	2.7	14.3	CAV	80	Heated and cooled	21	25	0	100	25	25
+B04	B-04.06	[HP] Apartment	HOSPITALITY	B.04.06	B	[HP] Apartment	57.0	59.7	148.2	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	2.6	14.3	CAV	80	Heated and cooled	21	25	0	100	25	25
+B04	B-04.07	[HP] Apartment	HOSPITALITY	B.04.07	B	[HP] Apartment	54.7	57.1	142.3	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	2.7	14.5	CAV	80	Heated and cooled	21	25	0	100	25	25
+B04	B-04.08	[HP] Apartment	HOSPITALITY	B.04.08	B	[HP] Apartment	44.6	47.2	116.1	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	3.4	15.7	CAV	80	Heated and cooled	21	25	0	100	25	25
+B04	B-04.09	[HP] Apartment	HOSPITALITY	B.04.09	B	[HP] Apartment	40.6	42.7	105.5	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	3.7	16.4	CAV	80	Heated and cooled	21	25	0	100	25	25
+B05	B-05.01	[HP] Apartment	HOSPITALITY	B.05.01	B	[HP] Apartment	76.8	79.6	199.7	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	2.0	12.9	CAV	80	Heated and cooled	21	25	0	100	25	25
+B05	B-05.02	[HP] Apartment	HOSPITALITY	B.05.02	B	[HP] Apartment	63.1	66.6	164.1	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	2.4	13.8	CAV	80	Heated and cooled	21	25	0	100	25	25
+B05	B-05.03	[HP] Apartment	HOSPITALITY	B.05.03	B	[HP] Apartment	79.0	82.4	205.3	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	1.9	12.8	CAV	80	Heated and cooled	21	25	0	100	25	25
+B05	B-05.04	[HP] Apartment	HOSPITALITY	B.05.04	B	[HP] Apartment	86.1	88.9	223.8	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	1.7	12.5	CAV	80	Heated and cooled	21	25	0	100	25	25
+B05	B-05.05	[HP] Apartment	HOSPITALITY	B.05.05	B	[HP] Apartment	56.3	59.3	146.5	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	2.7	14.3	CAV	80	Heated and cooled	21	25	0	100	25	25
+B05	B-05.06	[HP] Apartment	HOSPITALITY	B.05.06	B	[HP] Apartment	57.0	59.7	148.2	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	2.6	14.3	CAV	80	Heated and cooled	21	25	0	100	25	25
+B05	B-05.07	[HP] Apartment	HOSPITALITY	B.05.07	B	[HP] Apartment	54.7	57.1	142.3	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	2.7	14.5	CAV	80	Heated and cooled	21	25	0	100	25	25
+B05	B-05.08	[HP] Apartment	HOSPITALITY	B.05.08	B	[HP] Apartment	44.6	47.2	116.1	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	3.4	15.7	CAV	80	Heated and cooled	21	25	0	100	25	25
+B05	B-05.09	[HP] Apartment	HOSPITALITY	B.05.09	B	[HP] Apartment	40.6	42.7	105.5	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	3.7	16.4	CAV	80	Heated and cooled	21	25	0	100	25	25
+B06	B-06.01	[HP] Apartment	HOSPITALITY	B.06.01	B	[HP] Apartment	76.8	79.6	208.1	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	2.0	12.9	CAV	80	Heated and cooled	21	25	0	100	25	25
+B06	B-06.02	[HP] Apartment	HOSPITALITY	B.06.02	B	[HP] Apartment	63.1	66.6	171.1	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	2.4	13.8	CAV	80	Heated and cooled	21	25	0	100	25	25
+B06	B-06.03	[HP] Apartment	HOSPITALITY	B.06.03	B	[HP] Apartment	79.0	82.4	214.0	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	1.9	12.8	CAV	80	Heated and cooled	21	25	0	100	25	25
+B06	B-06.04	[HP] Apartment	HOSPITALITY	B.06.04	B	[HP] Apartment	86.1	88.9	233.3	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	1.7	12.5	CAV	80	Heated and cooled	21	25	0	100	25	25
+B06	B-06.05	[HP] Apartment	HOSPITALITY	B.06.05	B	[HP] Apartment	56.3	59.3	152.7	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	2.7	14.3	CAV	80	Heated and cooled	21	25	0	100	25	25
+B06	B-06.06	[HP] Apartment	HOSPITALITY	B.06.06	B	[HP] Apartment	57.0	59.7	154.5	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	2.6	14.3	CAV	80	Heated and cooled	21	25	0	100	25	25
+B06	B-06.07	[HP] Apartment	HOSPITALITY	B.06.07	B	[HP] Apartment	54.7	57.1	148.3	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	2.7	14.5	CAV	80	Heated and cooled	21	25	0	100	25	25
+B06	B-06.08	[HP] Apartment	HOSPITALITY	B.06.08	B	[HP] Apartment	44.6	47.2	121.0	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	3.4	15.7	CAV	80	Heated and cooled	21	25	0	100	25	25
+B06	B-06.09	[HP] Apartment	HOSPITALITY	B.06.09	B	[HP] Apartment	40.6	42.7	110.0	2	2	[EN16798] Residential	75	40	9.0	500	0	0	150	150	3.7	16.4	CAV	80	Heated and cooled	21	25	0	100	25	25
+00	B-AF.00.01	Afvalberging	TECHNICAL SPACE	B.00.00	B	[TS] Storage	26.5	30.1	109.4	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	B-AF.00.02	Afvalberging	TECHNICAL SPACE	B.00.00	B	[TS] Storage	7.6	8.8	31.2	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	B-AF.00.04	Afvalberging	TECHNICAL SPACE	B.00.04	B	[TS] Storage	26.6	30.7	110.0	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	B-BE.00.01	berging	TECHNICAL SPACE	B.00.00	B	[TS] Storage	4.0	4.3	16.6	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+01	B-BE.01.01	berging	TECHNICAL SPACE	B.01.04	B	[TS] Storage	4.8	5.3	24.5	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	B-FI.00.02	fietspunt	TECHNICAL SPACE	B.00.02	B	[TS] Storage	22.0	22.4	90.7	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+01	B-FO.01.01	upfood	FOOD N BEVERAGE	B.01.02	B	[FB] Restaurant	470.3	495.3	2398.3	50	50	[FNB] Restaurant	75	40	6.0	300	0	15	0	750	1.6	15.6	VAV	2000	Heated and cooled	21	25	0	100	50	50
+00	B-GA.00.01	Gang	GENERAL	B.00.00	B	[GEN] Circulation	39.2	41.7	162.1	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+00	B-GA.00.02	Gang	GENERAL	B.00.00	B	[GEN] Circulation	18.5	19.6	76.4	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+00	B-GA.00.03	Gang	GENERAL	B.00.03	B	[GEN] Circulation	37.8	39.4	156.0	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+01	B-GA.01.01	Gang	HOSPITALITY	B.01.04	B	[HP] Circulation	12.1	13.3	61.5	0	0	[EN16798] Residential	75	40	3.0	150	0	0	0	0	0.0	3.0	None	0	Heated and cooled	18	28	0	100	0	0
+01	B-GA.01.02	Gang	HOSPITALITY	B.01.04	B	[HP] Circulation	16.8	18.3	85.8	0	0	[EN16798] Residential	75	40	3.0	150	0	0	0	0	0.0	3.0	None	0	Heated and cooled	18	28	0	100	0	0
+B02	B-GA.02.01	[GEN] Circulation	GENERAL	B.02.00	B	[GEN] Circulation	10.5	11.5	27.4	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+B02	B-GA.02.02	[HP] Circulation	HOSPITALITY	B.02.00	B	[HP] Circulation	64.2	73.9	167.0	0	0	[EN16798] Residential	75	40	3.0	150	0	0	0	0	0.0	3.0	None	0	Heated and cooled	18	28	0	100	0	0
+B03	B-GA.03.01	[GEN] Circulation	GENERAL	B.03.00	B	[GEN] Circulation	10.5	11.5	27.4	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+B03	B-GA.03.02	[HP] Circulation	HOSPITALITY	B.03.00	B	[HP] Circulation	64.2	73.9	167.0	0	0	[EN16798] Residential	75	40	3.0	150	0	0	0	0	0.0	3.0	None	0	Heated and cooled	18	28	0	100	0	0
+B04	B-GA.04.01	[GEN] Circulation	GENERAL	B.04.00	B	[GEN] Circulation	10.5	11.5	27.4	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+B04	B-GA.04.02	[HP] Circulation	HOSPITALITY	B.04.00	B	[HP] Circulation	64.2	73.9	167.0	0	0	[EN16798] Residential	75	40	3.0	150	0	0	0	0	0.0	3.0	None	0	Heated and cooled	18	28	0	100	0	0
+B05	B-GA.05.01	[GEN] Circulation	GENERAL	B.05.00	B	[GEN] Circulation	10.5	11.5	27.4	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+B05	B-GA.05.02	[HP] Circulation	HOSPITALITY	B.05.00	B	[HP] Circulation	64.2	73.9	167.0	0	0	[EN16798] Residential	75	40	3.0	150	0	0	0	0	0.0	3.0	None	0	Heated and cooled	18	28	0	100	0	0
+B06	B-GA.06.01	[GEN] Circulation	GENERAL	B.06.00	B	[GEN] Circulation	10.5	11.5	28.6	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+B06	B-GA.06.02	[HP] Circulation	HOSPITALITY	B.06.00	B	[HP] Circulation	64.2	73.9	174.1	0	0	[EN16798] Residential	75	40	3.0	150	0	0	0	0	0.0	3.0	None	0	Heated and cooled	18	28	0	100	0	0
+01	B-GR.01.01	Gemeenschappelijke ruimte	ASSEMBLY	B.01.06	B	[AS] Multifunctional	105.1	114.0	535.8	21	21	[Assembly] Multifunctional	75	40	6.0	300	0	15	0	315	3.0	24.0	VAV	840	Heated and cooled	21	25	0	100	50	50
+00	B-IN.00.01	Inkom	GENERAL	B.00.00	B	[GEN] Circulation	18.2	18.2	75.0	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+00	B-IN.00.02	Inkom	GENERAL	B.00.00	B	[GEN] Circulation	15.9	16.9	65.6	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+00	B-KO.00.01	Koker	TECHNICAL SPACE	B.00.00	B	[TS] Shaft	2.1	2.5	8.7	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+01	B-KO.01.02	Koker	TECHNICAL SPACE	B.01.04	B	[TS] Shaft	3.0	3.7	15.3	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+B02	B-KO.02.02	Koker	TECHNICAL SPACE	B.02.00	B	[TS] Shaft	3.0	4.0	7.8	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+B03	B-KO.03.02	Koker	TECHNICAL SPACE	B.03.00	B	[TS] Shaft	3.0	4.0	7.8	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+B04	B-KO.04.02	Koker	TECHNICAL SPACE	B.04.00	B	[TS] Shaft	3.0	4.0	7.8	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+B05	B-KO.05.02	Koker	TECHNICAL SPACE	B.05.00	B	[TS] Shaft	3.0	4.0	7.8	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+B06	B-KO.06.02	Koker	TECHNICAL SPACE	B.06.00	B	[TS] Shaft	3.0	4.0	8.1	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	B-LI.00.01	Lift	TECHNICAL SPACE	B.00.00	B	[TS] Shaft	4.3	5.0	17.8	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+01	B-LI.01.01	Lift	TECHNICAL SPACE	B.01.04	B	[TS] Shaft	5.8	6.4	29.3	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+01	B-LI.01.02	Lift	TECHNICAL SPACE	B.01.02	B	[TS] Shaft	3.8	4.3	19.5	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+B02	B-LI.02.01	Lift	TECHNICAL SPACE	B.02.00	B	[TS] Shaft	6.8	7.7	17.6	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+B03	B-LI.03.01	Lift	TECHNICAL SPACE	B.03.00	B	[TS] Shaft	6.8	7.7	17.6	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+B04	B-LI.04.01	Lift	TECHNICAL SPACE	B.04.00	B	[TS] Shaft	6.8	7.7	17.6	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+B05	B-LI.05.01	Lift	TECHNICAL SPACE	B.05.00	B	[TS] Shaft	6.8	7.7	17.6	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+B06	B-LI.06.01	Lift	TECHNICAL SPACE	B.06.00	B	[TS] Shaft	6.8	7.7	18.3	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	B-SA.00.01	Sanitair	GENERAL	B.00.01	B	[GEN] Restrooms	28.4	29.2	117.2	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+00	B-SA.00.02	Sanitair	GENERAL	B.00.01	B	[GEN] Restrooms	5.1	5.7	20.9	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+00	B-SA.00.03	Sanitair	GENERAL	B.00.01	B	[GEN] Restrooms	26.5	31.0	109.6	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+01	B-SA.01.01	Sanitair	GENERAL	B.01.05	B	[GEN] Restrooms	42.6	46.0	217.5	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+00	B-TL.00.01	technisch lokaal	TECHNICAL SPACE	B.00.00	B	[TS] Technical Space	26.7	27.9	110.2	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	B-TL.00.02	technisch lokaal	TECHNICAL SPACE	B.00.00	B	[TS] Technical Space	8.8	9.5	36.4	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	B-TL.00.03	technisch lokaal	TECHNICAL SPACE	B.00.00	B	[TS] Technical Space	14.9	15.6	61.4	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	B-TL.00.04	technisch lokaal	TECHNICAL SPACE	B.00.00	B	[TS] Technical Space	10.6	11.3	44.0	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	B-TL.00.05	technisch lokaal	TECHNICAL SPACE	B.00.00	B	[TS] Technical Space	38.3	39.5	158.2	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	B-TL.00.06	technisch lokaal	TECHNICAL SPACE	B.00.00	B	[TS] Technical Space	15.5	16.2	64.1	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	B-TL.00.07	technisch lokaal	TECHNICAL SPACE	B.00.00	B	[TS] Technical Space	9.6	10.2	39.6	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+B02	B-TL.02.01	technisch lokaal	TECHNICAL SPACE	B.02.00	B	[TS] Technical Space	3.0	3.9	7.8	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+B03	B-TL.03.01	technisch lokaal	TECHNICAL SPACE	B.03.00	B	[TS] Technical Space	3.0	3.9	7.8	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+B04	B-TL.04.01	technisch lokaal	TECHNICAL SPACE	B.04.00	B	[TS] Technical Space	3.0	3.9	7.8	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+B05	B-TL.05.01	technisch lokaal	TECHNICAL SPACE	B.05.00	B	[TS] Technical Space	3.0	3.9	7.8	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+B06	B-TL.06.01	technisch lokaal	TECHNICAL SPACE	B.06.00	B	[TS] Technical Space	3.0	3.9	8.2	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	B-TR.00.01	[GEN] Stairway	GENERAL	B.00.00	B	[GEN] Stairway	15.5	16.5	64.1	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+00	B-TR.00.02	[GEN] Stairway	GENERAL	B.00.04	B	[GEN] Stairway	18.5	22.0	76.3	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+01	B-TR.01.01	[GEN] Stairway	GENERAL	B.01.04	B	[GEN] Stairway	16.4	17.5	83.5	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+01	B-TR.01.02	[GEN] Stairway	GENERAL	B.01.02	B	[GEN] Stairway	15.0	17.1	76.7	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+B02	B-TR.02.01	[GEN] Stairway	GENERAL	B.02.00	B	[GEN] Stairway	15.5	18.1	40.4	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+B02	B-TR.02.02	[GEN] Stairway	GENERAL	B.02.00	B	[GEN] Stairway	15.0	17.1	39.1	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+B03	B-TR.03.01	[GEN] Stairway	GENERAL	B.03.00	B	[GEN] Stairway	15.5	18.1	40.4	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+B03	B-TR.03.02	[GEN] Stairway	GENERAL	B.03.00	B	[GEN] Stairway	15.0	17.1	39.1	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+B04	B-TR.04.01	[GEN] Stairway	GENERAL	B.04.00	B	[GEN] Stairway	15.5	18.1	40.4	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+B04	B-TR.04.02	[GEN] Stairway	GENERAL	B.04.00	B	[GEN] Stairway	15.0	17.1	39.1	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+B05	B-TR.05.01	[GEN] Stairway	GENERAL	B.05.00	B	[GEN] Stairway	15.5	18.1	40.4	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+B05	B-TR.05.02	[GEN] Stairway	GENERAL	B.05.00	B	[GEN] Stairway	15.0	17.1	39.1	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+B06	B-TR.06.01	[GEN] Stairway	GENERAL	B.06.00	B	[GEN] Stairway	15.5	18.1	42.1	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+B06	B-TR.06.02	[GEN] Stairway	GENERAL	B.06.00	B	[GEN] Stairway	15.0	17.1	40.8	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+B07	B-TR.07.01	[GEN] Stairway	GENERAL	B.07.01	B	[GEN] Stairway	15.5	15.5	39.6	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+B07	B-TR.07.02	[GEN] Stairway	GENERAL	B.07.00	B	[GEN] Stairway	15.0	15.0	38.4	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+01	C-AU.01.01	[AS] Auditorium	ASSEMBLY	C.01.03	C	[AS] Auditorium	236.9	236.8	1857.3	240	240	[Assembly] Auditorium	75	40	10.0	500	0	15	0	3600	15.2	101.2	VAV	9600	Heated and cooled	21	25	0	100	50	50
+01	C-BA.01.01	BAR	ASSEMBLY	C.01.01	C	[AS] Reception Hall	11.3	11.3	30.0	2	2	[Assembly] Auditorium	75	40	3.0	300	5	0	0	57	5.0	21.2	CAV	80	Heated and cooled	21	25	0	100	50	50
+00	C-BE.00.01	berging	TECHNICAL SPACE	C.00.00	C	[TS] Storage	2.6	3.0	10.9	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+01	C-BE.01.01	berging	TECHNICAL SPACE	C.01.04	C	[TS] Storage	6.9	6.9	54.0	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+01	C-BE.01.02	berging	TECHNICAL SPACE	C.01.00	C	[TS] Storage	7.8	7.8	20.6	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+01	C-BE.01.03	berging	TECHNICAL SPACE	C.01.03	C	[TS] Storage	48.6	48.6	381.0	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+C02	C-BE.02.01	berging	TECHNICAL SPACE	C.02.00	C	[TS] Storage	7.8	7.8	19.7	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+01	C-FO.01.01	Foyer	ASSEMBLY	C.01.01	C	[AS] Reception Hall	192.6	260.1	510.4	120	120	[Assembly] Auditorium	75	40	3.0	300	5	0	0	963	5.0	54.7	CAV	4800	Heated and cooled	21	25	0	100	50	50
+01	C-GA.01.01	Gang	GENERAL	C.01.02	C	[GEN] Circulation	31.3	31.3	170.8	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+00	C-IN.00.01	Inkom	GENERAL	C.00.02	C	[GEN] Circulation	61.1	63.7	255.2	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+00	C-IN.00.02	Inkom	GENERAL	C.00.00	C	[GEN] Circulation	3.4	3.8	14.2	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+01	C-IN.01.01	Inkom	ASSEMBLY	C.01.05	C	[AS] Reception Hall	80.9	80.9	367.1	10	10	[Assembly] Auditorium	75	40	3.0	300	5	0	0	404	5.0	17.3	CAV	400	Heated and cooled	21	25	0	100	50	50
+01	C-IN.01.02	Inkom	ASSEMBLY	C.01.06	C	[AS] Reception Hall	58.2	58.2	264.3	10	10	[Assembly] Auditorium	75	40	3.0	300	5	0	0	291	5.0	20.9	CAV	400	Heated and cooled	21	25	0	100	50	50
+01	C-KE.01.01	Keuken	FOOD N BEVERAGE	C.01.00	C	[FB] Kitchen	24.3	24.3	64.3	5	5	[FNB] Restaurant	75	40	10.0	500	10	0	0	243	10.0	35.5	CAV	200	Heated and cooled	18	30	0	100	0	0
+01	C-KE.01.02	Keuken	FOOD N BEVERAGE	C.01.00	C	[FB] Kitchen	9.8	9.8	25.9	5	5	[FNB] Restaurant	75	40	10.0	500	10	0	0	98	10.0	58.4	CAV	200	Heated and cooled	18	30	0	100	0	0
+00	C-KO.00.01	Koker	TECHNICAL SPACE	C.00.00	C	[TS] Shaft	1.8	2.2	7.7	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	C-KO.00.02	Koker	TECHNICAL SPACE	C.00.00	C	[TS] Shaft	3.1	3.6	13.1	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+01	C-KO.01.01	Koker	TECHNICAL SPACE	C.01.04	C	[TS] Shaft	3.3	3.3	25.5	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+01	C-KO.01.03	[TS] Shaft	TECHNICAL SPACE	C.01.03	C	[TS] Shaft	15.1	15.1	118.2	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	C-LI.00.01	Lift	TECHNICAL SPACE	C.00.00	C	[TS] Shaft	9.9	10.7	41.3	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+01	C-LI.01.01	Lift	TECHNICAL SPACE	C.01.00	C	[TS] Shaft	13.2	13.2	35.0	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+C02	C-LI.02.01	Lift	TECHNICAL SPACE	C.02.00	C	[TS] Shaft	13.2	13.2	38.4	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	C-SA.00.01	Sanitair	GENERAL	C.00.01	C	[GEN] Restrooms	18.6	20.8	77.6	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+00	C-SA.00.02	Sanitair	GENERAL	C.00.01	C	[GEN] Restrooms	20.8	22.0	87.1	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+00	C-SA.00.03	Sanitair	GENERAL	C.00.01	C	[GEN] Restrooms	4.2	4.9	17.7	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+00	C-TL.00.01	technisch lokaal	TECHNICAL SPACE	C.00.00	C	[TS] Technical Space	3.8	4.2	15.9	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	C-TR.00.01	TRAP	GENERAL	C.00.00	C	[GEN] Stairway	20.4	21.6	85.1	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+01	C-TR.01.01	[GEN] Stairway	GENERAL	C.01.04	C	[GEN] Stairway	20.7	20.7	162.0	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+00	D1	12P	OFFICE	D.00.18	D	[OF] Meeting Room <= 12p	22.6	23.3	115.0	12	12	[Office] Meeting Room M	75	40	10.0	500	0	30	0	360	16.0	65.9	VAV	480	Heated and cooled	21	25	40	60	50	75
+00	D2	Office	OFFICE	D.00.17	D	[OF] Makerspace	50.2	51.3	256.1	3	3	[EN16798] Office Landscape	75	40	10.0	500	0	75	0	225	4.5	19.0	VAV	120	Heated and cooled	21	25	40	60	50	75
+00	D3	6P	OFFICE	D.00.16	D	[OF] Meeting Room < 6p	13.5	13.9	68.8	6	6	[Office] Meeting Room SS	75	40	10.0	500	0	30	0	180	13.3	56.7	VAV	240	Heated and cooled	21	25	40	60	50	75
+00	D4	12P	OFFICE	D.00.15	D	[OF] Meeting Room <= 12p	23.8	24.9	53.7	12	12	[Office] Meeting Room M	75	40	10.0	500	0	30	0	360	15.1	62.8	VAV	480	Heated and cooled	21	25	40	60	50	75
+00	D5	8P	OFFICE	D.00.14	D	[OF] Meeting Room <= 12p	17.3	17.8	88.3	8	8	[Office] Meeting Room M	75	40	10.0	500	0	30	0	240	13.9	58.5	VAV	320	Heated and cooled	21	25	40	60	50	75
+00	D6	6P	OFFICE	D.00.13	D	[OF] Meeting Room < 6p	14.2	14.7	72.4	6	6	[Office] Meeting Room SS	75	40	10.0	500	0	30	0	180	12.7	54.4	VAV	240	Heated and cooled	21	25	40	60	50	75
+D00.1	D7	6P	OFFICE	D.00.00.01	D	[OF] Meeting Room < 6p	13.9	14.9	32.6	6	6	[Office] Meeting Room SS	75	40	10.0	500	0	30	0	180	13.0	55.5	VAV	240	Heated and cooled	21	25	40	60	50	75
+D00.1	D8	12P	OFFICE	D.00.15.01	D	[OF] Meeting Room <= 12p	23.8	24.9	56.0	12	12	[Office] Meeting Room M	75	40	10.0	500	0	30	0	360	15.1	62.8	VAV	480	Heated and cooled	21	25	40	60	50	75
+D00.1	D9	8P	OFFICE	D.00.11.01	D	[OF] Meeting Room <= 12p	16.6	17.2	39.0	8	8	[Office] Meeting Room M	75	40	10.0	500	0	30	0	240	14.5	60.6	VAV	320	Heated and cooled	21	25	40	60	50	75
+D00.1	D10	6P	OFFICE	D.00.10.01	D	[OF] Meeting Room < 6p	14.1	14.4	33.2	6	6	[Office] Meeting Room SS	75	40	10.0	500	0	30	0	180	12.7	54.5	VAV	240	Heated and cooled	21	25	40	60	50	75
+00	D11	8P	OFFICE	D.00.11	D	[OF] Meeting Room <= 12p	16.6	17.1	37.3	8	8	[Office] Meeting Room M	75	40	10.0	500	0	30	0	240	14.5	60.6	VAV	320	Heated and cooled	21	25	40	60	50	75
+00	D12	6P	OFFICE	D.00.10	D	[OF] Meeting Room < 6p	14.1	14.4	31.8	6	6	[Office] Meeting Room SS	75	40	10.0	500	0	30	0	180	12.7	54.5	VAV	240	Heated and cooled	21	25	40	60	50	75
+00	D13	10P	OFFICE	D.00.08	D	[OF] Meeting Room <= 12p	22.4	22.7	50.5	10	10	[Office] Meeting Room M	75	40	10.0	500	0	30	0	300	13.4	56.8	VAV	400	Heated and cooled	21	25	40	60	50	75
+00	D14	D1	OFFICE	D.00.07	D	[OF] Meeting Room < 6p	8.3	8.6	42.2	6	6	[Office] Meeting Room SS	75	40	10.0	500	0	30	0	180	21.8	86.1	VAV	240	Heated and cooled	21	25	40	60	50	75
+00	D15	6P	OFFICE	D.00.09	D	[OF] Meeting Room < 6p	13.8	14.1	31.0	6	6	[Office] Meeting Room SS	75	40	10.0	500	0	30	0	180	13.1	55.8	VAV	240	Heated and cooled	21	25	40	60	50	75
+00	D16	6P	OFFICE	D.00.06	D	[OF] Meeting Room < 6p	11.7	12.3	59.6	6	6	[Office] Meeting Room SS	75	40	10.0	500	0	30	0	180	15.4	64.0	VAV	240	Heated and cooled	21	25	40	60	50	75
+D00.1	D17	6P	OFFICE	D.00.09.01	D	[OF] Meeting Room < 6p	12.0	12.2	28.2	6	6	[Office] Meeting Room SS	75	40	10.0	500	0	30	0	180	15.0	62.6	VAV	240	Heated and cooled	21	25	40	60	50	75
+D00.1	D18	10P	OFFICE	D.00.08.01	D	[OF] Meeting Room <= 12p	22.4	23.4	52.7	10	10	[Office] Meeting Room M	75	40	10.0	500	0	30	0	300	13.4	56.8	VAV	400	Heated and cooled	21	25	40	60	50	75
+00	D19	15P	OFFICE	D.00.05	D	[OF] Meeting Room >12p	26.9	27.6	137.1	15	15	[Office] Meeting Room L	75	40	10.0	500	0	30	0	450	16.7	68.6	VAV	600	Heated and cooled	21	25	40	60	50	75
+00	D20	12P	OFFICE	D.00.04	D	[OF] Meeting Room <= 12p	24.6	25.2	125.4	43	43	[Office] Meeting Room M	75	40	10.0	500	0	30	0	1290	52.5	193.6	VAV	1720	Heated and cooled	21	25	40	60	50	75
+00	D-AF.00.01	Afvalberging	TECHNICAL SPACE	D.00.02	D	[TS] Storage	54.7	58.0	279.1	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	D-BE.00.01	berging	TECHNICAL SPACE	D.00.00	D	[TS] Storage	1.7	1.9	8.9	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	D-BE.00.02	berging	TECHNICAL SPACE	D.00.00	D	[TS] Storage	50.7	51.9	258.4	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D01	D-BE.01.01	berging	TECHNICAL SPACE	D.01.00	D	[TS] Storage	1.7	1.9	5.3	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D02	D-BE.02.01	berging	TECHNICAL SPACE	D.02.00	D	[TS] Storage	1.7	1.9	5.3	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D03	D-BE.03.01	berging	TECHNICAL SPACE	D.03.00	D	[TS] Storage	1.7	1.9	5.3	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D04	D-BE.04.01	berging	TECHNICAL SPACE	D.04.00	D	[TS] Storage	1.7	1.9	5.3	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D05	D-BE.05.01	berging	TECHNICAL SPACE	D.01.00	D	[TS] Storage	1.7	1.9	5.3	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D06	D-BE.06.01	berging	TECHNICAL SPACE	D.01.00	D	[TS] Storage	1.7	1.9	5.4	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	D-FD.00.01	Flex desks	OFFICE	D.00.19	D	[OF] Office	43.2	47.7	97.1	6	6	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	450	10.4	28.3	VAV	240	Heated and cooled	21	25	40	60	50	75
+D00.1	D-FD.00.01.01	Flex desks	OFFICE	D.00.19	D	[OF] Office	43.2	47.7	101.5	6	6	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	450	10.4	28.3	VAV	240	Heated and cooled	21	25	40	60	50	75
+00	D-FD.00.03	Flex desks	OFFICE	D.00.03	D	[OF] Office	67.8	73.5	152.5	8	8	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	600	8.9	25.2	VAV	320	Heated and cooled	21	25	40	60	50	75
+D00.1	D-FD.00.03.01	Flex desks	OFFICE	D.00.03	D	[OF] Office	67.8	73.5	159.3	8	8	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	600	8.9	25.2	VAV	320	Heated and cooled	21	25	40	60	50	75
+00	D-GA.00.01	Gang	GENERAL	D.00.00	D	[GEN] Stairway	8.8	9.3	44.7	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+00	D-GA.00.02	Gang	OFFICE	D.00.00	D	[OF] Circulation	99.8	107.5	224.6	0	0	[EN16798] Office Landscape	75	40	3.0	150	0	0	0	0	0.0	3.0	None	0	Heated and cooled	18	28	0	100	0	0
+00	D-GA.00.03	Gang	OFFICE	D.00.20	D	[OF] Entrance	98.0	107.9	220.5	6	6	[EN16798] Office Landscape	75	40	3.0	300	3	0	0	294	3.0	10.6	CAV	240	Heated and cooled	21	25	0	100	50	50
+00	D-GA.00.04	Gang	OFFICE	D.00.20	D	[OF] Entrance	113.5	122.6	255.5	7	7	[EN16798] Office Landscape	75	40	3.0	300	3	0	0	341	3.0	10.6	CAV	280	Heated and cooled	21	25	0	100	50	50
+D01	D-GA.01.01	Gang	OFFICE	D.01.00	D	[OF] Circulation	55.9	59.5	178.4	0	0	[EN16798] Office Landscape	75	40	3.0	150	0	0	0	0	0.0	3.0	None	0	Heated and cooled	18	28	0	100	0	0
+D02	D-GA.02.01	Gang	OFFICE	D.02.00	D	[OF] Circulation	55.9	59.5	178.4	0	0	[EN16798] Office Landscape	75	40	3.0	150	0	0	0	0	0.0	3.0	None	0	Heated and cooled	18	28	0	100	0	0
+D03	D-GA.03.01	Gang	OFFICE	D.03.00	D	[OF] Circulation	55.9	59.5	178.4	0	0	[EN16798] Office Landscape	75	40	3.0	150	0	0	0	0	0.0	3.0	None	0	Heated and cooled	18	28	0	100	0	0
+D04	D-GA.04.01	Gang	OFFICE	D.04.00	D	[OF] Circulation	55.9	59.5	178.4	0	0	[EN16798] Office Landscape	75	40	3.0	150	0	0	0	0	0.0	3.0	None	0	Heated and cooled	18	28	0	100	0	0
+D05	D-GA.05.01	Gang	OFFICE	D.01.00	D	[OF] Circulation	55.9	59.5	178.4	0	0	[EN16798] Office Landscape	75	40	3.0	150	0	0	0	0	0.0	3.0	None	0	Heated and cooled	18	28	0	100	0	0
+D06	D-GA.06.01	Gang	OFFICE	D.01.00	D	[OF] Circulation	55.9	59.5	182.4	0	0	[EN16798] Office Landscape	75	40	3.0	150	0	0	0	0	0.0	3.0	None	0	Heated and cooled	18	28	0	100	0	0
+00	D-KO.00.01	Koker	TECHNICAL SPACE	D.00.00	D	[TS] Shaft	4.9	5.5	25.1	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	D-KO.00.04	Koker	TECHNICAL SPACE	D.00.00	D	[TS] Shaft	0.5	0.7	2.6	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	D-KO.00.05	Koker	TECHNICAL SPACE	D.00.00	D	[TS] Shaft	0.5	0.7	2.8	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	D-KO.00.06	Koker	TECHNICAL SPACE	D.00.00	D	[TS] Shaft	4.8	5.4	24.5	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D01	D-KO.01.01	Koker	TECHNICAL SPACE	D.01.00	D	[TS] Shaft	4.9	5.5	15.7	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D01	D-KO.01.02	Koker	TECHNICAL SPACE	D.01.00	D	[TS] Shaft	3.6	4.1	11.4	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D01	D-KO.01.05	Koker	TECHNICAL SPACE	D.01.00	D	[TS] Shaft	0.4	0.5	1.2	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D01	D-KO.01.06	Koker	TECHNICAL SPACE	D.01.00	D	[TS] Shaft	4.6	5.3	14.8	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D02	D-KO.02.01	Koker	TECHNICAL SPACE	D.02.00	D	[TS] Shaft	4.9	5.5	15.7	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D02	D-KO.02.03	Koker	TECHNICAL SPACE	D.02.00	D	[TS] Shaft	3.6	4.1	11.4	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D02	D-KO.02.05	Koker	TECHNICAL SPACE	D.02.00	D	[TS] Shaft	0.4	0.5	1.2	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D02	D-KO.02.06	Koker	TECHNICAL SPACE	D.02.00	D	[TS] Shaft	4.6	5.3	14.8	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D03	D-KO.03.01	Koker	TECHNICAL SPACE	D.03.00	D	[TS] Shaft	4.9	5.5	15.7	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D03	D-KO.03.03	Koker	TECHNICAL SPACE	D.03.00	D	[TS] Shaft	3.6	4.1	11.4	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D03	D-KO.03.05	Koker	TECHNICAL SPACE	D.03.00	D	[TS] Shaft	0.4	0.5	1.2	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D03	D-KO.03.06	Koker	TECHNICAL SPACE	D.03.00	D	[TS] Shaft	4.6	5.3	14.8	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D04	D-KO.04.01	Koker	TECHNICAL SPACE	D.04.00	D	[TS] Shaft	4.9	5.5	15.7	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D04	D-KO.04.03	Koker	TECHNICAL SPACE	D.04.00	D	[TS] Shaft	3.6	4.1	11.4	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D04	D-KO.04.05	Koker	TECHNICAL SPACE	D.04.00	D	[TS] Shaft	0.4	0.5	1.2	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D04	D-KO.04.06	Koker	TECHNICAL SPACE	D.04.00	D	[TS] Shaft	4.6	5.3	14.8	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D05	D-KO.05.01	Koker	TECHNICAL SPACE	D.01.00	D	[TS] Shaft	4.9	5.5	15.7	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D05	D-KO.05.03	Koker	TECHNICAL SPACE	D.01.00	D	[TS] Shaft	3.6	4.1	11.4	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D05	D-KO.05.05	Koker	TECHNICAL SPACE	D.01.00	D	[TS] Shaft	0.4	0.5	1.2	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D05	D-KO.05.06	Koker	TECHNICAL SPACE	D.01.00	D	[TS] Shaft	4.6	5.3	14.8	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D06	D-KO.06.01	Koker	TECHNICAL SPACE	D.01.00	D	[TS] Shaft	4.9	5.5	16.1	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D06	D-KO.06.03	Koker	TECHNICAL SPACE	D.01.00	D	[TS] Shaft	3.6	4.1	11.6	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D06	D-KO.06.05	Koker	TECHNICAL SPACE	D.01.00	D	[TS] Shaft	0.4	0.5	1.2	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D06	D-KO.06.06	Koker	TECHNICAL SPACE	D.01.00	D	[TS] Shaft	4.6	5.3	15.1	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D07	D-KO.07.01	Koker	TECHNICAL SPACE	D.07.00	D	[TS] Shaft	4.9	4.9	12.9	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D07	D-KO.07.03	Koker	TECHNICAL SPACE	D.07.00	D	[TS] Shaft	3.6	3.6	9.3	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D07	D-KO.07.06	Koker	TECHNICAL SPACE	D.07.00	D	[TS] Shaft	4.6	4.6	12.1	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	D-LI.00.01	Lift	TECHNICAL SPACE	D.00.00	D	[TS] Shaft	16.8	18.3	85.6	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D01	D-LI.01.01	Lift	TECHNICAL SPACE	D.01.00	D	[TS] Shaft	16.8	18.3	53.5	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D02	D-LI.02.01	Lift	TECHNICAL SPACE	D.02.00	D	[TS] Shaft	16.8	18.3	53.5	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D03	D-LI.03.01	Lift	TECHNICAL SPACE	D.03.00	D	[TS] Shaft	16.8	18.3	53.5	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D04	D-LI.04.01	Lift	TECHNICAL SPACE	D.04.00	D	[TS] Shaft	16.8	18.3	53.5	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D05	D-LI.05.01	Lift	TECHNICAL SPACE	D.01.00	D	[TS] Shaft	16.8	18.3	53.5	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D06	D-LI.06.01	Lift	TECHNICAL SPACE	D.01.00	D	[TS] Shaft	16.8	18.3	54.7	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	D-OF.00.01	Makerspace	OFFICE	D.00.01	D	[OF] Makerspace	251.2	254.3	1281.1	16	16	[EN16798] Office Landscape	75	40	10.0	500	0	75	0	1200	4.8	19.6	VAV	640	Heated and cooled	21	25	40	60	50	75
+D01	D-OF.01.01	[OF] Landscape Office	OFFICE	D.01.01	D	[OF] Office	358.6	374.8	1143.8	29	29	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	2175	6.1	19.6	VAV	1160	Heated and cooled	21	25	40	60	50	75
+D01	D-OF.01.02	[OF] Landscape Office	OFFICE	D.01.02	D	[OF] Office	204.0	212.3	650.7	16	16	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	1200	5.9	19.3	VAV	640	Heated and cooled	21	25	40	60	50	75
+D01	D-OF.01.03	[OF] Landscape Office	OFFICE	D.01.03	D	[OF] Office	194.3	198.1	619.9	16	16	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	1200	6.2	19.8	VAV	640	Heated and cooled	21	25	40	60	50	75
+D01	D-OF.01.04	[OF] Landscape Office	OFFICE	D.01.04	D	[OF] Office	380.6	395.3	1214.3	31	31	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	2325	6.1	19.7	VAV	1240	Heated and cooled	21	25	40	60	50	75
+D02	D-OF.02.01	[OF] Landscape Office	OFFICE	D.02.01	D	[OF] Office	360.4	376.8	1149.8	30	30	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	2250	6.2	20.0	VAV	1200	Heated and cooled	21	25	40	60	50	75
+D02	D-OF.02.02	[OF] Landscape Office	OFFICE	D.02.02	D	[OF] Office	204.0	212.3	650.7	16	16	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	1200	5.9	19.3	VAV	640	Heated and cooled	21	25	40	60	50	75
+D02	D-OF.02.03	[OF] Landscape Office	OFFICE	D.02.03	D	[OF] Office	195.0	199.0	622.1	16	16	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	1200	6.2	19.8	VAV	640	Heated and cooled	21	25	40	60	50	75
+D02	D-OF.02.04	[OF] Landscape Office	OFFICE	D.02.04	D	[OF] Office	381.3	396.1	1216.4	31	31	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	2325	6.1	19.7	VAV	1240	Heated and cooled	21	25	40	60	50	75
+D03	D-OF.03.01	[OF] Landscape Office	OFFICE	D.03.01	D	[OF] Office	360.4	376.7	1149.8	30	30	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	2250	6.2	20.0	VAV	1200	Heated and cooled	21	25	40	60	50	75
+D03	D-OF.03.2	[OF] Landscape Office	OFFICE	D.03.02	D	[OF] Office	204.0	212.3	650.7	16	16	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	1200	5.9	19.3	VAV	640	Heated and cooled	21	25	40	60	50	75
+D03	D-OF.03.03	[OF] Landscape Office	OFFICE	D.03.03	D	[OF] Office	195.0	197.3	622.1	16	16	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	1200	6.2	19.8	VAV	640	Heated and cooled	21	25	40	60	50	75
+D03	D-OF.03.04	[OF] Landscape Office	OFFICE	D.05.04	D	[OF] Office	381.3	396.0	1216.4	31	31	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	2325	6.1	19.7	VAV	1240	Heated and cooled	21	25	40	60	50	75
+D04	D-OF.04.01	[OF] Landscape Office	OFFICE	D.04.01	D	[OF] Office	360.4	376.7	1149.8	30	30	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	2250	6.2	20.0	VAV	1200	Heated and cooled	21	25	40	60	50	75
+D04	D-OF.04.02	[OF] Landscape Office	OFFICE	D.04.02	D	[OF] Office	204.0	212.3	650.7	16	16	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	1200	5.9	19.3	VAV	640	Heated and cooled	21	25	40	60	50	75
+D04	D-OF.04.03	[OF] Landscape Office	OFFICE	D.04.03	D	[OF] Office	195.0	197.3	622.1	16	16	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	1200	6.2	19.8	VAV	640	Heated and cooled	21	25	40	60	50	75
+D04	D-OF.04.04	[OF] Landscape Office	OFFICE	D.04.04	D	[OF] Office	381.3	396.0	1216.4	31	31	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	2325	6.1	19.7	VAV	1240	Heated and cooled	21	25	40	60	50	75
+D05	D-OF.05.01	[OF] Landscape Office	OFFICE	D.05.01	D	[OF] Office	360.4	376.7	1149.8	30	30	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	2250	6.2	20.0	VAV	1200	Heated and cooled	21	25	40	60	50	75
+D05	D-OF.05.02	[OF] Landscape Office	OFFICE	D.05.02	D	[OF] Office	204.0	212.3	650.7	16	16	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	1200	5.9	19.3	VAV	640	Heated and cooled	21	25	40	60	50	75
+D05	D-OF.05.03	[OF] Landscape Office	OFFICE	D.05.03	D	[OF] Office	195.0	197.3	622.1	16	16	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	1200	6.2	19.8	VAV	640	Heated and cooled	21	25	40	60	50	75
+D05	D-OF.05.04	[OF] Landscape Office	OFFICE	D.05.04	D	[OF] Office	381.3	396.0	1216.4	31	31	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	2325	6.1	19.7	VAV	1240	Heated and cooled	21	25	40	60	50	75
+D06	D-OF.06.01	[OF] Landscape Office	OFFICE	D.06.01	D	[OF] Office	360.4	376.7	1175.0	30	30	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	2250	6.2	20.0	VAV	1200	Heated and cooled	21	25	40	60	50	75
+D06	D-OF.06.02	[OF] Landscape Office	OFFICE	D.06.02	D	[OF] Office	204.0	212.3	665.0	16	16	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	1200	5.9	19.3	VAV	640	Heated and cooled	21	25	40	60	50	75
+D06	D-OF.06.03	[OF] Landscape Office	OFFICE	D.06.03	D	[OF] Office	195.0	197.3	635.8	16	16	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	1200	6.2	19.8	VAV	640	Heated and cooled	21	25	40	60	50	75
+D06	D-OF.06.04	[OF] Landscape Office	OFFICE	D.06.04	D	[OF] Office	381.3	396.0	1243.1	31	31	[EN16798] Office Landscape	75	40	7.5	500	0	75	0	2325	6.1	19.7	VAV	1240	Heated and cooled	21	25	40	60	50	75
+00	D-SA.00.01/1	Sanitair	GENERAL	D.00.00	D	[GEN] Restrooms	9.2	10.5	46.7	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+00	D-SA.00.02	Sanitair	GENERAL	D.00.00	D	[GEN] Restrooms	4.8	5.6	24.6	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+00	D-SA.00.03/1	Sanitair	GENERAL	D.00.00	D	[GEN] Restrooms	11.1	11.9	56.8	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D01	D-SA.01.01/1	Sanitair	GENERAL	D.01.00	D	[GEN] Restrooms	9.2	10.1	29.3	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D01	D-SA.01.02	Sanitair	GENERAL	D.01.00	D	[GEN] Restrooms	4.9	5.3	15.7	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D01	D-SA.01.03/1	Sanitair	GENERAL	D.01.00	D	[GEN] Restrooms	11.0	11.9	35.0	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D02	D-SA.02.01	Sanitair	GENERAL	D.02.00	D	[GEN] Restrooms	9.2	10.1	29.3	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D02	D-SA.02.02	Sanitair	GENERAL	D.02.00	D	[GEN] Restrooms	4.9	5.3	15.7	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D02	D-SA.02.03	Sanitair	GENERAL	D.02.00	D	[GEN] Restrooms	11.0	11.9	35.0	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D03	D-SA.03.01	Sanitair	GENERAL	D.03.00	D	[GEN] Restrooms	9.2	10.1	29.3	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D03	D-SA.03.02	Sanitair	GENERAL	D.03.00	D	[GEN] Restrooms	4.9	5.3	15.7	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D03	D-SA.03.03	Sanitair	GENERAL	D.03.00	D	[GEN] Restrooms	11.0	11.9	35.0	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D04	D-SA.04.01	Sanitair	GENERAL	D.04.00	D	[GEN] Restrooms	9.2	10.1	29.3	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D04	D-SA.04.02	Sanitair	GENERAL	D.04.00	D	[GEN] Restrooms	4.9	5.3	15.7	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D04	D-SA.04.03	Sanitair	GENERAL	D.04.00	D	[GEN] Restrooms	11.0	11.9	35.0	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D05	D-SA.05.01	Sanitair	GENERAL	D.01.00	D	[GEN] Restrooms	9.2	10.1	29.3	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D05	D-SA.05.02	Sanitair	GENERAL	D.01.00	D	[GEN] Restrooms	4.9	5.3	15.7	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D05	D-SA.05.03	Sanitair	GENERAL	D.01.00	D	[GEN] Restrooms	11.0	11.9	35.0	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D06	D-SA.06.01	Sanitair	GENERAL	D.01.00	D	[GEN] Restrooms	9.2	10.1	29.9	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D06	D-SA.06.02	Sanitair	GENERAL	D.01.00	D	[GEN] Restrooms	4.9	5.3	16.0	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D06	D-SA.06.03	Sanitair	GENERAL	D.01.00	D	[GEN] Restrooms	11.0	11.9	35.8	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D00.1	D-TL.00.00.01	technisch lokaal	TECHNICAL SPACE	D.00.00.01	D	[TS] Technical Space	2.1	2.6	4.9	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	D-TL.00.01	technisch lokaal	TECHNICAL SPACE	D.00.20	D	[TS] Technical Space	11.9	13.1	60.5	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D00.1	D-TL.00.09.01	technisch lokaal	TECHNICAL SPACE	D.00.09.01	D	[TS] Technical Space	1.5	1.6	3.4	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D01	D-TL.01.01	technisch lokaal	TECHNICAL SPACE	D.01.00	D	[TS] Technical Space	3.9	4.3	12.4	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D02	D-TL.02.01	technisch lokaal	TECHNICAL SPACE	D.02.00	D	[TS] Technical Space	3.9	4.3	12.4	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D03	D-TL.03.01	technisch lokaal	TECHNICAL SPACE	D.03.00	D	[TS] Technical Space	3.9	4.3	12.4	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D04	D-TL.04.01	technisch lokaal	TECHNICAL SPACE	D.04.00	D	[TS] Technical Space	3.9	4.3	12.4	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D05	D-TL.05.01	technisch lokaal	TECHNICAL SPACE	D.01.00	D	[TS] Technical Space	3.9	4.3	12.4	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+D06	D-TL.06.01	technisch lokaal	TECHNICAL SPACE	D.01.00	D	[TS] Technical Space	3.9	4.3	12.6	0	0	[General] Off	75	40	0.0	0	0	0	0	0	0.0	0.0	None	0	Unconditioned	0	99	0	100	0	0
+00	D-TR.00.01	[GEN] Stairway	GENERAL	D.00.00	D	[GEN] Stairway	18.9	20.4	96.2	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+00	D-TR.00.02	TRAP	GENERAL	D.00.00	D	[GEN] Stairway	19.5	21.4	99.5	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D01	D-TR.01.01	[GEN] Stairway	GENERAL	D.01.00	D	[GEN] Stairway	18.9	20.4	60.2	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D01	D-TR.01.02	TRAP	GENERAL	D.01.00	D	[GEN] Stairway	18.7	21.0	59.7	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D02	D-TR.01.03	[GEN] Stairway	GENERAL	D.02.00	D	[GEN] Stairway	18.9	20.4	60.2	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D02	D-TR.01.04	TRAP	GENERAL	D.02.00	D	[GEN] Stairway	18.7	21.0	59.7	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D03	D-TR.03.01	[GEN] Stairway	GENERAL	D.03.00	D	[GEN] Stairway	18.9	20.4	60.2	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D03	D-TR.03.02	TRAP	GENERAL	D.03.00	D	[GEN] Stairway	18.7	21.0	59.7	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D04	D-TR.04.01	[GEN] Stairway	GENERAL	D.04.00	D	[GEN] Stairway	18.9	20.4	60.2	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D04	D-TR.04.02	TRAP	GENERAL	D.04.00	D	[GEN] Stairway	18.7	21.0	59.7	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D05	D-TR.05.01	[GEN] Stairway	GENERAL	D.01.00	D	[GEN] Stairway	18.9	20.4	60.2	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D05	D-TR.05.02	TRAP	GENERAL	D.01.00	D	[GEN] Stairway	18.7	21.0	59.7	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D06	D-TR.06.01	[GEN] Stairway	GENERAL	D.01.00	D	[GEN] Stairway	18.9	20.4	61.5	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D06	D-TR.06.02	TRAP	GENERAL	D.01.00	D	[GEN] Stairway	18.7	21.0	61.0	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D07	D-TR.07.01	[GEN] Stairway	GENERAL	D.07.00	D	[GEN] Stairway	18.9	18.9	49.3	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+D07	D-TR.07.02	[GEN] Stairway	GENERAL	D.07.00	D	[GEN] Stairway	18.7	18.7	48.8	0	0	[General] Off	75	40	2.0	100	0	0	0	0	0.0	2.0	None	0	Heated	18	99	0	100	0	0
+00	D.00.00.01	Afwas	OFFICE	D.00.00	D	[OF] Meeting Room < 6p	16.2	17.4	36.6	6	6	[Office] Meeting Room SS	75	40	10.0	500	0	30	0	180	11.1	48.8	VAV	240	Heated and cooled	21	25	40	60	50	75
+00	D.00.12	pitch arena	OFFICE	D.00.12	D	[OF] Meeting Room >12p	54.0	56.3	275.2	49	49	[Office] Meeting Room L	75	40	10.0	500	0	30	0	1470	27.2	105.4	VAV	1960	Heated and cooled	21	25	40	60	50	75
